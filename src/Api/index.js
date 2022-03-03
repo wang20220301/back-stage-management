@@ -6,7 +6,14 @@ import axios from "axios";
 const my = axios.create({
   // 此地址上线之后要进行修改
   // 这个地址就是请求发生地址
-  baseURL: "http://localhost:3306",
+  // header:timeout: 1000,
+  // baseURL: 'https://some-domain.com/api/',
+  baseURL:"http://localhost:8080/",
+  headers: {
+    "Content-Type": "content-type:application/x-javascript",
+  },
+  // header:{"content-type":"application/x-javascript"}
+  // header('Access-Control-Allow-Origin:*'); 
 });
 
 // 创建get提交方法

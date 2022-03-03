@@ -1,58 +1,170 @@
 
 <template>
-  <div>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="date" label="日期" width="180"> </el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"> </el-table-column>
-      <el-table-column prop="address" label="地址"> </el-table-column>
-    </el-table>
-    <el-progress :percentage="50"></el-progress>
-<el-progress :percentage="100" :format="format"></el-progress>
-<el-progress :percentage="100" status="success"></el-progress>
-<el-progress :percentage="100" status="warning"></el-progress>
-<el-progress :percentage="50" status="exception"></el-progress>
-
-    <el-progress type="circle" :percentage="30"></el-progress>
-<el-progress type="circle" :percentage="100"></el-progress>
-<el-progress type="circle" :percentage="20" status="success"></el-progress>
-<el-progress type="circle" :percentage="60" status="warning"></el-progress>
-<el-progress type="circle" :percentage="70" status="exception"></el-progress>
+  <div class="content">
+    <div class="header">
+      <div class="logText">
+        <div class="log">
+          <img :src="log" alt="集思电力科技有限公司" draggable="false" />
+        </div>
+        <div class="text">
+          <h4>{{ text }}</h4>
+        </div>
+      </div>
+    </div>
+    <div class="login">
+      <div class="title">
+        <h1>
+          {{ text2 }}
+        </h1>
+      </div>
+      <div class="loginFormStyle">
+        <div class="loginForm">
+          <div class="checkbox">
+              <div class="chexkboxText">
+                <h4>
+                  请选择登录方式
+                </h4>
+              </div>
+              <div class="chexk"> 
+                 <el-select v-model="value" placeholder="请选择登录方式">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+              </div>
+          </div>
+          <Form :value="value"></Form>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
   <script>
+import log from "../../assets/log2.png";
+ import Form from "./form.vue"
 export default {
   name: "ppeP",
+  components:{
+    Form,
+  },
   data() {
     return {
-      tableData: [
+      log,
+      text: "集思电力科技有限公司",
+      text2: "数据信息管理系统",
+      options: [
         {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
+          value: "选项1",
+          label: "超级管理员",
         },
         {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
+          value: "选项2",
+          label: "运营管理员",
         },
         {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
+          value: "选项3",
+          label: "学校管理员",
         },
         {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
+          value: "选项4",
+          label: "班级管理员",
         },
       ],
+      value: "",
     };
   },
-  methods: {
-      format(percentage) {
-        return percentage === 100 ? '空' : `${percentage}%`;
-      }
-    }
+  methods: {},
 };
 </script>
+<style scoped>
+.content {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-image: url("../../assets/bag3.png");
+}
+.header {
+  width: 600px;
+  height: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: red; */
+}
+.logText {
+  width: 330px;
+  height: 44px;
+  /* background-color: black; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.log {
+  height: 44px;
+  width: 140px;
+  background: black;
+}
+.log img {
+  height: 44px;
+  width: 140px;
+}
+.text h2 {
+  font-size: 16px;
+  color: #fff;
+}
+.login {
+  width: 500px;
+  height: 500px;
+  /* background: red; */
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+}
+.title h1 {
+  color: aqua;
+  /* font-size: ; */
+}
+.loginFormStyle {
+  width: 500px;
+  height: 450px;
+  /* background: #00ffff; */
+  display: flex;
+  opacity: 0.7;
+}
+.loginForm {
+  width: 380px;
+  height: 380px;
+  margin: auto;
+  background:#F0F8FF;
+}
+.chexkboxText{
+  width: 380px;
+  height: 21px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.chexkboxText h4{
+   /* margin: 0 auto; */
+   text-align: center;
+   color: black;
+}
+.chexk{
+  width: 310px;
+  margin-left: 50px;
+  display: flex;
+  justify-content: center;
+}
+</style>
+
