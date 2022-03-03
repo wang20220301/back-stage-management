@@ -1,10 +1,11 @@
-// import { from } from 'core-js/core/array'
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import { nextTick } from 'vue/types/umd'
 
 Vue.use(VueRouter)
-// import Home from "../components/home/index.vue"
+import Home from "../components/home/index.vue"
+import Login from "../components/login/login.vue"
 // import Page from "../components/page/index.vue"
 // 2. 定义路由
 // 每个路由应该映射一个组件。 其中"component" 可以是
@@ -12,8 +13,8 @@ Vue.use(VueRouter)
 // 或者，只是一个组件配置对象。
 // 我们晚点再讨论嵌套路由。
 const routes = [
- 
-//   { path: '/bar', component: Bar }
+   {path:"/",component:Login,},
+  { path: '/home', component: Home }
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置
