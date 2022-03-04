@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import { nextTick } from 'vue/types/umd'
@@ -16,13 +15,30 @@ import Login from "../components/login/login.vue"
 // 通过 Vue.extend() 创建的组件构造器，
 // 或者，只是一个组件配置对象。
 
-const routes = [
-   {path:"/",component:Login,},
-  { path: '/superAdmin', component: superAdmin },
-  { path: '/teacherAdmin', component: teacherAdmin },
-  { path: '/schoolAdmin', component: schoolAdmin },
-  { path: '/ompAdmin', component:ompAdmin},
-  { path: '/student', component: student },
+const routes = [{
+    path: "",
+    component: Login,
+  },
+  {
+    path: '/superAdmin',
+    component: superAdmin
+  },
+  {
+    path: '/teacherAdmin',
+    component: teacherAdmin
+  },
+  {
+    path: '/schoolAdmin',
+    component: schoolAdmin
+  },
+  {
+    path: '/ompAdmin',
+    component: ompAdmin
+  },
+  {
+    path: '/student',
+    component: student
+  },
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置
@@ -30,9 +46,9 @@ const router = new VueRouter({
   routes // (缩写) 相当于 routes: routes
 })
 
-router.beforeEach((to,from,next)=>{
- 
-   next()
+router.beforeEach((to, from, next) => {
+
+  next()
 })
 
 export default router

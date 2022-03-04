@@ -39,7 +39,7 @@
 import { post } from "../../Api/index";
 import KeepKey from "./keepkey.vue";
 import { baseLocalStorage, localStorageValue } from "../../utils/index";
-import {routers} from "./index.js"
+import { Routers, RequestUrl } from "./index.js";
 export default {
   name: "loginFrom",
   components: {
@@ -103,15 +103,16 @@ export default {
             var param = new FormData();
             param.append("username", username);
             param.append("password", password);
-            post("https://www.bi-et.com/api/login/index", param).then((res) => {
+            let path = RequestUrl(this.value); //获取对应的请求地址
+            post(path, param).then((res) => {
               if (res.data.err_code == 1) {
                 if (checked) {
                   // 登录成功，如果勾选了记住密码，通过bsae64加密并保持到本地窗口
                   baseLocalStorage("usename", username);
                   baseLocalStorage("password", password);
                   baseLocalStorage("loginType", this.value);
-                } 
-                routers(this.value) //登录成功跳转到home页面
+                }
+                Routers(this.$router, this.value); //登录成功跳转到home页面
               } else {
                 //  open 该方法会弹出一个提示框,提示
                 this.open("用户名或密码错误"); //失败跳出提示信息
