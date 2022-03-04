@@ -23,6 +23,9 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
+        <KeepKey></KeepKey>
+      </el-form-item>
+      <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')"
           >登录</el-button
         >
@@ -34,8 +37,14 @@
 </template>
 <script>
 import { post } from "../../Api/index";
+import KeepKey from "./keepkey.vue";
+import { baseLocalStorage, localStorageValue } from "../../utils/index";
+import {routers} from "./index.js"
 export default {
-  name: "lginFrom",
+  name: "loginFrom",
+  components: {
+    KeepKey,
+  },
   props: {
     value: {
       type: String,
@@ -67,7 +76,6 @@ export default {
       ruleForm: {
         pass: "",
         checkPass: "",
-        age: "",
       },
       rules: {
         pass: [{ validator: validatePass, trigger: "blur" }],
@@ -75,29 +83,42 @@ export default {
       },
     };
   },
+  mounted() {
+    this.ruleForm.pass = localStorageValue("usename");
+    this.ruleForm.checkPass = localStorageValue("password");
+  },
   methods: {
     submitForm(formName) {
+      let username = this.$data.ruleForm.pass;
+      let password = this.$data.ruleForm.checkPass;
+      let { checked } = this.$store.state.data;
+      console.log(localStorageValue("usename"));
+      // 验证账号密码是否都有值
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 判断登录的选择的登录账号的类型，如果为空，提示选折登录账号类型
           if (this.value != "") {
             // 判断成功发送请求到服务器
-            // this.data.pass 表示用户名
-            // this.data.checkPass 表示密码
             // 因为后端原因,传参固定写法，不能直接使用data以对象方式传参
             var param = new FormData();
-            param.append("username", this.$data.ruleForm.pass);
-            param.append("password", this.$data.ruleForm.checkPass);
+            param.append("username", username);
+            param.append("password", password);
             post("https://www.bi-et.com/api/login/index", param).then((res) => {
               if (res.data.err_code == 1) {
-                this.$router.push("/home");      //登录成功跳转到home页面
+                if (checked) {
+                  // 登录成功，如果勾选了记住密码，通过bsae64加密并保持到本地窗口
+                  baseLocalStorage("usename", username);
+                  baseLocalStorage("password", password);
+                  baseLocalStorage("loginType", this.value);
+                } 
+                routers(this.value) //登录成功跳转到home页面
               } else {
-              //  open 该方法会弹出一个提示框,提示 
-                this.open("用户名或密码错误")      //失败跳出提示信息
+                //  open 该方法会弹出一个提示框,提示
+                this.open("用户名或密码错误"); //失败跳出提示信息
               }
             });
-          }else{
-            this.open("请选择登录方式")
+          } else {
+            this.open("请选择登录方式");
           }
         } else {
           return false;
@@ -108,15 +129,15 @@ export default {
       this.$refs[formName].resetFields();
     },
     //  控制提示框的
-     open(text) {
-        this.$confirm(text, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        })
-      }
-    }
+    open(text) {
+      this.$confirm(text, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true,
+      });
+    },
+  },
 };
 </script>
 <style scoped>

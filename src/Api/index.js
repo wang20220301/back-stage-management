@@ -12,8 +12,6 @@ const my = axios.create({
   headers: {
     "Content-Type": "content-type:application/x-javascript",
   },
-  // header:{"content-type":"application/x-javascript"}
-  // header('Access-Control-Allow-Origin:*'); 
 });
 
 // 创建get提交方法

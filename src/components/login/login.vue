@@ -20,22 +20,20 @@
       <div class="loginFormStyle">
         <div class="loginForm">
           <div class="checkbox">
-              <div class="chexkboxText">
-                <h4>
-                  请选择登录方式
-                </h4>
-              </div>
-              <div class="chexk"> 
-                 <el-select v-model="value" placeholder="请选择登录方式">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-              </div>
+            <div class="chexkboxText">
+              <h4>请选择登录方式</h4>
+            </div>
+            <div class="chexk">
+              <el-select v-model="value" placeholder="请选择登录方式">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </div>
           </div>
           <Form :value="value"></Form>
         </div>
@@ -46,10 +44,11 @@
 
   <script>
 import log from "../../assets/log2.png";
- import Form from "./form.vue"
+import Form from "./form.vue";
+import { localStorageValue } from "../../utils/index";
 export default {
   name: "ppeP",
-  components:{
+  components: {
     Form,
   },
   data() {
@@ -59,24 +58,29 @@ export default {
       text2: "数据信息管理系统",
       options: [
         {
-          value: "选项1",
+          value: "1",
           label: "超级管理员",
         },
         {
-          value: "选项2",
+          value: "2",
           label: "运营管理员",
         },
         {
-          value: "选项3",
+          value: "3",
           label: "学校管理员",
         },
         {
-          value: "选项4",
+          value: "4",
           label: "班级管理员",
         },
       ],
       value: "",
     };
+  },
+  mounted() {
+    // 加载页面判断是否有值,有就获取没有就默认值
+
+    this.value = localStorageValue("loginType");
   },
   methods: {},
 };
@@ -95,12 +99,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background: red; */
 }
 .logText {
   width: 330px;
   height: 44px;
-  /* background-color: black; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -121,7 +123,7 @@ export default {
 .login {
   width: 500px;
   height: 500px;
-  /* background: red; */
+
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -134,12 +136,11 @@ export default {
 }
 .title h1 {
   color: aqua;
-  /* font-size: ; */
 }
 .loginFormStyle {
   width: 500px;
   height: 450px;
-  /* background: #00ffff; */
+
   display: flex;
   opacity: 0.7;
 }
@@ -147,20 +148,20 @@ export default {
   width: 380px;
   height: 380px;
   margin: auto;
-  background:#F0F8FF;
+  background: #f0f8ff;
 }
-.chexkboxText{
+.chexkboxText {
   width: 380px;
   height: 21px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.chexkboxText h4{
-   /* margin: 0 auto; */
-   text-align: center;
-   color: black;
+.chexkboxText h4 {
+  /* margin: 0 auto; */
+  text-align: center;
+  color: black;
 }
-.chexk{
+.chexk {
   width: 310px;
   margin-left: 50px;
   display: flex;

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">登录成功跳转到首页</div>
+  <div class="home">跳转到学生管理员界面</div>
 </template>
 
 <script>

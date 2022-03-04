@@ -5,12 +5,14 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    count: 10
+    data:{
+      checked:""
+    }
   },
   mutations: {
-    increment (state) {
-      state.count++
-    }
+   alterObj(state,data){
+     state.data.checked=data
+   }
   }
 })
  export default  store
