@@ -112,6 +112,7 @@ export default {
                 // 设置cookie
                 baseCookie();
                 // 未完成待续
+                // console.log("ahahah")
 
                 // 获取cookie
                 console.log(cookieValue(username));
