@@ -1,4 +1,4 @@
-// import base64 from "base64-js";
+
 
 // base64加密并储存到localStorage
 function baseLocalStorage(name, value) {
@@ -18,8 +18,35 @@ function localStorageValue(key) {
 
 }
 
+function baseCookie(key) {
+    console.log(key)
+    let base = window.btoa(key)
+    
+    document.cookie = "username=" + base;
+}
 
+function cookieValue(){
+    let base=getCookie("username")
+    if (base == null) {
+        return ""
+    } else {
+        return window.atob(base)
+    }
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
 export {
     baseLocalStorage,
     localStorageValue,
+    baseCookie,
+    getCookie,
+    cookieValue,
 }

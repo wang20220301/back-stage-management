@@ -6,12 +6,16 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     data:{
-      checked:""
+      checked:"",
+      username:""
     }
   },
   mutations: {
    alterObj(state,data){
      state.data.checked=data
+   },
+   add(state,data){
+     state.data.username=data
    }
   }
 })
