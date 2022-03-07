@@ -1,3 +1,4 @@
+// import { md } from "@/Md5";
 
 
 // base64加密并储存到localStorage
@@ -18,15 +19,21 @@ function localStorageValue(key) {
 
 }
 
+// md5加密
+function Md5(key) {
+    return window.btoa(key)
+}
+
+// 设置cookie
 function baseCookie(key) {
-    console.log(key)
-    let base = window.btoa(key)
-    
+
+    let base = Md5(key)
     document.cookie = "username=" + base;
 }
 
-function cookieValue(){
-    let base=getCookie("username")
+// 获取解密过后的cookie值
+function cookieValue() {
+    let base = getCookie("username")
     if (base == null) {
         return ""
     } else {
@@ -34,6 +41,7 @@ function cookieValue(){
     }
 }
 
+// 获取指定cookie值
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');

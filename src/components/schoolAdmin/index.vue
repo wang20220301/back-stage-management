@@ -1,5 +1,5 @@
 <template>
-  <div class="home">跳转到超级管理员界面</div>
+  <div class="home">跳转到学校管理员</div>
 </template>
 
 <script>

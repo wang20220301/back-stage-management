@@ -12,7 +12,7 @@ export default {
       let param = md();
       post("https://www.bi-et.com/api/monitor/all_monitor", param).then(
         (res) => {
-          console.log(res.data);
+          console.log(res);
         }
       );
     },

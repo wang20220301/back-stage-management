@@ -1,6 +1,6 @@
 import md5 from "md5";
 import {
-    localStorageValue
+    cookieValue
 } from "../utils/index"
 
 function md() {
@@ -8,7 +8,7 @@ function md() {
     let timestamp = Date.parse(new Date());
     
     // 获取当前的登录名
-    let username = localStorageValue("username")
+    let username = cookieValue("username")
     var param = new FormData();
     let key = md5(username + "jisi123!!!@" + timestamp)
     param.append("user_id", username);

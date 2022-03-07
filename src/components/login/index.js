@@ -1,16 +1,12 @@
-<<<<<<< HEAD
-// import router from "@/router"
-// import router from "../../router/index";
+// <<<<<<< HEAD
+import router from "../../router/index";
+
+
+
+import { baseLocalStorage } from "../../utils/index";
 
 // 根据登录方式跳转到对应的url路线,显示对应的组件,实现权限控制
-function Routers(router, key) {
-=======
-import router from "@/router"
-import {
-    baseLocalStorage,
-  } from "../../utils/index";
 function routers(key) {
->>>>>>> devlop
     key = Number(key)
     switch (key) {
         case 1: {
@@ -32,8 +28,7 @@ function routers(key) {
     }
 }
 
-<<<<<<< HEAD
-//  根据登录方式返回对应的请求路径
+//  根据登录选项返回对应的请求路径
 function RequestUrl(key) {
     key = Number(key)
     switch (key) {
@@ -53,11 +48,9 @@ function RequestUrl(key) {
         }
     }
 }
-export {
-    Routers,
-    RequestUrl,
-=======
-function getLocalStorage(username,password,value) {
+
+// 请求发送参数
+function getLocalStorage(username, password, value) {
     baseLocalStorage("username", username);
     baseLocalStorage("password", password);
     baseLocalStorage("loginType", value);
@@ -65,5 +58,5 @@ function getLocalStorage(username,password,value) {
 export {
     routers,
     getLocalStorage,
->>>>>>> devlop
+    RequestUrl,
 }
