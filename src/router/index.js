@@ -16,29 +16,29 @@ import Login from "../components/login/login.vue"
 // 或者，只是一个组件配置对象。
 
 const routes = [{
-    path: "",
-    component: Login,
-  },
-  {
-    path: '/superAdmin',
-    component: superAdmin
-  },
-  {
-    path: '/teacherAdmin',
-    component: teacherAdmin
-  },
-  {
-    path: '/schoolAdmin',
-    component: schoolAdmin
-  },
-  {
-    path: '/ompAdmin',
-    component: ompAdmin
-  },
-  {
-    path: '/student',
-    component: student
-  },
+  path: "",
+  component: Login,
+},
+{
+  path: '/superAdmin',
+  component: superAdmin
+},
+{
+  path: '/teacherAdmin',
+  component: teacherAdmin
+},
+{
+  path: '/schoolAdmin',
+  component: schoolAdmin
+},
+{
+  path: '/ompAdmin',
+  component: ompAdmin
+},
+{
+  path: '/student',
+  component: student
+},
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置

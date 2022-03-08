@@ -91,7 +91,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-image: url("../../assets/bag3.png");
+  background-image: url("../../assets/bag.jpg");
 }
 .header {
   width: 600px;
@@ -142,7 +142,7 @@ export default {
   height: 450px;
 
   display: flex;
-  opacity: 0.7;
+  opacity: 0.9;
 }
 .loginForm {
   width: 380px;
