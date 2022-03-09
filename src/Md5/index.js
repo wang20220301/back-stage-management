@@ -6,7 +6,6 @@ import {
 function md() {
     //  获取当前时间戳
     let timestamp = Date.parse(new Date());
-    
     // 获取当前的登录名
     let username = cookieValue("username")
     var param = new FormData();

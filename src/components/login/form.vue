@@ -109,9 +109,12 @@ export default {
             // 根据选项执行不同的请求路径
             let path = RequestUrl(this.value);
             post(path, param).then((res) => {
+              // console.log(res.data.data.token)
               if (res.data.err_code == 1) {
                 // 设置cookie
-                baseCookie(username);
+                baseCookie("username",username);
+                // 设置cookie值
+                baseCookie("token",res.data.data.token)
                 routers(this.value); //登录成功跳转到home页面
               } else {
                 //  open 该方法会弹出一个提示框
@@ -145,6 +148,5 @@ export default {
 .form {
   margin-top: 10px;
   width: 310px;
-  
 }
 </style>

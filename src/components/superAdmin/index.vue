@@ -18,16 +18,17 @@
             <i class="el-icon-setting"></i>
             <span slot="title">首页</span>
           </el-menu-item>
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>用户管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/superAdmin/power">权限管理</el-menu-item>
-              <el-menu-item index="/superAdmin/user">添加或修改</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
+          <div class="menu" v-for="(item, index) in menu" :key="index">
+            <el-submenu :index="item.index">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>{{ item.title }}</span>
+              </template>
+              <el-menu-item-group v-for="(i, idx) in item.list" :key="idx">
+                <el-menu-item :index="i.path">{{ i.name }}</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+          </div>
         </el-menu>
       </div>
       <div class="right">
@@ -48,6 +49,36 @@ export default {
   data() {
     return {
       isCollapse: true,
+      menu: [
+        {
+          index: "1",
+          title: "用户管理",
+          list: [
+            {
+              path: "/superAdmin/power",
+              name: "权限管理",
+            },
+            {
+              path: "/superAdmin/user",
+              name: "添加/修改",
+            },
+          ],
+        },
+        {
+          index: "2",
+          title: "设备管理",
+          list: [
+            {
+              path: "/superAdmin/power",
+              name: "权限管理",
+            },
+            {
+              path: "/superAdmin/user",
+              name: "添加/修改",
+            },
+          ],
+        },
+      ],
     };
   },
   computed: {

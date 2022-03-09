@@ -1,5 +1,3 @@
-// import { md } from "@/Md5";
-
 
 // base64加密并储存到localStorage
 function baseLocalStorage(name, value) {
@@ -25,15 +23,15 @@ function Md5(key) {
 }
 
 // 设置cookie
-function baseCookie(key) {
+function baseCookie(name, key) {
 
     let base = Md5(key)
-    document.cookie = "username=" + base;
+    document.cookie = `${name}= ${base}`;
 }
 
 // 获取解密过后的cookie值
-function cookieValue() {
-    let base = getCookie("username")
+function cookieValue(getItem) {
+    let base = getCookie(getItem)
     if (base == null) {
         return ""
     } else {
