@@ -14,6 +14,11 @@ import Login from "../components/login/login.vue"
 // 每个路由应该映射一个组件。 其中"component" 可以是
 // 通过 Vue.extend() 创建的组件构造器，
 // 或者，只是一个组件配置对象。
+// 子路由
+ import Power from "../components/utils/power.vue"
+ import User from "../components/utils/user.vue"
+ import Home from "../components/utils/home.vue"
+// import { component } from 'vue/types/umd'
 
 const routes = [{
   path: "",
@@ -21,7 +26,22 @@ const routes = [{
 },
 {
   path: '/superAdmin',
-  component: superAdmin
+  component: superAdmin,
+  // 配置子路由 子路由不能以/开头(/power)，以斜杆开头讲被视为根路由
+  children:[
+    {
+      path:"power",
+      component:Power
+    },
+    {
+      path:"user",
+      component:User
+    },
+    {
+      path:"home",
+      component:Home
+    }
+  ]
 },
 {
   path: '/teacherAdmin',

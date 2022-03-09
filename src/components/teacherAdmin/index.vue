@@ -84,14 +84,13 @@ export default {
 .leftBar {
   width: 200px;
   height: 100%;
-  /* background-color: #545c64; */
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
-  min-height: 100%;
-  height: 100%;
+  min-height: 400px;
 }
-.el-menu-vertical-demo{
-  height: 100%;
+.el-menu-vertical-demo {
+  /* calc自动计算宽高 */
+  height: calc(100vh - 56px);
 }
 </style>

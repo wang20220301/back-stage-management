@@ -145,5 +145,6 @@ export default {
 .form {
   margin-top: 10px;
   width: 310px;
+  
 }
 </style>

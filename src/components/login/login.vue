@@ -149,6 +149,7 @@ export default {
   height: 380px;
   margin: auto;
   background: #f0f8ff;
+   border-radius: 10px;
 }
 .chexkboxText {
   width: 380px;

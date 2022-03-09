@@ -3,56 +3,36 @@
     <Header></Header>
     <div class="box">
       <div class="leftBar">
-        <el-row class="tac">
-          <el-col :span="12">
-            <el-menu
-              default-active="2"
-              class="el-menu-vertical-demo"
-              @open="handleOpen"
-              @close="handleClose"
-              background-color="#545c64"
-              text-color="#fff"
-              active-text-color="#ffd04b"
-            >
-              <el-menu-item index="1">
-                <i class="el-icon-setting"></i>
-                <span slot="title">首页</span>
-              </el-menu-item>
-              <el-submenu index="2">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>用户管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="2-1">权限管理</el-menu-item>
-                  <el-menu-item index="2-2">添加或修改</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="3">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>设备管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="3-1">设备管理</el-menu-item>
-                  <el-menu-item index="3-2">系统管理</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="4">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>设备管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="4-1">设备管理</el-menu-item>
-                  <el-menu-item index="4-2">系统管理</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-            </el-menu>
-          </el-col>
-        </el-row>
+        <el-menu
+          :default-active="defaultActive"
+          class="el-menu-vertical-demo"
+          @open="handleOpen"
+          @close="handleClose"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          router
+          unique-opened
+        >
+          <el-menu-item index="/superAdmin/home">
+            <i class="el-icon-setting"></i>
+            <span slot="title">首页</span>
+          </el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>用户管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/superAdmin/power">权限管理</el-menu-item>
+              <el-menu-item index="/superAdmin/user">添加或修改</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </el-menu>
       </div>
-      <div class="right"></div>
+      <div class="right">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
@@ -69,6 +49,12 @@ export default {
     return {
       isCollapse: true,
     };
+  },
+  computed: {
+    // computed计算属性,该属性不需要在data里定义,自定义的属性
+    defaultActive() {
+      return "/superAdmin/" + this.$route.path.split("/").reverse()[0];
+    },
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -87,19 +73,16 @@ export default {
   width: 100%;
   height: 100vh;
 }
-.leftBar {
-  width: 200px;
-  height: 100%;
-  background-color: #545c64;
+.box {
+  width: 100%;
+  display: flex;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
 }
-.box {
-  width: 100%;
-  height: 100%;
-  display: flex;
+.el-menu-vertical-demo {
+  height: calc(100vh - 56px);
 }
 .right {
   flex: 1;

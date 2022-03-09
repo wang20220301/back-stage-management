@@ -28,7 +28,7 @@ function routers(key) {
     }
 }
 
-//  根据登录选项返回对应的请求路径
+//  根据登录选项返回对应的请求路径url
 function RequestUrl(key) {
     key = Number(key)
     switch (key) {
@@ -49,7 +49,7 @@ function RequestUrl(key) {
     }
 }
 
-// 请求发送参数
+// 请求发送参数fromdata
 function getLocalStorage(username, password, value) {
     baseLocalStorage("username", username);
     baseLocalStorage("password", password);
