@@ -10,14 +10,16 @@
           @close="handleClose"
           background-color="#545c64"
           text-color="#fff"
-          active-text-color="#ffd04b"
+          active-text-color="#5196FF"
           router
           unique-opened
         >
-          <el-menu-item index="/superAdmin/home">
-            <i class="el-icon-setting"></i>
-            <span slot="title">首页</span>
-          </el-menu-item>
+          <div class="oneMenu" v-for="(item, index) in oneMenu" :key="index">
+            <el-menu-item :index="item.path">
+              <i class="el-icon-setting"></i>
+              <span slot="title">{{ item.title }}</span>
+            </el-menu-item>
+          </div>
           <div class="menu" v-for="(item, index) in menu" :key="index">
             <el-submenu :index="item.index">
               <template slot="title">
@@ -49,32 +51,40 @@ export default {
   data() {
     return {
       isCollapse: true,
-      menu: [
+      oneMenu: [
         {
-          index: "1",
-          title: "用户管理",
-          list: [
-            {
-              path: "/superAdmin/power",
-              name: "权限管理",
-            },
-            {
-              path: "/superAdmin/user",
-              name: "添加/修改",
-            },
-          ],
+          title: "首页",
+          path: "/superAdmin/home",
         },
+        {
+          title: "用户管理",
+          path: "/superAdmin/user",
+        },
+      ],
+      menu: [
         {
           index: "2",
           title: "设备管理",
           list: [
             {
-              path: "/superAdmin/power",
-              name: "权限管理",
+              path: "/superAdmin/Device",
+              name: "柜子管理",
             },
             {
-              path: "/superAdmin/user",
-              name: "添加/修改",
+              name: "移动房",
+            },
+          ],
+        },
+        {
+          index: "3",
+          title: "设备管理",
+          list: [
+            {
+              path: "/superAdmin/Device",
+              name: "柜子管理",
+            },
+            {
+              name: "移动房",
             },
           ],
         },
@@ -102,7 +112,7 @@ export default {
 <style scoped>
 .content {
   width: 100%;
-  height: 100vh;
+  background: #ecf0f5;
 }
 .box {
   width: 100%;
@@ -113,10 +123,10 @@ export default {
   min-height: 400px;
 }
 .el-menu-vertical-demo {
-  height: calc(100vh - 56px);
+  height: calc(100vh - 60px);
 }
 .right {
   flex: 1;
-  background: honeydew;
+  /* background: honeydew; */
 }
 </style>
