@@ -14,7 +14,7 @@
           router
           unique-opened
         >
-          <div class="oneMenu" v-for="(item, index) in oneMenu" :key="index">
+          <div class="oneMenu" v-for="(item, index) in oneMenu" :key="index+2">
             <el-menu-item :index="item.path">
               <i class="el-icon-setting"></i>
               <span slot="title">{{ item.title }}</span>

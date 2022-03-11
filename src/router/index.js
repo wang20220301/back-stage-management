@@ -17,6 +17,7 @@ import Login from "../components/login/login.vue"
 // 子路由
  import User from "../components/utils/user/inde.vue"
  import Device from "../components/utils/Device/index.vue"
+ import Details from "../components/utils/Device/details/index.vue"
 // import { component } from 'vue/types/umd'
 
 const routes = [{
@@ -36,6 +37,10 @@ const routes = [{
       path:"user",
       component:User
     },
+    {
+      path:"detalis",
+      component:Details,
+    }
   ]
 },
 {

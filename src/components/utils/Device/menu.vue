@@ -54,6 +54,7 @@ export default {
         },
       ],
       value: "",
+      input:"",
     };
   },
   methods: {

@@ -27,7 +27,6 @@ export default {
   name: "menuModule",
   data() {
     return {
-      list: ["全部用户", "管理员", "经销商", "普通用户"],
       input:"",
       activeName:"",
     };
