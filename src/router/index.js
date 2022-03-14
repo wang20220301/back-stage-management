@@ -15,9 +15,11 @@ import Login from "../components/login/login.vue"
 // 通过 Vue.extend() 创建的组件构造器，
 // 或者，只是一个组件配置对象。
 // 子路由
- import User from "../components/utils/user/inde.vue"
- import Device from "../components/utils/Device/index.vue"
- import Details from "../components/utils/Device/details/index.vue"
+import User from "../components/utils/user/inde.vue"
+import Device from "../components/utils/Device/index.vue"
+import Details from "../components/utils/Device/details/index.vue"
+import Home from "../components/utils/home/index.vue"
+// import { component } from 'vue/types/umd'
 // import { component } from 'vue/types/umd'
 
 const routes = [{
@@ -28,18 +30,22 @@ const routes = [{
   path: '/superAdmin',
   component: superAdmin,
   // 配置子路由 子路由不能以/开头(/power)，以斜杆开头讲被视为根路由
-  children:[
+  children: [
     {
-      path:"Device",
-      component:Device
+      path: "Device",
+      component: Device
     },
     {
-      path:"user",
-      component:User
+      path: "user",
+      component: User
     },
     {
-      path:"detalis",
-      component:Details,
+      path: "detalis",
+      component: Details,
+    },
+    {
+      path: "home",
+      component: Home
     }
   ]
 },

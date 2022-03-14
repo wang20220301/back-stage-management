@@ -3,21 +3,39 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+
+const moduleA = {
+  namespaced: true,
   state: {
-    data:{
-      checked:"",
-      username:""
+    data: {
+      checked: "",
     }
   },
   mutations: {
-   alterObj(state,data){
-     state.data.checked=data
-   },
-   add(state,data){
-     state.data.username=data
-   }
+    alterObj(state, data) {
+      state.data.checked = data
+    },
+  },
+}
+
+const moduleB = {
+  namespaced: true,
+  state: {
+    data: ""
+  },
+  mutations: {
+    AddMsg(state, data) {
+      state.data = data
+    },
+  },
+}
+
+const store = new Vuex.Store({
+  modules: {
+    a: moduleA,
+    b: moduleB
   }
 })
- export default  store
+
+export default store
 

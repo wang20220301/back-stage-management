@@ -14,7 +14,11 @@
           router
           unique-opened
         >
-          <div class="oneMenu" v-for="(item, index) in oneMenu" :key="index+2">
+          <div
+            class="oneMenu"
+            v-for="(item, index) in oneMenu"
+            :key="index + 2"
+          >
             <el-menu-item :index="item.path">
               <i class="el-icon-setting"></i>
               <span slot="title">{{ item.title }}</span>
@@ -64,19 +68,6 @@ export default {
       menu: [
         {
           index: "2",
-          title: "设备管理",
-          list: [
-            {
-              path: "/superAdmin/Device",
-              name: "柜子管理",
-            },
-            {
-              name: "移动房",
-            },
-          ],
-        },
-        {
-          index: "3",
           title: "设备管理",
           list: [
             {

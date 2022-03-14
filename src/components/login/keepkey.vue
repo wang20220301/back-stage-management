@@ -13,7 +13,7 @@ export default {
   methods: {
     // 判断是否勾选了保存账号密码,勾选了保持到vuex
     click(){
-        this.$store.commit("alterObj",this.$data.checked)
+        this.$store.commit("a/alterObj",this.$data.checked)
     }
   },
 };

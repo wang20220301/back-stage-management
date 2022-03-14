@@ -7,7 +7,7 @@
         <el-form-item label="设备名称">
           <el-input v-model="sizeForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="商户">
+        <el-form-item label="所属商户">
           <el-select v-model="sizeForm.region" placeholder="请选择活动区域">
             <el-option label="区域一" value="shanghai"></el-option>
             <el-option label="区域二" value="beijing"></el-option>
@@ -45,6 +45,10 @@ export default {
       },
     };
   },
+  created() {
+    // 获取vuex数据
+    console.log(this.$store.state.b.data);
+  },
   methods: {
     onSubmit() {
       console.log("submit!");
@@ -54,7 +58,7 @@ export default {
 </script>
 
 <style scoped>
-.menu{
+.menu {
   width: 680px;
   height: 358px;
   background: #ffff;
@@ -73,9 +77,9 @@ export default {
   letter-spacing: 0px;
   text-align: left;
   margin-bottom: 20px;
-  color: #282D30;
+  color: #282d30;
 }
-.from{
+.from {
   width: 400px;
   margin-left: 92px;
 }

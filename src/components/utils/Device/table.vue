@@ -23,6 +23,7 @@
         <div
           :class="scope.row.status == 0 ? `off-line` : ``"
           slot-scope="scope"
+          name="1212"
         >
           <p class="pp">
             {{ scope.row.status == 0 ? "离线" : "在线" }}
@@ -32,9 +33,14 @@
       <el-table-column prop="add_time" label="添加时间" width="">
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
-        <template>
-          <el-button @click="handleClick()" type="text" size="small"
-            >查看详情</el-button
+        <template slot-scope="scope">
+          <el-butto
+            @click="handleClick(scope.row.group_id)"
+            type="text"
+            size="small"
+            name="buttom"
+            style="color: #1890ff"
+            >查看详情</el-butto
           >
         </template>
       </el-table-column>
@@ -44,7 +50,8 @@
 
 <script>
 import { post } from "@/Api/index";
-import { msg } from "@/token/index";
+import { query } from "@/token/index";
+import { baseCookie } from "@/utils/index";
 export default {
   name: "tablePage",
   data() {
@@ -55,7 +62,7 @@ export default {
   },
   mounted() {
     // 创建完成发送请求
-    post("https://www.bi-et.com/api/monitor/sark_list", msg()).then((res) => {
+    post("https://www.bi-et.com/api/monitor/sark_list", query()).then((res) => {
       this.$data.tableData = res.data.data.list;
     });
   },
@@ -72,7 +79,9 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    handleClick() {
+    handleClick(id) {
+      baseCookie("id", id);
+      // 获取传过来的id储存到cookie里
       // 点击跳转到查看详情页
       this.$router.push("/superAdmin/detalis");
     },
@@ -103,11 +112,13 @@ export default {
   top: 18px;
   border-radius: 2px;
   padding: 5px, 29px, 5px, 29px;
-  color: #44F14D29;
+  color: #44f14d29;
   background: rgba(68, 241, 77, 0.16);
-
 }
 .pp {
   margin: 0 auto;
+}
+.cell {
+  color: #1890ff;
 }
 </style>

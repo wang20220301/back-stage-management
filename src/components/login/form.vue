@@ -91,7 +91,8 @@ export default {
     submitForm(formName) {
       let username = this.$data.ruleForm.pass;
       let password = this.$data.ruleForm.checkPass;
-      let { checked } = this.$store.state.data;
+      console.log(this.$store)
+      let { checked } = this.$store.state.a.data;
       // 验证账号密码是否都有值
       this.$refs[formName].validate((valid) => {
         if (valid) {
