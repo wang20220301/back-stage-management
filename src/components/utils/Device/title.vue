@@ -18,7 +18,8 @@ export default {
 .title {
   display: flex;
   margin-bottom: 17px;
-  /* margin-top: 20px; */
+  margin-top: 20px;
+  margin-left: 22px;
 }
 .da {
   font-size: 18px;

@@ -49,8 +49,9 @@ export default {
 .header {
   width: 100%;
   height: 60px;
-  /* background: #3c8dbc; */
   display: flex;
+  position: fixed;
+  z-index: 999;
 }
 .log {
   width: 200px;

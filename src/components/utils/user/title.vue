@@ -16,6 +16,7 @@ export default {
   display: flex;
   margin-bottom: 17px;
   color: #282d30;
+  margin-left: 22px;
 }
 .title span:nth-child(1) {
   font-size: 18px;

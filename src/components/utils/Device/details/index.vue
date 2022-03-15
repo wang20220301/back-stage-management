@@ -35,7 +35,7 @@ export default {
     post("https://www.bi-et.com/api/monitor/monitor_detail", details()).then(
       (res) => {
         // 通过vuex设置数据共享
-        this.$store.commit("b/AddMsg", res.data.data.detail);
+        this.$store.commit("b/AddMsg", res.data.data);
       }
     );
   },
@@ -44,8 +44,8 @@ export default {
 
 <style scoped>
 .details {
-  margin-top: 20px;
-  margin-left: 22px;
+  margin-top: 80px;
+  margin-left: 222px;
 }
 .structure {
   width: 1670px;

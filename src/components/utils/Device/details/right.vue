@@ -61,14 +61,12 @@ export default {
 </script>
 
 <style scoped>
-.right {
-  margin-top: 20px;
-}
 .blank {
   clear: both;
   height: 25px;
 }
 .title {
+  padding-top: 10px;
   margin-left: 20px;
   font-size: 18px;
   font-style: normal;

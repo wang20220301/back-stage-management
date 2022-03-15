@@ -18,8 +18,10 @@
         >
       </el-popover>
     </div>
-    <el-pagination background layout="prev, pager, next" :total="1000">
-    </el-pagination>
+    <div class="right">
+      <el-pagination background layout="prev, pager, next" :total="1000">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -38,13 +40,16 @@ export default {
 .hah {
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  height: 44px;
+  width: 1930px;
+  height: 68px;
   background: #fff;
   margin-top: 20px;
   align-items: center;
 }
 .delete {
-  margin-left: 15px;
+  margin-left: 30px;
+}
+.right {
+  margin-right: 40px;
 }
 </style>

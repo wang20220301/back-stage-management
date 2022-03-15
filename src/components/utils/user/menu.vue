@@ -16,7 +16,7 @@
         ></el-input>
       </div>
       <div class="add">
-        <el-button type="success" size="small" autosize>添加用户</el-button>
+        <el-button type="primary" size="small" autosize>添加用户</el-button>
       </div>
     </div>
   </div>
@@ -27,8 +27,8 @@ export default {
   name: "menuModule",
   data() {
     return {
-      input:"",
-      activeName:"",
+      input: "",
+      activeName: "",
     };
   },
   methods: {
@@ -48,6 +48,8 @@ export default {
   justify-content: space-between;
   background: #fff;
   padding-left: 20px;
+  margin-top: 20px;
+  margin-left: 22px;
 }
 .right {
   display: flex;

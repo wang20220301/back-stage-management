@@ -21,7 +21,7 @@
       <el-table-column prop="name" label="位置" width=""> </el-table-column>
       <el-table-column label="设备状态" width="">
         <div
-          :class="scope.row.status == 0 ? `off-line` : ``"
+          :class="scope.row.status == 0 ? `off-line` : `on-l`"
           slot-scope="scope"
           name="1212"
         >
@@ -91,28 +91,30 @@ export default {
 
 <style scoped>
 .tabel {
-  margin-top: 10px;
-  width: 100%;
-  height: 100%;
+  margin-top: 20px;
+  height: 736px;
+  margin-left: 22px;
 }
 .off-line {
   background: rgba(239, 35, 35, 0.1);
   color: #ef2323;
-  width: 48px;
+  width: 56px;
   height: 28px;
   height: 28px;
   border-radius: 2px;
   padding: 5px, 29px, 5px, 29px;
   display: flex;
 }
-.on-line {
+.on-l {
+  background: rgba(239, 35, 35, 0.1);
+  color: #ef2323;
+  width: 56px;
   height: 28px;
-  width: 86px;
-  left: 1226px;
-  top: 18px;
+  height: 28px;
   border-radius: 2px;
   padding: 5px, 29px, 5px, 29px;
-  color: #44f14d29;
+  display: flex;
+  color: #109116;
   background: rgba(68, 241, 77, 0.16);
 }
 .pp {

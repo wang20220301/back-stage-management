@@ -72,13 +72,13 @@ export default {
   height: 329px;
   margin-right: 20px;
   background: #fff;
+  border-radius: 5px;
 }
 .title {
   margin-top: 30px;
   width: 100%;
   height: 28px;
   line-height: 24px;
-  /* background: lavender; */
   display: flex;
   justify-content: space-between;
 }
@@ -92,12 +92,23 @@ export default {
   width: 44px;
   height: 28px;
   margin-right: 8px;
-  background: #f2f2f2;
+  /* background: #; */
   text-align: center;
 }
 .text {
   width: 100px;
   height: 28px;
   margin-left: 24px;
+}
+.text p {
+  width: 112px;
+  height: 24px;
+  font-size: 14px;
+  font-family: Source Han Sans CN, Source Han Sans CN-Medium;
+  font-weight: 500;
+  text-align: LEFT;
+  color: #20253a;
+  line-height: 24px;
+  font-weight: 800;
 }
 </style>

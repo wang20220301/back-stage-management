@@ -20,18 +20,16 @@ export default {
     Title,
   },
   data() {
-    return {
-
-    };
+    return {};
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 
 <style scoped>
 .user {
-  margin-top: 20px;
-  margin-left: 22px;
+  margin-top: 80px;
+  margin-left: 200px;
+  width: 1880px;
 }
 </style>

@@ -107,7 +107,18 @@ export default {
 }
 .box {
   width: 100%;
+  height: 100%;
   display: flex;
+}
+.leftBar {
+  position: fixed;
+  top: 60px;
+  z-index: 999;
+}
+.right {
+  width: 100%;
+  min-height: 1040px;
+  background: #ecf0f5;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
@@ -115,9 +126,5 @@ export default {
 }
 .el-menu-vertical-demo {
   height: calc(100vh - 60px);
-}
-.right {
-  flex: 1;
-  /* background: honeydew; */
 }
 </style>

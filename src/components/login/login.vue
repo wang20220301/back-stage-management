@@ -79,7 +79,6 @@ export default {
   },
   mounted() {
     // 加载页面判断是否有值,有就获取没有就默认值
-
     this.value = localStorageValue("loginType");
   },
   methods: {},
@@ -91,6 +90,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+  background-size: 100%;
   background-image: url("../../assets/bag.jpg");
 }
 .header {

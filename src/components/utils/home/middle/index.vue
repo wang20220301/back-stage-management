@@ -2,7 +2,7 @@
   <div class="middle">
     <Fan></Fan>
     <FanTwo></FanTwo>
-    <div class="fan2"></div>
+    <FanThree></FanThree>
   </div>
 </template>
 
@@ -10,11 +10,13 @@
 <script>
 import Fan from "./fan.vue";
 import FanTwo from "./fanTwo.vue"
+import FanThree from "./fanThree.vue"
 export default {
   name: "middleModule",
   components: {
     Fan,
     FanTwo,
+    FanThree
   },
 };
 </script>

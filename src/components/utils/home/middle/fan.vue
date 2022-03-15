@@ -69,6 +69,7 @@ export default {
   height: 329px;
   margin-right: 20px;
   background: #fff;
+  border-radius: 5px;
 }
 #fanImg {
   margin-left: 50px;

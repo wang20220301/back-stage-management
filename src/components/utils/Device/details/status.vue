@@ -68,6 +68,15 @@ export default {
       ],
     };
   },
+  created() {
+    // 遍历数组
+    // let detail = this.$store.state.b.data.detail;
+    let list = this.$store.state.b.data.detail;
+    let len = list.length;
+    for (var i = 0; i < len; i++) {
+     console.log(list[i].value)
+    }
+  },
 };
 </script>
 
@@ -84,6 +93,7 @@ export default {
   height: 25px;
 }
 .title {
+  padding-top: 10px;
   margin-left: 20px;
   font-size: 18px;
   font-style: normal;
@@ -92,7 +102,7 @@ export default {
   letter-spacing: 0px;
   text-align: left;
   margin-bottom: 20px;
-  color: #282D30;
+  color: #282d30;
 }
 .list {
   width: 536px;

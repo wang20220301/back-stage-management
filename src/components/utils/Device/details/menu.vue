@@ -8,20 +8,25 @@
           <el-input v-model="sizeForm.name"></el-input>
         </el-form-item>
         <el-form-item label="所属商户">
-          <el-select v-model="sizeForm.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+          <el-select v-model="sizeForm.region" placeholder="请选择所属商户">
+            <div v-for="(item, index) in user" :key="index">
+              <el-option :value="item.username"></el-option>
+            </div>
           </el-select>
         </el-form-item>
         <el-form-item label="地址">
-          <el-input v-model="sizeForm.name"></el-input>
+          <el-input v-model="sizeForm.address"></el-input>
         </el-form-item>
         <el-form-item label="经纬度">
-          <el-input v-model="sizeForm.name"></el-input>
+          <el-input v-model="sizeForm.long"></el-input>
         </el-form-item>
         <el-form-item size="large">
           <el-button>取消</el-button>
-          <el-button type="primary" @click="onSubmit">保存</el-button>
+          <el-button
+            type="primary"
+            @click="onSubmit(sizeForm.name, sizeForm.long)"
+            >保存</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -33,25 +38,19 @@ export default {
   name: "fromMmodul",
   data() {
     return {
-      sizeForm: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
-      },
+      sizeForm: "",
+      user: "",
     };
   },
   created() {
     // 获取vuex数据
-    console.log(this.$store.state.b.data);
+    this.$data.sizeForm = this.$store.state.b.data.detail;
+    this.$data.user = this.$store.state.b.data.merchant;
+    console.log(this.$data.user);
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
+    onSubmit(name, long) {
+      console.log(name, long);
     },
   },
 };
@@ -69,6 +68,7 @@ export default {
 }
 .menu .title {
   margin-left: 20px;
+  margin-top: 10px;
   /* font-family: Source Han Sans CN; */
   font-size: 18px;
   font-style: normal;

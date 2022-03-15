@@ -1,8 +1,9 @@
 <template>
   <div class="menu">
     <div class="choice">
-      <el-select v-model="value" placeholder="所有设备">
+      <el-select v-model="value" placeholder="所有设备" size="small">
         <el-option
+          
           v-for="item in options"
           :key="item.value"
           :label="item.label"
@@ -20,7 +21,7 @@
         ></el-input>
       </div>
       <div class="add">
-        <el-button type="success" size="small" autosize>搜索</el-button>
+        <el-button type="primary" size="small" autosize>搜索</el-button>
       </div>
     </div>
   </div>
@@ -54,7 +55,7 @@ export default {
         },
       ],
       value: "",
-      input:"",
+      input: "",
     };
   },
   methods: {
@@ -76,11 +77,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 20px;
+  margin-left: 22px;
 }
 .choice {
   width: 128px;
-  height: 38px;
+  height: 34px;
   margin-left: 24px;
+  text-align: center;
 }
 .right {
   display: flex;
@@ -93,5 +97,6 @@ export default {
   line-height: 36px;
   margin-left: 10px;
   margin-right: 30px;
+  /* color: #00BC55; */
 }
 </style>
