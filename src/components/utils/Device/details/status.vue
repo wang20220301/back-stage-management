@@ -5,77 +5,65 @@
     <div class="list">
       <div v-for="(item, index) in list" :key="index">
         <span>{{ item.key }}</span>
-        <span>{{ item.value }}</span>
+        <span :class="item.class">
+          {{ item.value }}
+          <img
+            :src="item.img == 1 ? img : img2"
+            alt=""
+            v-if="item.show"
+            @click="click(item.type, item.name, item.img)"
+          />
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { StatusMsg } from "./index.js";
+import openImg from "@/assets/open.png";
+import offImg from "@/assets/off.png";
+import { controData, } from "./index.js";
 export default {
   name: "statusModule",
   data() {
     return {
-      list: [
-        {
-          key: "室内温度",
-          value: "16.2°C",
-        },
-        {
-          key: "电量",
-          value: "94%",
-        },
-        {
-          key: "规格",
-          value: "64格",
-        },
-        {
-          key: "充电功率",
-          value: "0.0w",
-        },
-        {
-          key: "放电电流",
-          value: "0.00A",
-        },
-        {
-          key: "状态",
-          value: "离线",
-        },
-        {
-          key: "充电电流",
-          value: "0A",
-        },
-        {
-          key: "放电压",
-          value: "0.00v",
-        },
-        {
-          key: "灯状态",
-          value: "关闭",
-        },
-        {
-          key: "pv电压",
-          value: "0.00v",
-        },
-        {
-          key: "日发电量",
-          value: "0w/h",
-        },
-        {
-          key: "电源状态",
-          value: "开启",
-        },
-      ],
+      list: null,
+      img: openImg,
+      img2: offImg,
     };
   },
-  created() {
-    // 遍历数组
-    // let detail = this.$store.state.b.data.detail;
-    let list = this.$store.state.b.data.detail;
-    let len = list.length;
-    for (var i = 0; i < len; i++) {
-     console.log(list[i].value)
-    }
+  mounted() {
+    this.$data.list = StatusMsg();
+  },
+  methods: {
+    click(type, key, value) {
+      if (type == 1) {
+        let msg = this.$data.list[8];
+        if (value == 0) {
+          value = 1;
+          msg.img = 1;
+          this.$set(this.$data.list, 8, msg);
+        } else if (value == 1) {
+          value = 0;
+          msg.img = 0;
+          this.$set(this.$data.list, 8, msg);
+        }
+      } else {
+        let msg2 = this.$data.list[11];
+        if (value == 0) {
+          value = 1;
+          msg2.img = 1;
+          this.$set(this.$data.list, 11, msg2);
+        } else if (value == 1) {
+          value = 0;
+          msg2.img = 0;
+          this.$set(this.$data.list, 11, msg2);
+        }
+      }
+
+      controData(type, key, value);
+    },
   },
 };
 </script>
@@ -105,14 +93,14 @@ export default {
   color: #282d30;
 }
 .list {
-  width: 536px;
+  width: 640px;
   height: 146px;
   display: flex;
   flex-wrap: wrap;
   margin-left: 64px;
 }
 .list div {
-  width: 170px;
+  width: 190px;
   height: 21px;
   display: flex;
   justify-content: center;
@@ -132,5 +120,16 @@ export default {
 }
 .list div span:nth-child(1) {
   margin-right: 23px;
+}
+.highlight {
+  color: #fe0000 !important;
+}
+.highlight2 {
+  color: #109116 !important;
+}
+.list div:nth-child(9) span:nth-child(2),
+.list div:nth-child(12) span:nth-child(2) {
+  display: flex;
+  align-items: center;
 }
 </style>

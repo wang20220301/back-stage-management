@@ -1,6 +1,7 @@
 // <<<<<<< HEAD
 import router from "../../router/index";
 
+import {url} from "@/Api/http.js"
 
 
 import { baseLocalStorage } from "../../utils/index";
@@ -33,7 +34,7 @@ function RequestUrl(key) {
     key = Number(key)
     switch (key) {
         case 1: {
-            return "https://www.bi-et.com/api/login/index"
+            return `${url}/api/login/index`
 
         }
         case 2: {

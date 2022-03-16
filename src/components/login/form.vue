@@ -91,7 +91,7 @@ export default {
     submitForm(formName) {
       let username = this.$data.ruleForm.pass;
       let password = this.$data.ruleForm.checkPass;
-      console.log(this.$store)
+      console.log(this.$store);
       let { checked } = this.$store.state.a.data;
       // 验证账号密码是否都有值
       this.$refs[formName].validate((valid) => {
@@ -113,9 +113,9 @@ export default {
               // console.log(res.data.data.token)
               if (res.data.err_code == 1) {
                 // 设置cookie
-                baseCookie("username",username);
+                baseCookie("username", username);
                 // 设置cookie值
-                baseCookie("token",res.data.data.token)
+                baseCookie("token", res.data.data.token);
                 routers(this.value); //登录成功跳转到home页面
               } else {
                 //  open 该方法会弹出一个提示框

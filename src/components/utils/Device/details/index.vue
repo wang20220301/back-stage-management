@@ -19,9 +19,8 @@ import Title from "./title.vue";
 import Menu from "./menu.vue";
 import Status from "./status.vue";
 import Right from "./right.vue";
-// 工具方法
-import { post } from "@/Api/index";
-import { details } from "@/token/index";
+
+import { gitData } from "./index.js";
 export default {
   name: "detalisPage",
   components: {
@@ -30,14 +29,8 @@ export default {
     Status,
     Right,
   },
-  created() {
-    // 进入页面发送请求获取数据
-    post("https://www.bi-et.com/api/monitor/monitor_detail", details()).then(
-      (res) => {
-        // 通过vuex设置数据共享
-        this.$store.commit("b/AddMsg", res.data.data);
-      }
-    );
+  mounted() {
+    gitData();
   },
 };
 </script>

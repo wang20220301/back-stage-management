@@ -24,7 +24,7 @@
           <el-button>取消</el-button>
           <el-button
             type="primary"
-            @click="onSubmit(sizeForm.name, sizeForm.long)"
+            @click="onSubmit(sizeForm.name, sizeForm.long, sizeForm.address)"
             >保存</el-button
           >
         </el-form-item>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { msg, alterData } from "./index.js";
 export default {
   name: "fromMmodul",
   data() {
@@ -42,15 +43,16 @@ export default {
       user: "",
     };
   },
-  created() {
+  mounted() {
     // 获取vuex数据
-    this.$data.sizeForm = this.$store.state.b.data.detail;
-    this.$data.user = this.$store.state.b.data.merchant;
-    console.log(this.$data.user);
+    msg((data) => {
+      this.$data.sizeForm = data.detail;
+      this.$data.user = data.merchant;
+    });
   },
   methods: {
-    onSubmit(name, long) {
-      console.log(name, long);
+    onSubmit(name, long, address) {
+      alterData(name, long, address);
     },
   },
 };

@@ -52,6 +52,7 @@
 import { post } from "@/Api/index";
 import { query } from "@/token/index";
 import { baseCookie } from "@/utils/index";
+import {url} from "@/Api/http.js"
 export default {
   name: "tablePage",
   data() {
@@ -62,7 +63,7 @@ export default {
   },
   mounted() {
     // 创建完成发送请求
-    post("https://www.bi-et.com/api/monitor/sark_list", query()).then((res) => {
+    post(`${url}/api/monitor/sark_list`, query()).then((res) => {
       this.$data.tableData = res.data.data.list;
     });
   },

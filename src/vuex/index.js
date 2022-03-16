@@ -9,19 +9,30 @@ const moduleA = {
   state: {
     data: {
       checked: "",
-    }
+    },
+    count: 10
   },
   mutations: {
     alterObj(state, data) {
       state.data.checked = data
     },
+    increment(state) {
+      state.count++
+    }
   },
+  actions: {
+    increment({ commit }) {
+      setTimeout(() => {
+        commit('increment')
+      }, 100)
+    }
+  }
 }
 
 const moduleB = {
   namespaced: true,
   state: {
-    data: ""
+    data: null
   },
   mutations: {
     AddMsg(state, data) {

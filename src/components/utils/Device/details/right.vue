@@ -2,9 +2,14 @@
   <div class="right">
     <div class="blank"></div>
     <div class="title">柜子状态</div>
-    <div class="bigBox" @click="click">
-      <p v-for="(item, index) in arr" :key="index">
-        {{ item }}
+    <div class="bigBox">
+      <p
+        @click="open(item.class)"
+        v-for="(item, index) in arr"
+        :key="index"
+        :class="item.class"
+      >
+        {{ item.value }}
       </p>
     </div>
     <div class="state">
@@ -26,7 +31,7 @@
       </div>
     </div>
     <div class="blankStyle"></div>
-    <div class="footer">
+    <!-- <div class="footer">
       <div class="footer1">
         <p>柜子控制</p>
         <p>选中设备即可操作</p>
@@ -35,32 +40,85 @@
         <p>开门</p>
         <p>清货</p>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
+import { getBoxSize } from "./index.js";
 export default {
   name: "rightModule",
   data() {
     return {
-      arr: [],
+      arr: "",
       list: ["空闲", "有货", "未关门"],
     };
   },
-  beforeMount() {
-    this.$data.arr = new Array(64).fill(1);
+  created() {
+    getBoxSize((data) => {
+      this.$data.arr = data;
+      // console.log(data, "1111");
+    });
+    console.log(this.$data.arr, "1111");
   },
-
   methods: {
-    click() {
-      //   console.log(this.$data.arr);
+    click(item) {
+      getBoxSize((data) => {
+        this.$data.arr.box = data.box;
+        this.$set(this.$data.arr, 0, data.box);
+      });
+      // console.log(this.$data.arr.box, "1111");
+      console.log(item);
+    },
+    open(value) {
+      console.log(value == "have");
+      if (value === "have") {
+        this.$confirm("打开箱子", {
+          confirmButtonText: "确定",
+          cancelButtonText: "清货",
+          type: "warning",
+        })
+          .then(() => {
+            this.$message({
+              type: "success",
+              message: "成功打开!",
+            });
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "清货成功",
+            });
+          });
+      } else {
+        this.$confirm("打开箱子", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        })
+          .then(() => {
+            this.$message({
+              type: "success",
+              message: "成功打开!",
+            });
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "取消打开",
+            });
+          });
+      }
     },
   },
 };
 </script>
 
 <style scoped>
+.right {
+  width: 960px;
+  height: 615px;
+}
 .blank {
   clear: both;
   height: 25px;
@@ -79,7 +137,7 @@ export default {
 }
 .bigBox {
   width: 774px;
-  height: 331px;
+  height: 400px;
   margin-left: 75px;
   /* background: red; */
   display: flex;
@@ -88,35 +146,23 @@ export default {
 }
 .bigBox p {
   width: 88px;
-  height: 30px;
+  height: 38px;
   text-align: center;
+  line-height: 38px;
   margin: 0 auto;
   background: rgba(0, 0, 0, 0.12);
 }
-.bigBox p:nth-child(2) {
-  background: #00bc55;
+.have {
+  background: #00bc55 !important;
 }
-.bigBox p:nth-child(10) {
-  background: #00bc55;
-}
-.bigBox p:nth-child(20) {
-  background: #00bc55;
-}
-.bigBox p:nth-child(42) {
-  background: #00bc55;
-}
-.bigBox p:nth-child(63) {
-  background: #fba500;
-}
-.bigBox p:nth-child(25) {
-  background: #fba500;
+.door {
+  background: rgba(0, 0, 0, 0.5) !important;
 }
 .state {
   width: 764px;
   margin-top: 20px;
   margin-left: 75px;
   height: 21px;
-  /* background: #00bc55; */
   display: flex;
   justify-content: space-between;
 }
