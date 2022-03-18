@@ -1,44 +1,60 @@
 <template>
   <div class="fanthree">
-    <div class="text"><p>各类产品数量占比</p></div>
-    <div id="fanthree" style="width: 540px; height: 280px"></div>
+    <div class="fanthreeStye">
+      <div id="fanthree" style="width: 100%; height: 100%"></div>
+    </div>
   </div>
 </template>
 
 <script>
+import { VuexMsg } from "../homeApi.js";
 export default {
   name: "fanthreeModule",
   mounted() {
-    this.fanthree();
+    this.setData();
   },
   methods: {
-    fanthree() {
+    setData() {
+      VuexMsg((data) => {
+        let { monitor_type } = data;
+        //  遍历
+        for (let item of monitor_type) {
+          let value = item.num;
+          delete item.num;
+          item.value = value;
+        }
+        this.fanthree(monitor_type);
+      });
+    },
+    fanthree(monitor_type) {
       var chartDom = document.getElementById("fanthree");
       var myChart = this.$echarts.init(chartDom);
       var option;
       option = {
-        // legend: {
-        //   top: "bottom",
-        // },
-        toolbox: {
-          show: true,
+        title: {
+          text: "各类产品数量占比",
+          left: "center",
+        },
+        tooltip: {
+          trigger: "item",
+        },
+        legend: {
+          orient: "vertical",
+          left: "left",
         },
         series: [
           {
-            name: "Nightingale Chart",
+            name: "产品数量",
             type: "pie",
-            center: ["50%", "50%"],
-            itemStyle: {
-              borderRadius: 8,
+            radius: "50%",
+            data: monitor_type,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)",
+              },
             },
-            data: [
-              { value: 40, name: "零碳储物柜" },
-              { value: 38, name: "零碳智慧空间" },
-              { value: 32, name: "小铁-智慧电源" },
-              { value: 30, name: "深圳展柜" },
-              { value: 28, name: "增城测试柜" },
-              { value: 26, name: "丰巢-智能电源" },
-            ],
           },
         ],
       };
@@ -51,19 +67,14 @@ export default {
 
 <style scoped>
 .fanthree {
-  width: 540px;
+  width: 30%;
   height: 329px;
   background: #fff;
   border-radius: 5px;
 }
-.text {
-  margin-top: 10px;
-  width: 100%;
-  height: 32px;
-  /* background: honeydew; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.fanthreeStye {
+  padding: 30px;
+  height: 100%;
 }
 .text p {
   width: 112px;

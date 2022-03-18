@@ -1,4 +1,5 @@
 
+import router from "@/router/index.js";
 // base64加密并储存到localStorage
 function baseLocalStorage(name, value) {
     // let key = base64.fromByteArray(value);
@@ -24,7 +25,6 @@ function Md5(key) {
 
 // 设置cookie
 function baseCookie(name, key) {
-
     let base = Md5(key)
     document.cookie = `${name}= ${base}`;
 }
@@ -49,10 +49,19 @@ function getCookie(name) {
     }
     return null;
 }
+
+// 回到登录页面重新登录
+let backLoginPage = () => {
+    baseCookie("token", "");
+    console.log(router)
+    router.push("/");
+}
+// 清除cookie
 export {
     baseLocalStorage,
     localStorageValue,
     baseCookie,
     getCookie,
     cookieValue,
+    backLoginPage
 }

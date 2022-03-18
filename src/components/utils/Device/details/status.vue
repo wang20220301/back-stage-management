@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import { StatusMsg } from "./index.js";
+import { StatusMsg } from "./detailsApi.js";
 import openImg from "@/assets/open.png";
 import offImg from "@/assets/off.png";
-import { controData, } from "./index.js";
+import { controData, } from "./detailsApi.js";
 export default {
   name: "statusModule",
   data() {

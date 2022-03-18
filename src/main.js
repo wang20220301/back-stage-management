@@ -6,8 +6,9 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-
-let echarts =require("echarts")
+// 事件主线
+Vue.prototype.$bus = new Vue({});
+let echarts = require("echarts")
 Vue.prototype.$echarts = echarts
 
 Vue.use(VueAxios, axios)

@@ -81,13 +81,13 @@ export default {
 
 <style scoped>
 .sort {
-  width: 1880px;
   height: 65px;
   background: #fff;
   margin-top: 20px;
   display: flex;
   align-items: center;
-  margin-left: 22px;
+  margin-left: 20px;
+  margin-right: 20px;
   border-radius: 5px;
 }
 .sort-box {
@@ -122,5 +122,26 @@ export default {
   text-align: RIGHT;
    line-height: 14px;
    margin-right: 20px;
+}
+.electric {
+  height: 441px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  display: flex;
+  background: #ecf0f5;
+}
+.electrc1 {
+  width: 49.5%;
+  height: 441px;
+  margin-right: 20px;
+  background: #fff;
+  border-radius: 5px;
+}
+.electrc2 {
+  width: 49.5%;
+  height: 441px;
+  background: #fff;
+  border-radius: 5px;
 }
 </style>

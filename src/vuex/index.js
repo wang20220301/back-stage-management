@@ -10,22 +10,13 @@ const moduleA = {
     data: {
       checked: "",
     },
-    count: 10
   },
   mutations: {
     alterObj(state, data) {
       state.data.checked = data
     },
-    increment(state) {
-      state.count++
-    }
   },
   actions: {
-    increment({ commit }) {
-      setTimeout(() => {
-        commit('increment')
-      }, 100)
-    }
   }
 }
 
@@ -35,7 +26,30 @@ const moduleB = {
     data: null
   },
   mutations: {
-    AddMsg(state, data) {
+    AddData(state, data) {
+      state.data = data
+    },
+  },
+}
+const moduleC = {
+  namespaced: true,
+  state: {
+    data: null
+  },
+  mutations: {
+    AddData(state, data) {
+      state.data = data
+    },
+  },
+}
+
+const moduleD = {
+  namespaced: true,
+  state: {
+    data: null
+  },
+  mutations: {
+    AddData(state, data) {
       state.data = data
     },
   },
@@ -44,7 +58,9 @@ const moduleB = {
 const store = new Vuex.Store({
   modules: {
     a: moduleA,
-    b: moduleB
+    device: moduleB,
+    details: moduleC,
+    home:moduleD
   }
 })
 

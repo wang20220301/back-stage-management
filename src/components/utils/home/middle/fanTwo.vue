@@ -5,7 +5,12 @@
         <p>新增会员数量</p>
       </div>
       <div class="time">
-        <p v-for="(item, index) in list" :key="index">
+        <p
+          v-for="(item, index) in list"
+          :key="index"
+          @click="cutData(index)"
+          :class="cont == index ? `highlight` : ``"
+        >
           {{ item }}
         </p>
       </div>
@@ -15,52 +20,101 @@
 </template>
 
 <script>
+import { getAddVip } from "../homeApi.js";
 export default {
   name: "fanTwo",
   data() {
     return {
       list: ["今日", "本周", "本月", "全年"],
+      cont: 0,
     };
   },
   mounted() {
-    this.fanImga();
+    //  挂载完成获取数据
+    this.setData();
   },
   methods: {
-    fanImga() {
+    async setData() {
+      let { xData, yData } = await getAddVip("day_type", 1);
+      this.fanImga(xData, yData);
+    },
+    fanImga(xData, yData) {
       var chartDom = document.getElementById("fanImg2");
       var myChart = this.$echarts.init(chartDom);
       var option;
-
       option = {
+        title: {},
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+          },
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            saveAsImage: {},
+          },
+        },
         xAxis: {
           type: "category",
-          data: [
-            "1月",
-            "2月",
-            "3月",
-            "4月",
-            "5月",
-            "6月",
-            "7月",
-            "8月",
-            "9月",
-            "10月",
-            "11月",
-            "12月",
-          ],
+          boundaryGap: false,
+          data: xData,
         },
         yAxis: {
           type: "value",
+          axisLabel: {
+            formatter: "{value} ",
+          },
+          axisPointer: {
+            snap: true,
+          },
+        },
+        visualMap: {
+          show: false,
+          dimension: 0,
+          pieces: [
+            {
+              lte: 6,
+              color: "green",
+            },
+            {
+              gt: 6,
+              lte: 8,
+              color: "green",
+            },
+            {
+              gt: 8,
+              lte: 14,
+              color: "green",
+            },
+            {
+              gt: 14,
+              lte: 17,
+              color: "green",
+            },
+            {
+              gt: 17,
+              color: "green",
+            },
+          ],
         },
         series: [
           {
-            data: [25, 50, 75, 100, 125, 150, 175],
+            name: "新增会员",
             type: "line",
+            smooth: true,
+            data: yData,
           },
         ],
       };
 
       option && myChart.setOption(option);
+    },
+    async cutData(index) {
+      this.$data.cont = index;
+      let { xData, yData } = await getAddVip("day_type", index + 1);
+      this.fanImga(xData, yData);
     },
   },
 };
@@ -68,7 +122,7 @@ export default {
 
 <style scoped>
 .fanTwo {
-  width: 800px;
+  width: 40.5%;
   height: 329px;
   margin-right: 20px;
   background: #fff;
@@ -82,6 +136,11 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+/* 高亮 */
+.highlight {
+  background: #5196ff !important;
+  color: #fff !important;
+}
 .time {
   display: flex;
   margin-right: 30px;
@@ -92,8 +151,9 @@ export default {
   width: 44px;
   height: 28px;
   margin-right: 8px;
-  /* background: #; */
   text-align: center;
+  color: #74798c;
+  background: #f2f2f2;
 }
 .text {
   width: 100px;

@@ -1,15 +1,17 @@
 <template>
-  <div class="title">
+  <header class="title">
     <div class="da">设备管理</div>
     <div class="xiao">
       <span>设备管理></span>
       <span>柜子管理</span>
     </div>
-  </div>
+  </header>
 </template>
 
 <script>
+// import header from '../header.vue';
 export default {
+  // components: { header },
   name: "titleModule",
 };
 </script>

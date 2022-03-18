@@ -3,13 +3,13 @@
     <div class="electrc1">
       <div
         id="elect1"
-        style="width: 900px; height: 441px; margin-left: 10px"
+        style="width: 100%; height: 441px; margin-left: 10px"
       ></div>
     </div>
     <div class="electrc2">
       <div
         id="elect2"
-        style="width: 900px; height: 441px; margin-left: 10px"
+        style="width: 100%; height: 441px; margin-left: 10px"
       ></div>
     </div>
   </div>
@@ -190,23 +190,22 @@ export default {
 
 <style scoped>
 .electric {
-  width: 1880px;
   height: 441px;
-  /* background: red; */
   margin-top: 20px;
   margin-left: 20px;
+  margin-right: 20px;
   display: flex;
-  /* border-radius: 5px; */
+  background: #ecf0f5;
 }
 .electrc1 {
-  width: 930px;
+  width: 49.5%;
   height: 441px;
   margin-right: 20px;
   background: #fff;
   border-radius: 5px;
 }
 .electrc2 {
-  width: 930px;
+  width: 49.5%;
   height: 441px;
   background: #fff;
   border-radius: 5px;

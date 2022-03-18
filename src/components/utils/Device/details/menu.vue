@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { msg, alterData } from "./index.js";
+import { msg, alterData } from "./detailsApi.js";
 export default {
   name: "fromMmodul",
   data() {

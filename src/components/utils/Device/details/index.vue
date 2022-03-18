@@ -20,7 +20,7 @@ import Menu from "./menu.vue";
 import Status from "./status.vue";
 import Right from "./right.vue";
 
-import { gitData } from "./index.js";
+import { gitData } from "./detailsApi.js";
 export default {
   name: "detalisPage",
   components: {

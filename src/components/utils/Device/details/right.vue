@@ -4,7 +4,7 @@
     <div class="title">柜子状态</div>
     <div class="bigBox">
       <p
-        @click="open(item.class)"
+        @click="open(item.class, item.value)"
         v-for="(item, index) in arr"
         :key="index"
         :class="item.class"
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { getBoxSize } from "./index.js";
+import { getBoxSize, controData } from "./detailsApi.js";
 export default {
   name: "rightModule",
   data() {
@@ -57,34 +57,27 @@ export default {
   created() {
     getBoxSize((data) => {
       this.$data.arr = data;
-      // console.log(data, "1111");
     });
     console.log(this.$data.arr, "1111");
   },
   methods: {
-    click(item) {
-      getBoxSize((data) => {
-        this.$data.arr.box = data.box;
-        this.$set(this.$data.arr, 0, data.box);
-      });
-      // console.log(this.$data.arr.box, "1111");
-      console.log(item);
-    },
-    open(value) {
-      console.log(value == "have");
-      if (value === "have") {
+    open(style, value) {
+      console.log(style == "have");
+      if (style === "have") {
         this.$confirm("打开箱子", {
           confirmButtonText: "确定",
           cancelButtonText: "清货",
           type: "warning",
         })
           .then(() => {
+            controData(3, "position", value);
             this.$message({
               type: "success",
               message: "成功打开!",
             });
           })
           .catch(() => {
+            controData(4);
             this.$message({
               type: "info",
               message: "清货成功",
@@ -97,6 +90,7 @@ export default {
           type: "warning",
         })
           .then(() => {
+            controData(3, "position", value);
             this.$message({
               type: "success",
               message: "成功打开!",

@@ -3,13 +3,20 @@ import {
     cookieValue
 } from "../utils/index"
 
-// 查询设备数据
-let query = (page = 10) => {
+// 查询所有设备，或所有用户
+let query = (page = 1, page_num = 10) => {
     var param = new FormData();
     let tok = token()
     param.append("token", tok);
     param.append("page", page);
-    param.append("page_num", 20);
+    param.append("page_num", page_num);
+    return param
+}
+
+let queryHome = () => {
+    var param = new FormData()
+    let tok = token()
+    param.append("token", tok);
     return param
 }
 
@@ -31,7 +38,9 @@ let control = (type, key, value) => {
     param.append("token", tok);
     param.append("group_id", id);
     param.append("type", type);
-    param.append(key, value);
+    if (key != undefined) {
+        param.append(key, value);
+    }
     return param
 }
 
@@ -48,6 +57,24 @@ let alter = (name, shop_id, address) => {
     param.append("address", address);
     return param
 }
+
+// 查询单个设备,或用户或某日新增会员
+let queryOnce = (key, value) => {
+    let tok = token()
+    var param = new FormData()
+    param.append("token", tok);
+    param.append(key, value)
+    return param
+}
+
+let deleteDevice = (key, value) => {
+    let tok = token()
+    var param = new FormData()
+    param.append("token", tok);
+    param.append(key, value)
+    return param
+}
+
 function token() {
     return cookieValue("token")
 }
@@ -58,4 +85,7 @@ export {
     details,
     control,
     alter,
+    queryOnce,
+    deleteDevice,
+    queryHome,
 }

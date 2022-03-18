@@ -103,6 +103,7 @@ export default {
 <style scoped>
 .content {
   width: 100%;
+  height: 100%;
   background: #ecf0f5;
 }
 .box {
@@ -117,7 +118,7 @@ export default {
 }
 .right {
   width: 100%;
-  min-height: 1040px;
+  min-height: calc(100vh - 60px);
   background: #ecf0f5;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {

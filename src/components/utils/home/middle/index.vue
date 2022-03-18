@@ -25,7 +25,6 @@ export default {
 .middle {
   margin-top: 20px;
   margin-left: 20px;
-  width: 1880px;
   height: 329px;
   display: flex;
 }

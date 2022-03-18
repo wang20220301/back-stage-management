@@ -3,16 +3,13 @@ import store from "@/vuex/index"
 import { post } from "@/Api/index";
 import { url } from "@/Api/http.js"
 import { details, control, alter } from "@/token/index";
-// import { cosh } from "core-js/core/number";
-// import { cosh } from "core-js/core/number";
-// 进入页面获取所有数据
 
 let gitData = () => {
     // 进入页面发送请求获取数据
     post(`${url}/api/monitor/monitor_detail`, details()).then(
         (res) => {
             // 通过vuex设置数据共享
-            store.commit("b/AddMsg", res.data.data);
+            store.commit("details/AddData", res.data.data);
         }
     );
 }
@@ -21,7 +18,7 @@ let gitData = () => {
 // 获取通过计时器异步获取vuex里的数据
 let msg = (fun) => {
     let time = setTimeout(() => {
-        let data = store.state.b.data
+        let data = store.state.details.data
         console.log(data)
         if (data != null) {
             clearInterval(time);
@@ -125,7 +122,7 @@ let StatusMsg = () => {
     return list
 }
 
-//  数据修改Api
+//  数据修改 开灯或电源，打开门，或关闭门
 let controData = (type, key, value) => {
     let msg
     post(`${url}/api/monitor/control_monitor`, control(type, key, value)).then((res) => {
@@ -154,12 +151,12 @@ let getBoxSize = (fun) => {
             obj[key] = {}
             obj[key].value = arr[key]
         }
-        // 遍历存在货物的柜子
+        // 遍历存在货物的柜子，給每个柜子添加一个样式
         let leng = data.goods_position.length
         for (let i = 0; i < leng; i++) {
             obj[data.goods_position[i]].class = "have"
         }
-        //遍历未关门的柜子
+        //遍历未关门的柜子，給每个柜子添加一个样式
         let len = data.monitor_door.length
         for (let i = 0; i < len; i++) {
             obj[data.goods_position[i]].class = "have"

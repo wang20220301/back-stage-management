@@ -2,20 +2,20 @@
   <div class="user">
     <Title></Title>
     <Menu></Menu>
-    <Tabel></Tabel>
-    <Footer></Footer>
+    <!-- <Tabel></Tabel> -->
+    <!-- <Footer></Footer> -->
   </div>
 </template>
 <script>
-import Tabel from "./table.vue";
-import Footer from "./Footer.vue";
+// import Tabel from "./table.vue";
+// import Footer from "./Footer.vue";
 import Menu from "./menu.vue";
 import Title from "./title.vue";
 export default {
   name: "userPage",
   components: {
-    Tabel,
-    Footer,
+    // Tabel,
+    // Footer,
     Menu,
     Title,
   },
@@ -30,6 +30,6 @@ export default {
 .user {
   margin-top: 80px;
   margin-left: 200px;
-  width: 1880px;
+
 }
 </style>

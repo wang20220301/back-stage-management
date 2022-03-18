@@ -1,7 +1,7 @@
 // <<<<<<< HEAD
 import router from "../../router/index";
 
-import {url} from "@/Api/http.js"
+import { url } from "@/Api/http.js"
 
 
 import { baseLocalStorage } from "../../utils/index";
@@ -11,7 +11,7 @@ function routers(key) {
     key = Number(key)
     switch (key) {
         case 1: {
-            router.push("/superAdmin");
+            router.push("/superAdmin/home");
             break
         }
         case 2: {
@@ -38,14 +38,14 @@ function RequestUrl(key) {
 
         }
         case 2: {
-            return "https://www.bi-et.com/api/login/index"
+            return `${url}/api/login/index`
 
         }
         case 3: {
-            return "https://www.bi-et.com/api/login/index"
+            return `${url}/api/login/index`
         }
         case 4: {
-            return "https://www.bi-et.com/api/login/index"
+            return `${url}/api/login/index`
         }
     }
 }

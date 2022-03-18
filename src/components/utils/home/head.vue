@@ -4,7 +4,7 @@
       <div class="box1">
         <div class="box2">
           <p>故障报修</p>
-          <p>12</p>
+          <p>{{ data.fault_num }}</p>
         </div>
       </div>
     </div>
@@ -12,7 +12,7 @@
       <div class="box1">
         <div class="box2">
           <p>经销商申请</p>
-          <p>12</p>
+          <p>{{ data.apply_num }}</p>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
       <div class="box1">
         <div class="box2">
           <p>经销商认证</p>
-          <p>12</p>
+          <p>{{ data.attestation_num }}</p>
         </div>
       </div>
     </div>
@@ -28,16 +28,28 @@
 </template>
 
 <script>
+import { VuexMsg } from "./homeApi.js";
 export default {
   name: "headModule",
+  data() {
+    return {
+      data: "",
+    };
+  },
+  mounted() {
+    // 异步获取vuex数据
+    VuexMsg((data) => {
+      console.log(data);
+      this.$data.data = data;
+    });
+  },
 };
 </script>
 
 <style scoped>
 .head {
-  margin-top: 20px;
   margin-left: 20px;
-  width: 1880px;
+  margin-right: 20px;
   height: 100px;
   background: #ffffff;
   border-radius: 5px;
@@ -84,13 +96,4 @@ export default {
   line-height: 32px;
   margin: 0 auto;
 }
-/* .box div:nth-child(1){
-  background: honeydew;
-}
-.box div:nth-child(2){
-  background: lawngreen;
-}
-.box div:nth-child(3){
-  background: lavenderblush;
-} */
 </style>

@@ -110,10 +110,14 @@ export default {
             // 根据选项执行不同的请求路径
             let path = RequestUrl(this.value);
             post(path, param).then((res) => {
-              // console.log(res.data.data.token)
+              console.log(res.data);
               if (res.data.err_code == 1) {
-                // 设置cookie
+                // console.log(res.data.data.role_id,'12133')
+                let type = res.data.data.role_id;
+                // 储存用户名
                 baseCookie("username", username);
+                // 储存账号类型值
+                baseCookie("type", type);
                 // 设置cookie值
                 baseCookie("token", res.data.data.token);
                 routers(this.value); //登录成功跳转到home页面

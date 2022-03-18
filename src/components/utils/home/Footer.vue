@@ -119,21 +119,17 @@ export default {
 </script>
 <style>
 .foo {
-  width: 1840px;
-  /* background: red; */
   background: #fff;
   margin-left: 20px;
   margin-top: 20px;
+  margin-right: 20px;
   padding: 20px;
-  
 }
 .fooList {
-  width: 1840px;
   margin-left: 10px;
-  /* margin-top: 10px; */
+  margin-top: 10px;
 }
 .fooTitle {
-  width: 1840px;
   height: 40px;
   font-weight: 800;
   display: flex;
@@ -141,9 +137,9 @@ export default {
   margin-bottom: 20px;
   padding-top: 6px;
 }
-.fooTitle div p{
- margin-left: 20px;
- margin-right: 20px;
+.fooTitle div p {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .test {
   color: #08f !important;
