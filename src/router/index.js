@@ -19,8 +19,10 @@ import User from "../components/utils/user/inde.vue"
 import Device from "../components/utils/Device/index.vue"
 import Details from "../components/utils/Device/details/index.vue"
 import Home from "../components/utils/home/index.vue"
-// import { component } from 'vue/types/umd'
-// import { component } from 'vue/types/umd'
+// Device页面子路由
+import DeviceData from "@/components/utils/Device/popup/deData.vue"
+import DeviceMsg from '@/components/utils/Device/popup/deMsg.vue'
+import cupState from "@/components/utils/Device/popup/cupState"
 
 const routes = [{
   path: "",
@@ -32,8 +34,23 @@ const routes = [{
   // 配置子路由 子路由不能以/开头(/power)，以斜杆开头讲被视为根路由
   children: [
     {
-      path: "Device",
-      component: Device
+      path: "device",
+      component: Device,
+      children: [
+        {
+          path: "devicedata",
+          component: DeviceData
+        },
+        {
+          path: "deviceMsg",
+          component: DeviceMsg
+        },
+        {
+          path: "state",
+          component: cupState
+        }
+
+      ]
     },
     {
       path: "user",

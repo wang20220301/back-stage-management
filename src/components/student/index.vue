@@ -93,7 +93,7 @@
 
 <script>
 export default {
-  name:"studentPage",
+  name: "studentPage",
   data() {
     const item = {
       date: "2016-05-02",

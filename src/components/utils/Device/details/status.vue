@@ -23,7 +23,7 @@
 import { StatusMsg } from "./detailsApi.js";
 import openImg from "@/assets/open.png";
 import offImg from "@/assets/off.png";
-import { controData, } from "./detailsApi.js";
+import { controData } from "./detailsApi.js";
 export default {
   name: "statusModule",
   data() {

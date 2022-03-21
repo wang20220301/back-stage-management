@@ -60,7 +60,7 @@ const store = new Vuex.Store({
     a: moduleA,
     device: moduleB,
     details: moduleC,
-    home:moduleD
+    home: moduleD
   }
 })
 

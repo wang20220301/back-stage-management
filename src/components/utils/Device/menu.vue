@@ -1,5 +1,23 @@
 <template>
   <div>
+    <div class="shade" v-show="popupShow">
+      <aside :class="popup">
+        <div class="popupMenu">
+          <p
+            v-for="(item, index) in popupMenu"
+            :key="index"
+            @click="highClick(index)"
+            :class="index == high ? `popupMenuBottomHight` : ``"
+          >
+            {{ item }}
+          </p>
+          <div class="popupMenuIcon">
+            <i class="el-icon-close" @click="clickHidePopup"></i>
+          </div>
+        </div>
+        <router-view></router-view>
+      </aside>
+    </div>
     <menu class="menu">
       <div class="choice">
         <el-select v-model="value" placeholder="所有设备" size="small">
@@ -12,7 +30,7 @@
           </el-option>
         </el-select>
       </div>
-      <div class="right">
+      <div class="rightInput">
         <div class="input">
           <el-input
             v-model="input"
@@ -27,7 +45,7 @@
         </div>
       </div>
     </menu>
-    <menu class="tabel">
+    <article class="tabel">
       <el-table
         ref="multipleTable"
         :data="tableData"
@@ -60,8 +78,8 @@
         </el-table-column>
         <el-table-column prop="add_time" label="添加时间" width="">
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="100">
-          <template slot-scope="scope">
+        <el-table-column fixed="right" label="操作" width="160">
+          <!-- <template slot-scope="scope">
             <el-butto
               @click="handleClick(scope.row.group_id)"
               type="text"
@@ -70,10 +88,19 @@
               style="color: #1890ff"
               >查看详情</el-butto
             >
+          </template> -->
+          <template slot-scope="scope">
+            <el-button type="text" size="small">离线</el-button>
+            <el-button
+              @click="handleClick(scope.row.group_id)"
+              type="text"
+              size="small"
+              >查看详情</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
-    </menu>
+    </article>
 
     <footer class="footer">
       <div class="delete">
@@ -94,8 +121,10 @@
 </template>
 
 <script>
-import { gitData, searchUres, del } from "./deviceAPi";
+import { gitData, searchUres, del, setPopupStyle, routers } from "./deviceAPi";
 import { baseCookie } from "@/utils/index";
+// import { time } from 'echarts';
+
 export default {
   name: "footerModul",
   data() {
@@ -122,11 +151,15 @@ export default {
           label: "北京烤鸭",
         },
       ],
+      popupMenu: ["柜格状态", "设备信息", "设备数据"],
       value: "",
       input: "",
+      high: 0,
       tableData: [],
       multipleSelection: [],
       visible: false,
+      popup: "cupboardState",
+      popupShow: false,
     };
   },
   mounted() {
@@ -177,11 +210,25 @@ export default {
       console.info(this.multipleSelection);
     },
 
+    // 点击查看详情显示弹窗
     handleClick(id) {
       baseCookie("id", id);
       // 获取传过来的id储存到cookie里
-      // 点击跳转到查看详情页
-      this.$router.push("/superAdmin/detalis");
+      // 点击弹出弹窗
+      this.$data.popupShow = true;
+      this.$router.push("/superAdmin/device/state");
+    },
+    // 点击×隐藏弹窗
+    clickHidePopup() {
+      this.$data.popupShow = false;
+      this.$router.push("/superAdmin/device");
+    },
+    highClick(index) {
+      // 设置不同的弹窗样式
+      this.$data.high = index;
+      setPopupStyle(index, this.$data);
+      // 根据id显示不同的路由
+      routers(index);
     },
     open2() {
       this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
@@ -226,7 +273,7 @@ export default {
   margin-left: 24px;
   text-align: center;
 }
-.right {
+.rightInput {
   display: flex;
   height: 36px;
 }
@@ -240,7 +287,6 @@ export default {
 }
 .tabel {
   margin-top: 20px;
-  /* height: 700px; */
   margin-left: 22px;
   margin-right: 20px;
 }
@@ -286,7 +332,87 @@ export default {
 .delete {
   margin-left: 30px;
 }
-.right {
+/* .right {
   margin-right: 40px;
+} */
+/* 弹窗遮罩 */
+.shade {
+  width: calc(100vw - 200px);
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.4);
+  /* display: none; */
+}
+/* 柜格状态弹窗样式 */
+.cupboardState {
+  width: 860px;
+  height: 820px;
+  background: #ffffff;
+  border-radius: 8px;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+/* 设备信息弹窗样式 */
+.deData {
+  width: 860px;
+  height: 420px;
+  background: #ffffff;
+  border-radius: 8px;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: -200px;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+/* 设备数据弹窗样式 */
+.deMsg {
+  width: 1200px;
+  height: 950px;
+  background: #ffffff;
+  border-radius: 8px;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0px;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.popupMenu {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+.popupMenu p {
+  flex: 1;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #dcdfe6;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: LEFT;
+  color: #606266;
+}
+.popupMenuBottomHight {
+  border-bottom: 1px solid #409eff !important;
+  color: #409eff !important;
+  font-weight: 700 !important;
+}
+.popupMenuIcon {
+  float: right;
+  width: 20px;
+  height: 48px;
 }
 </style>

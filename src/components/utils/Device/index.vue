@@ -1,6 +1,6 @@
 <template>
   <div class="device">
-    <Title></Title>
+    <!-- <Title></Title> -->
     <Menu></Menu>
     <Tabel></Tabel>
     <!-- <Footer></Footer> -->
@@ -8,14 +8,10 @@
 </template>
 
 <script>
-import Title from "./title.vue";
 import Menu from "./menu.vue";
-// import Tabel from "./table.vue";
-// import Footer from "../user/Footer.vue";
 export default {
   name: "equipmentPage",
   components: {
-    Title,
     Menu,
   },
 };
@@ -25,5 +21,6 @@ export default {
 .device {
   margin-top: 80px;
   margin-left: 200px;
+  /* position: relative; */
 }
 </style>

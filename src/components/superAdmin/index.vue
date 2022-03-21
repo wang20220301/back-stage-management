@@ -71,7 +71,7 @@ export default {
           title: "设备管理",
           list: [
             {
-              path: "/superAdmin/Device",
+              path: "/superAdmin/device",
               name: "柜子管理",
             },
             {

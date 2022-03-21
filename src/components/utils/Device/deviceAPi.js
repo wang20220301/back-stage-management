@@ -3,6 +3,7 @@ import { post } from "@/Api/index";
 import { query, queryOnce, deleteDevice } from "@/token/index";
 import { url } from "@/Api/http.js";
 import { backLoginPage } from "@/utils/index.js"
+import router from "@/router/index.js"
 
 // 获取数据
 let gitData = async () => {
@@ -42,9 +43,41 @@ let del = async (value) => {
     }
 }
 
+// 设置弹窗样式
+
+let setPopupStyle = (index, data) => {
+    switch (index) {
+        case 0:
+            data.popup = "cupboardState";
+            break
+        case 1:
+            data.popup = "deData";
+            break
+        case 2:
+            data.popup = "deMsg"
+            break
+    }
+}
+
+// 路由跳转
+let routers = (index) => {
+    switch (index) {
+        case 0:
+            router.push("/superAdmin/device/state")
+            break
+        case 1:
+            router.push("/superAdmin/device/deviceMsg")
+            break
+        case 2:
+            router.push("/superAdmin/device/devicedata")
+            break
+    }
+}
 
 export {
     gitData,
     searchUres,
-    del
+    del,
+    setPopupStyle,
+    routers,
 }
