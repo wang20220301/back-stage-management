@@ -17,7 +17,7 @@ import Login from "../components/login/login.vue"
 // 子路由
 import User from "../components/utils/user/inde.vue"
 import Device from "../components/utils/Device/index.vue"
-import Details from "../components/utils/Device/details/index.vue"
+// import Details from "../components/utils/Device/details/index.vue"
 import Home from "../components/utils/home/index.vue"
 // Device页面子路由
 import DeviceData from "@/components/utils/Device/popup/deData.vue"
@@ -55,10 +55,6 @@ const routes = [{
     {
       path: "user",
       component: User
-    },
-    {
-      path: "detalis",
-      component: Details,
     },
     {
       path: "home",

@@ -9,9 +9,7 @@
 </template>
 
 <script>
-// import header from '../header.vue';
 export default {
-  // components: { header },
   name: "titleModule",
 };
 </script>

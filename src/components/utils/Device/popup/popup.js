@@ -2,7 +2,7 @@ import store from "@/vuex/index"
 // 工具方法
 import { post } from "@/Api/index";
 import { url } from "@/Api/http.js"
-import { details, control, alter } from "@/token/index";
+import { details, control, alter, queryAllDevilce } from "@/token/index";
 import { backLoginPage } from "@/utils/index.js"
 
 let gitData = () => {
@@ -14,7 +14,7 @@ let gitData = () => {
                 alert("登录已过期,请重新登录")
             } else {
                 // 通过vuex设置数据共享
-                store.commit("details/AddData", res.data.data);
+                store.commit("popup/AddData", res.data.data);
             }
 
         }
@@ -22,11 +22,10 @@ let gitData = () => {
 }
 
 
-// 获取通过计时器异步获取vuex里的数据
+// 获取通过计时器异步获取vuex里的data数据
 let msg = (fun) => {
     let time = setTimeout(() => {
-        let data = store.state.details.data
-        console.log(data)
+        let data = store.state.popup.data
         if (data != null) {
             clearInterval(time);
             fun(data)
@@ -117,26 +116,22 @@ let StatusMsg = () => {
         list[7].value = msg.drain_voltage + "V"
         list[8].img = msg.lamp
         if (list[8].name == 0) {
-            list[8].name = "关闭"
+            list[8].value = "关闭"
             list[8].class = 'highlight'
-            list[8].state = 0
         } else {
             list[8].value = "开启"
             list[8].class = "highlight2"
-            list[8].state = 1
         }
 
         list[9].value = msg.voltage + "V"
         list[10].value = msg.electric + "w/h"
         list[11].img = msg.wire
         if (list[11].name == 0) {
-            list[11].name = "关闭"
+            list[11].value = "关闭"
             list[11].class = 'highlight'
-            list[11].state = 0
         } else {
             list[11].value = "开启"
             list[11].class = "highlight2"
-            list[11].state = 1
         }
     });
     return list
@@ -146,20 +141,26 @@ let StatusMsg = () => {
 let controData = (type, key, value) => {
     let msg
     post(`${url}/api/monitor/control_monitor`, control(type, key, value)).then((res) => {
-        console.log(res)
+        if (res.data.err_code == -2) {
+            backLoginPage()
+            alert("登录已过期,请重新登录")
+        }
     })
     return msg
 }
 
 // 修改设备的名字id
-let alterData = (name, long, address) => {
-    post(`${url}/api/monitor/monitor_modify`, alter(name, long, address)).then((res) => {
-        console.log(res)
+let alterData = (name, long, address, shop_id, kind) => {
+    post(`${url}/api/monitor/monitor_modify`, alter(name, long, address, shop_id, kind)).then((res) => {
+        if (res.data.err_code == -2) {
+            backLoginPage()
+            alert("登录已过期,请重新登录")
+        }
         // 修改成功刷新数据
         // gitData()
     })
 }
-// 获取格子数量,以及是否有物品
+// 获取弹窗的格子数量,以及是否有物品,給格子添加不同的class,已区分
 let getBoxSize = (fun) => {
     let obj = {}
     msg((data) => {
@@ -185,11 +186,39 @@ let getBoxSize = (fun) => {
     })
 }
 
+// // 获取弹窗的设备数据
+let getFacilityData = () => {
+    post(`${url}/api/index/monitor_switch`, queryAllDevilce()).then((res) => {
+        if (res.data.err_code == -2) {
+            backLoginPage()
+            alert("登录已过期,请重新登录")
+        } else {
+            // 通过vuex设置数据共享,数据分发
+            store.commit("popup/AddDetailsMsg", res.data.data);
+        }
+
+    })
+}
+
+// 获取vuex里存的详细的设备数据
+let msg2 = (fun) => {
+    let time = setTimeout(() => {
+    let data = store.state.popup.detailsMsg
+        if (data != null) {
+            clearInterval(time);
+            fun(data)
+        }
+    }, 100)
+
+}
+
 export {
     msg,
     StatusMsg,
     gitData,
     controData,
     alterData,
-    getBoxSize
+    getBoxSize,
+    getFacilityData,
+    msg2,
 }

@@ -29,7 +29,6 @@ let searchUres = async (key, value) => {
 }
 
 // 删除设备
-
 let del = async (value) => {
     // 处理选中的值
     // 遍历数组
@@ -44,7 +43,6 @@ let del = async (value) => {
 }
 
 // 设置弹窗样式
-
 let setPopupStyle = (index, data) => {
     switch (index) {
         case 0:

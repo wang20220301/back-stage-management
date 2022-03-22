@@ -30,11 +30,19 @@
     </p>
     <div class="lamp">
       <span> 灯状态:</span>
-      <img :src="lamp == 1 ? img : img2" alt="" @click="lampStateCut()" />
+      <img
+        :src="list[8].value == `开启` ? img : img2"
+        alt=""
+        @click="lampStateCut()"
+      />
     </div>
     <div class="power">
       <span> 电源控制：</span>
-      <img :src="power == 1 ? img : img2" alt="" @click="powerStateCut()" />
+      <img
+        :src="list[11].value == `开启` ? img : img2"
+        alt=""
+        @click="powerStateCut()"
+      />
     </div>
     <div class="status">
       <div class="list">
@@ -49,8 +57,8 @@
   </div>
 </template>
 <script>
-import { getBoxSize, controData, gitData } from "./detailsApi.js";
-import { StatusMsg } from "./detailsApi.js";
+import { getBoxSize, controData, gitData } from "./popup.js";
+import { StatusMsg } from "./popup.js";
 import openImg from "@/assets/open.png";
 import offImg from "@/assets/off.png";
 export default {
@@ -62,8 +70,6 @@ export default {
       list: null,
       img: openImg,
       img2: offImg,
-      lamp: null,
-      power: null,
     };
   },
   created() {
@@ -71,16 +77,12 @@ export default {
     getBoxSize((data) => {
       this.$data.msg = data;
     });
-    this.setState()
+    this.setState();
   },
   methods: {
     setState() {
       // 获取当前状态数据
-      let list = StatusMsg();
-      this.$data.list = list;
-      // 设置当前的状态数据
-      this.$data.lamp = list[8].state;
-      this.$data.power = list[11].state;
+      this.$data.list = StatusMsg();
     },
     open(style, value) {
       console.log(style == "have");
@@ -126,17 +128,31 @@ export default {
       }
     },
     lampStateCut() {
-      if (this.$data.lamp == 1) {
-        this.$data.lamp = 0;
+      let list = this.$data.list[8];
+      if (list.value == "开启") {
+        list.value = "关闭";
+        list.class = "highlight2";
+        controData(1, "lamp", 0);
+        this.$set(this.$data.list, 8, list);
       } else {
-        this.$data.lamp = 1;
+        list.value = "开启";
+        list.class = "highlight";
+        controData(1, "lamp", 1);
+        this.$set(this.$data.list, 8, list);
       }
     },
     powerStateCut() {
-      if (this.$data.power == 1) {
-        this.$data.power = 0;
+      let list = this.$data.list[11];
+      if (list.value == "开启") {
+        list.value = "关闭";
+        list.class = "highlight2";
+        controData(2, "wire", 0);
+        this.$set(this.$data.list, 11, list);
       } else {
-        this.$data.power = 1;
+        list.value = "开启";
+        list.class = "highlight";
+        controData(2, "wire", 1);
+        this.$set(this.$data.list, 11, list);
       }
     },
   },
@@ -324,7 +340,6 @@ export default {
   padding-right: 20px;
 }
 .explain {
-  /* width: 533px; */
   height: 18px;
   font-size: 12px;
   font-weight: 400;

@@ -2,13 +2,10 @@
   <div class="user">
     <Title></Title>
     <Menu></Menu>
-    <!-- <Tabel></Tabel> -->
-    <!-- <Footer></Footer> -->
+   
   </div>
 </template>
 <script>
-// import Tabel from "./table.vue";
-// import Footer from "./Footer.vue";
 import Menu from "./menu.vue";
 import Title from "./title.vue";
 export default {
@@ -30,6 +27,5 @@ export default {
 .user {
   margin-top: 80px;
   margin-left: 200px;
-
 }
 </style>

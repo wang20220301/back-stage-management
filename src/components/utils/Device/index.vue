@@ -1,9 +1,7 @@
 <template>
   <div class="device">
-    <!-- <Title></Title> -->
     <Menu></Menu>
     <Tabel></Tabel>
-    <!-- <Footer></Footer> -->
   </div>
 </template>
 
@@ -21,6 +19,5 @@ export default {
 .device {
   margin-top: 80px;
   margin-left: 200px;
-  /* position: relative; */
 }
 </style>

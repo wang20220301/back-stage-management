@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="shade" v-show="popupShow">
-      <aside :class="popup">
+      <aside :class="[popup, popupStyle]">
         <div class="popupMenu">
           <p
             v-for="(item, index) in popupMenu"
@@ -123,7 +123,6 @@
 <script>
 import { gitData, searchUres, del, setPopupStyle, routers } from "./deviceAPi";
 import { baseCookie } from "@/utils/index";
-// import { time } from 'echarts';
 
 export default {
   name: "footerModul",
@@ -160,6 +159,7 @@ export default {
       visible: false,
       popup: "cupboardState",
       popupShow: false,
+      popupStyle: "popupStyle",
     };
   },
   mounted() {
@@ -201,13 +201,11 @@ export default {
     },
     //保存选中结果
     handleSelectionChange(val) {
-      console.info(val);
       this.multipleSelection = val;
     },
     //获取选中结果
     getSelected() {
       this.open2();
-      console.info(this.multipleSelection);
     },
 
     // 点击查看详情显示弹窗
@@ -215,8 +213,8 @@ export default {
       baseCookie("id", id);
       // 获取传过来的id储存到cookie里
       // 点击弹出弹窗
-      this.$data.popupShow = true;
       this.$router.push("/superAdmin/device/state");
+      this.$data.popupShow = true;
     },
     // 点击×隐藏弹窗
     clickHidePopup() {
@@ -332,9 +330,7 @@ export default {
 .delete {
   margin-left: 30px;
 }
-/* .right {
-  margin-right: 40px;
-} */
+
 /* 弹窗遮罩 */
 .shade {
   width: calc(100vw - 200px);
@@ -345,47 +341,34 @@ export default {
   background: rgba(0, 0, 0, 0.4);
   /* display: none; */
 }
-/* 柜格状态弹窗样式 */
-.cupboardState {
-  width: 860px;
-  height: 820px;
+/* 弹窗共用样式 */
+.popupStyle {
   background: #ffffff;
   border-radius: 8px;
   position: absolute;
   z-index: 10;
   left: 0;
-  top: 0;
   right: 0;
   bottom: 0;
   margin: auto;
+}
+/* 柜格状态弹窗样式 */
+.cupboardState {
+  width: 860px;
+  height: 820px;
+  top: 0;
 }
 /* 设备信息弹窗样式 */
 .deData {
   width: 860px;
   height: 420px;
-  background: #ffffff;
-  border-radius: 8px;
-  position: absolute;
-  z-index: 10;
-  left: 0;
   top: -200px;
-  right: 0;
-  bottom: 0;
-  margin: auto;
 }
 /* 设备数据弹窗样式 */
 .deMsg {
-  width: 1200px;
-  height: 950px;
-  background: #ffffff;
-  border-radius: 8px;
-  position: absolute;
-  z-index: 10;
-  left: 0;
-  top: 0px;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+  width: 1300px;
+  height: 1000px;
+  top: 47px;
 }
 
 .popupMenu {

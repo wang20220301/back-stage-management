@@ -34,12 +34,16 @@ const moduleB = {
 const moduleC = {
   namespaced: true,
   state: {
-    data: null
+    data: null,
+    detailsMsg: null
   },
   mutations: {
     AddData(state, data) {
       state.data = data
     },
+    AddDetailsMsg(state, data) {
+      state.detailsMsg=data
+    }
   },
 }
 
@@ -59,7 +63,7 @@ const store = new Vuex.Store({
   modules: {
     a: moduleA,
     device: moduleB,
-    details: moduleC,
+    popup: moduleC,
     home: moduleD
   }
 })

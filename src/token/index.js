@@ -46,15 +46,17 @@ let control = (type, key, value) => {
 
 //  修改设备名字和地址
 
-let alter = (name, shop_id, address) => {
+let alter = (name, long, address, shop_id, kind,) => {
     let id = cookieValue("id")
     let tok = token()
     var param = new FormData()
     param.append("token", tok);
     param.append("group_id", id);
+    param.append("long", long);
     param.append("name", name);
     param.append("shop_id", shop_id);
-    param.append("address", address);
+    param.append("address", address)
+    param.append("kind", kind)
     return param
 }
 
@@ -74,7 +76,15 @@ let deleteDevice = (key, value) => {
     param.append(key, value)
     return param
 }
+let queryAllDevilce = () => {
+    let tok = token()
+    let id = cookieValue("id")
+    var param = new FormData()
+    param.append("token", tok);
+    param.append("group_id", id);
+    return param
 
+}
 function token() {
     return cookieValue("token")
 }
@@ -88,4 +98,5 @@ export {
     queryOnce,
     deleteDevice,
     queryHome,
+    queryAllDevilce
 }
