@@ -2,7 +2,7 @@
   <div class="con">
     <Head></Head>
     <Middle></Middle>
-    <Menu></Menu>
+    <!-- <Menu></Menu> -->
     <!-- <Footer></Footer> -->
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script>
 import Head from "./head.vue";
 import Middle from "./middle/index.vue";
-import Menu from "./menu.vue";
+// import Menu from "./menu.vue";
 import { gitData } from "./homeApi.js";
 // import Footer from './Footer.vue';
 export default {
@@ -18,7 +18,7 @@ export default {
   components: {
     Head,
     Middle,
-    Menu,
+    // Menu,
     // Footer,
   },
   mounted() {

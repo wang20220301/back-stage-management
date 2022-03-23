@@ -85,6 +85,29 @@ let queryAllDevilce = () => {
     return param
 
 }
+// 获取某个设备指定区间的数据，
+let getDate = (day_start, day_end) => {
+    let tok = token()
+    let id = cookieValue("id")
+    var param = new FormData()
+    param.append("token", tok);
+    param.append("group_id", id);
+    param.append("day_start", day_start)
+    param.append("day_end", day_end)
+    return param
+}
+//  获取某个设备的某个小时的数据
+let getHourDate = (day, hour) => {
+    let tok = token()
+    let id = cookieValue("id")
+    var param = new FormData()
+    param.append("token", tok);
+    param.append("group_id", id);
+    param.append("hour", hour)
+    param.append("day", day)
+    return param
+}
+
 function token() {
     return cookieValue("token")
 }
@@ -98,5 +121,7 @@ export {
     queryOnce,
     deleteDevice,
     queryHome,
-    queryAllDevilce
+    queryAllDevilce,
+    getDate,
+    getHourDate
 }

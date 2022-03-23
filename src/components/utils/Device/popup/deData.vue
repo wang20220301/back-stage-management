@@ -16,9 +16,12 @@
           <el-date-picker
             v-model="value1"
             type="daterange"
+            size="mini"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            value-format="yyyy-MM-dd"
+            @change="getDateRequest"
           >
           </el-date-picker>
         </div>
@@ -38,7 +41,7 @@
 
 <script>
 import Footer from "./deMsgFooter.vue";
-import { getFacilityData, msg2 } from "./popup.js";
+import { getFacilityData, msg2, getDateSection } from "./popup.js";
 export default {
   name: "deviceData",
   components: {
@@ -224,6 +227,25 @@ export default {
       };
 
       option && myChart.setOption(option);
+    },
+
+    //  当选择了日期点击确认即发送请求
+    async getDateRequest() {
+      // 获取请求数据渲染页面
+      console.log(this.$data.value1);
+      let msg = await getDateSection(
+        this.$data.value1[0],
+        this.$data.value1[1]
+      );
+      // // 设备实时电量百分比
+      let dataX = msg.data.data.battery.y;
+      let datay = msg.data.data.battery.data;
+      this.elect1(dataX, datay);
+      // // 设备充电功率
+      let dataX2 = msg.data.data.power.y;
+      let datay2 = msg.data.data.power.data;
+      this.elect2(dataX2, datay2);
+      console.log(msg.data.data);
     },
   },
 };

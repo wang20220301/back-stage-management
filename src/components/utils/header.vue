@@ -17,10 +17,6 @@
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="1">退出登录</el-dropdown-item>
-              <!-- <el-dropdown-item>狮子头</el-dropdown-item>
-              <el-dropdown-item>螺蛳粉</el-dropdown-item>
-              <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-              <el-dropdown-item divided>蚵仔煎</el-dropdown-item> -->
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -33,7 +29,7 @@
   </div>
 </template>
 <script>
-import log from "../../assets/log5.png";
+import log from "../../assets/log.jpg";
 import { cookieValue, backLoginPage } from "@/utils/index.js";
 export default {
   name: "homePage",
@@ -60,6 +56,8 @@ export default {
         break;
       default:
     }
+    // 页面更新执行
+    console.log("页面更新执行","123")
   },
   methods: {
     handleCommand(command) {
@@ -81,8 +79,9 @@ export default {
 .log {
   width: 200px;
   height: 60px;
-  background-color: #545c64;
+  background-color: #fff;
   display: flex;
+  margin-right: 1px;
 }
 .log img {
   width: 158.13px;

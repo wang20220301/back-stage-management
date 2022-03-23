@@ -17,13 +17,12 @@ import Login from "../components/login/login.vue"
 // 子路由
 import User from "../components/utils/user/inde.vue"
 import Device from "../components/utils/Device/index.vue"
-// import Details from "../components/utils/Device/details/index.vue"
 import Home from "../components/utils/home/index.vue"
+import Dealer from "../components/utils/dealer/inde.vue"
 // Device页面子路由
 import DeviceData from "@/components/utils/Device/popup/deData.vue"
 import DeviceMsg from '@/components/utils/Device/popup/deMsg.vue'
 import cupState from "@/components/utils/Device/popup/cupState"
-
 const routes = [{
   path: "",
   component: Login,
@@ -59,7 +58,12 @@ const routes = [{
     {
       path: "home",
       component: Home
-    }
+    },
+    {
+      path: "dealer",
+      component:Dealer
+    },
+
   ]
 },
 {

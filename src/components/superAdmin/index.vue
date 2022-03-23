@@ -8,8 +8,8 @@
           class="el-menu-vertical-demo"
           @open="handleOpen"
           @close="handleClose"
-          background-color="#545c64"
-          text-color="#fff"
+          background-color="#FFFFFF"
+          text-color="#606266"
           active-text-color="#5196FF"
           router
           unique-opened
@@ -63,6 +63,10 @@ export default {
         {
           title: "用户管理",
           path: "/superAdmin/user",
+        },
+        {
+          title: "经销商管理",
+          path: "/superAdmin/dealer",
         },
       ],
       menu: [

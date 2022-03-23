@@ -2,7 +2,7 @@ import store from "@/vuex/index"
 // 工具方法
 import { post } from "@/Api/index";
 import { url } from "@/Api/http.js"
-import { details, control, alter, queryAllDevilce } from "@/token/index";
+import { details, control, alter, queryAllDevilce, getDate, getHourDate } from "@/token/index";
 import { backLoginPage } from "@/utils/index.js"
 
 let gitData = () => {
@@ -203,15 +203,36 @@ let getFacilityData = () => {
 // 获取vuex里存的详细的设备数据
 let msg2 = (fun) => {
     let time = setTimeout(() => {
-    let data = store.state.popup.detailsMsg
+        let data = store.state.popup.detailsMsg
         if (data != null) {
             clearInterval(time);
             fun(data)
         }
-    }, 100)
+    }, 300)
 
 }
-
+// 获取指定设备的指定日期区间数据
+// day_start 开始日期
+// day_end 结束日期
+let getDateSection = async (day_start, day_end) => {
+    let res = await post(`${url}/api/index/day_switch`, getDate(day_start, day_end))
+    if (res.data.err_code == -2) {
+        backLoginPage()
+        alert("登录已过期,请重新登录")
+    } else {
+        return res
+    }
+}
+// 获取某个设备某天某个小时的数据
+let getHour = async (day, hour) => {
+    let res = await post(`${url}/api/index/hour_switch`, getHourDate(day, hour))
+    if (res.data.err_code == -2) {
+        backLoginPage()
+        alert("登录已过期,请重新登录")
+    } else {
+        return res.data.data
+    }
+}
 export {
     msg,
     StatusMsg,
@@ -221,4 +242,6 @@ export {
     getBoxSize,
     getFacilityData,
     msg2,
+    getDateSection,
+    getHour
 }

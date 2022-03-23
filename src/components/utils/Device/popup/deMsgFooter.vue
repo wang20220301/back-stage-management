@@ -10,7 +10,8 @@
               type="datetime"
               size="mini"
               placeholder="选择日期时间"
-              default-time="12:00:00"
+              value-format="yyyy-MM-dd,H"
+              @change="getHousData"
             >
             </el-date-picker>
           </div>
@@ -60,67 +61,22 @@
 
 
 <script>
-import { msg2 } from "./popup.js";
+import { msg2, getHour } from "./popup.js";
 export default {
   name: "footerModelue",
   mounted() {
     // 页面更新获取数据
     msg2((data) => {
-      this.$data.tableData = data.monitor_data;
-      console.log(data.monitor_data);
+      if (data.monitor_data == false) {
+        this.$data.tableData = [];
+      } else {
+        this.$data.tableData = data.monitor_data;
+      }
     });
   },
   data() {
     return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区",
-        },
-      ],
-      value1: "",
-      value2: "",
+      tableData: [],
       value3: "",
     };
   },
@@ -130,6 +86,17 @@ export default {
     },
     handrowclass: function () {
       return "text";
+    },
+    async getHousData() {
+      let string = this.$data.value3;
+      //  转为数组
+      let arr = string.split(",");
+      let msg = await getHour(arr[0], arr[1]);
+      if (msg.monitor_data == false) {
+        this.$data.tableData = [];
+      } else {
+        this.$data.tableData = msg.monitor_data;
+      }
     },
   },
 };

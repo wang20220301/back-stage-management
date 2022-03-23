@@ -1,11 +1,5 @@
 <template>
   <div>
-    <div class="shade" v-show="show" @on-sonmsg="sonmsg">
-      <add-user></add-user>
-    </div>
-    <div class="shade" v-show="updataShow">
-      <up-data></up-data>
-    </div>
     <nav class="header">
       <div class="right">
         <div class="input">
@@ -19,12 +13,54 @@
         </div>
         <div class="add">
           <el-button
-            @click="clickPopupAddUser"
+            @click="dialogFormVisible = true"
             type="primary"
             size="small"
             autosize
             >添加用户</el-button
           >
+          <el-dialog
+            title="添加用户"
+            :visible.sync="dialogFormVisible"
+            width="25%"
+          >
+            <el-form :model="form">
+              <el-form-item label="选择分组" :label-width="formLabelWidth">
+                <el-select v-model="form.region" placeholder="请选择分组">
+                  <el-option value="管理员"></el-option>
+                  <el-option value="经销商"></el-option>
+                  <el-option value="普通用户"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="用户名" :label-width="formLabelWidth">
+                <el-input v-model="form.name" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="密码" :label-width="formLabelWidth">
+                <el-input v-model="form.password" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="确认密码" :label-width="formLabelWidth">
+                <el-input
+                  v-model="form.confirmPassWord"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="邮箱" :label-width="formLabelWidth">
+                <el-input v-model="form.email" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="手机号" :label-width="formLabelWidth">
+                <el-input
+                  v-model="form.phoneNumber"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="clickAddUserName"
+                >确 定</el-button
+              >
+            </div>
+          </el-dialog>
         </div>
       </div>
     </nav>
@@ -52,9 +88,8 @@
         <el-table-column prop="create_time" label="注册时间"> </el-table-column>
         <el-table-column prop="role_id" label="角色信息"> </el-table-column>
         <el-table-column prop="last_area" label="地址"> </el-table-column>
-        <el-table-column fixed="right" label="操作" width="150">
+        <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
-            <el-button type="text" size="small">锁定</el-button>
             <el-button @click="clickTrue(scope.row)" type="text" size="small"
               >查看/更新</el-button
             >
@@ -64,12 +99,7 @@
     </section>
     <footer class="hah">
       <div class="delete">
-        <el-button
-          type="danger"
-          slot="reference"
-          size="small"
-          @click="getSelected"
-        >
+        <el-button type="danger" slot="reference" size="small">
           <i class="el-icon-delete-solid"></i>
           删除选中</el-button
         >
@@ -79,27 +109,79 @@
         </el-pagination>
       </div>
     </footer>
+    <el-dialog title="添加用户" :visible.sync="dialogFormVisible2" width="25%">
+      <el-form :model="form2">
+        <el-form-item label="选择分组" :label-width="formLabelWidth">
+          <el-select v-model="form.region" placeholder="请选择分组">
+            <el-option value="管理员"></el-option>
+            <el-option value="经销商"></el-option>
+            <el-option value="普通用户"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="用户名" :label-width="formLabelWidth">
+          <el-input v-model="form.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" :label-width="formLabelWidth">
+          <el-input v-model="form.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" :label-width="formLabelWidth">
+          <el-input
+            v-model="form.confirmPassWord"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" :label-width="formLabelWidth">
+          <el-input v-model="form.email" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号" :label-width="formLabelWidth">
+          <el-input v-model="form.phoneNumber" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible2 = false">取 消</el-button>
+        <el-button type="primary" @click="clickFase">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
 import { gitData, del, searchUres } from "./userApi";
-import AddUser from "./addUser.vue";
-import UpData from "./upData.vue"
 export default {
   name: "menuModule",
-  components: {
-    AddUser,
-    UpData,
-  },
   data() {
     return {
       input: "",
       activeName: "",
       tableData: [],
       multipleSelection: [],
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      dialogTableVisible2: false,
+      dialogFormVisible2: false,
+      form: {
+        name: "",
+        region: "",
+        email: "",
+        phoneNumber: "",
+        delivery: false,
+        type: [],
+        desc: "",
+      },
+      form2: {
+        name: "",
+        password: "",
+        confirmPassWord: "",
+        region: "",
+        email: "",
+        phoneNumber: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: "",
+      },
       formLabelWidth: "120px",
-      show: false,
-      updataShow: false,
     };
   },
   mounted() {
@@ -128,7 +210,7 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    //获取选中结果，点击确定删除选中数据，点击取消不操作
+    //获取选中结果
     getSelected() {
       this.open2();
     },
@@ -136,7 +218,7 @@ export default {
       console.log(row);
     },
     open2() {
-      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示admin无法删除", {
+      this.$confirm("此操作将永久删除选中数据, 是否继续?", "提示admin无法删除", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -171,22 +253,12 @@ export default {
       this.$data.dialogFormVisible = false;
       console.log(this.$data.form, "12");
     },
-    // 点击查看更新显示弹窗
     clickTrue(value) {
-      this.$data.updataShow = true;
       console.log(value);
+      this.$data.dialogFormVisible2 = true;
     },
     clickFase() {
       this.$data.dialogFormVisible2 = false;
-    },
-    // 控制弹窗显示
-    clickPopupAddUser() {
-      this.$data.show = true;
-    },
-    // 父组件接收子组件传过来的参数
-    sonmsg(bool) {
-      console.log("接收到");
-      this.$data.show = bool;
     },
     open3() {
       this.$confirm("输入的两次密码不同", "提示", {
@@ -276,16 +348,6 @@ export default {
   border-radius: 2px;
   color: #ef2323;
   text-align: center;
-}
-.shade {
-  width: calc(100vw - 200px);
-  height: 100%;
-  position: absolute;
-  top: 0px;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.4);
-  /* 设置弹性盒模型 */
-  display: flex;
 }
 </style>
 
