@@ -1,11 +1,11 @@
 import { post } from "@/Api/index";
-import { query, queryOnce, deleteDevice } from "@/token/index";
+import { query, queryOnce, deleteDevice, queryHome, addMer, alertMer2 } from "@/token/index";
 import { url } from "@/Api/http.js";
 import { backLoginPage } from "@/utils/index.js"
 
 // 获取数据
 let gitData = async () => {
-    let data = await post(`${url}/api/members/get_member_list`, query())
+    let data = await post(`${url}/api/members/get_user_list`, query())
     // 遍历数组
     if (data.data.err_code == -2) {
         alert("登录已过期,请重新登录")
@@ -19,28 +19,28 @@ let gitData = async () => {
                 item.is_status = "正常"
                 item.class = "normal "
             } else {
-                item.is_status = "锁定"
+                item.is_status = "封禁"
                 item.class = "offNormal "
             }
-            // 判断是经销商还是管理员
+
             let id = item.role_id * 1
             switch (id) {
                 case 1:
-                    item.role_id = "超级管理员"
+                    item.role_name = "超级管理员"
                     break;
                 case 5:
-                    item.role_id = "经销商"
+                    item.role_name = "经销商"
                     break;
                 case 7:
-                    item.role_id = "运营商"
+                    item.role_name = "运营商"
                     break
-                case 4:
-                    item.role_id = "大客户"
+                case 8:
+                    item.role_name = "大客户"
                     break
                 default:
             }
         }
-        console.log(data.data.data.list)
+        console.log(data.data.data.list,"用户信息")
         return data.data.data.list
     }
 
@@ -74,7 +74,7 @@ let searchUres = async (key, value) => {
                 case 7:
                     item.role_id = "运营商"
                     break
-                case 4:
+                case 8:
                     item.role_id = "大客户"
                     break
                 default:
@@ -99,9 +99,44 @@ let del = async (value) => {
     }
 }
 
+// 获取商户类型
+let commercialType = async () => {
+    let data = await post(`${url}/api/members/member_group`, queryHome())
+    if (data.data.err_code == -2) {
+        alert("登录已过期,请重新登录")
+        backLoginPage()
+    } else {
+        console.log(data.data.data, "商户类型")
+        return data.data.data
+    }
+}
+
+// 添加商户
+let addMerchants = async (obj, string) => {
+
+    let data = await post(`${url}/api/members/add_account`, addMer(obj.userName, obj.pass, obj.email, obj.phone, string))
+    if (data.data.err_code == -2) {
+        alert("登录已过期,请重新登录")
+        backLoginPage()
+    } else if (data.data.err_code == -1) {
+       return 1
+    }else{
+        console.log(data.data.err_code,"jin")
+        return 2
+    }
+}
+// 修改商户数据
+let alterMsg = async (obj, string) => {
+
+    let data = await post(`${url}/api/members/update_users`, alertMer2(obj, string))
+    console.log(data, obj)
+}
 
 export {
     gitData,
     searchUres,
-    del
+    del,
+    commercialType,
+    addMerchants,
+    alterMsg,
 }

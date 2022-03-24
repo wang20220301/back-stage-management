@@ -1,7 +1,7 @@
 <template>
   <div class="addUser">
     <div class="cancel">
-      <h4>添加用户</h4>
+      <h4>查看/更新</h4>
       <p @click="ckickClose"><i class="el-icon-close"></i></p>
     </div>
     <div class="fromStyle">
@@ -14,30 +14,27 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item label="用户组">
-          <el-select v-model="ruleForm.region" placeholder="请选择用户组">
-            <el-option label="用户" value="用户"></el-option>
-            <el-option label="经销商" value="经销商"></el-option>
+        <el-form-item label="角色信息">
+          <el-select v-model="ruleForm.role_id" popos="role_id">
+            <el-option
+              v-for="(item, index) in mertype"
+              :key="index"
+              :label="item.role_name"
+              :value="item.role_id"
+            ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="用户名" prop="userName">
+        <el-form-item label="账号" prop="userName">
           <el-input
             type="text"
             v-model="ruleForm.userName"
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pass">
+        <el-form-item label="商户名称" prop="name">
           <el-input
-            type="password"
-            v-model="ruleForm.pass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input
-            type="password"
-            v-model="ruleForm.checkPass"
+            type="text"
+            v-model="ruleForm.name"
             autocomplete="off"
           ></el-input>
         </el-form-item>
@@ -55,9 +52,30 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
+        <el-form-item label="修改密码" prop="pass">
+          <el-input
+            type="password"
+            v-model="ruleForm.pass"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="checkPass">
+          <el-input
+            type="password"
+            v-model="ruleForm.checkPass"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="地址" prop="address">
+          <el-input
+            type="text"
+            v-model="ruleForm.address"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')"
-            >提交</el-button
+            >保存</el-button
           >
           <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
@@ -66,7 +84,10 @@
   </div>
 </template>
 <script>
+import { alterMsg } from "./merchantApi.js";
 export default {
+  // 接收父组件传过来的参数
+  props: ["msg", "mertype"],
   data() {
     //   验证用户名不能为空
     let validatePass3 = (rule, value, callback) => {
@@ -90,19 +111,13 @@ export default {
       }, 1000);
     };
     var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        if (this.ruleForm.checkPass !== "") {
-          this.$refs.ruleForm.validateField("checkPass");
-        }
-        callback();
+      if (this.ruleForm.checkPass !== "") {
+        this.$refs.ruleForm.validateField("checkPass");
       }
+      callback();
     };
     var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.ruleForm.pass) {
+      if (value !== this.ruleForm.pass) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
@@ -125,13 +140,32 @@ export default {
         }
       }, 1000);
     };
+    // 验证邮箱不能为空
+    let validatePass4 = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("地址不能为空"));
+      } else {
+        return callback();
+      }
+    };
+    let validatePass5 = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("名称不能为空"));
+      } else {
+        return callback();
+      }
+    };
     return {
+      shop_id: "",
       ruleForm: {
         userName: "",
         pass: "",
         checkPass: "",
         email: "",
         phone: "",
+        address: "",
+        name: "",
+        role_id: "",
       },
       rules: {
         userName: [{ validator: validatePass3, trigger: "blur" }],
@@ -139,16 +173,40 @@ export default {
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
         email: [{ validator: checkAge, trigger: "blur" }],
         phone: [{ validator: checkAge2, trigger: "blur" }],
+        address: [{ validator: validatePass4, trigger: "blur" }],
+        title: [{ validator: validatePass5, trigger: "blur" }],
       },
     };
+  },
+  // watch监听当响应式数据发生,变化时执行
+  watch: {
+    // 第一个值,表示监听那个数据
+    // immediate 表示在 watch 中首次绑定数据的时候是否执行 handler
+    msg: {
+      handler(val) {
+        // val表示监听对象的值
+        let ruleForm = this.$data.ruleForm;
+        ruleForm.userName = val.username;
+        ruleForm.email = val.email;
+        ruleForm.name = val.name;
+        ruleForm.phone = val.mobile * 1;
+        ruleForm.address = val.address;
+        ruleForm.region = val.role_id;
+        this.$data.shop_id = val.user_id;
+        console.log(val, "监听成功");
+      },
+      immediate: true,
+    },
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          // 获取当前的值
+          alterMsg(this.$data.ruleForm, this.$data.shop_id);
+          this.ckickClose();
+          this.open3()
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -158,8 +216,14 @@ export default {
     },
     // 点击关闭
     ckickClose() {
-      console.log("检测到点击事件");
-      this.$emit("sonmsg", false);
+      // 点击触发父组件方法
+      this.$emit("increment", 1);
+    },
+     open3() {
+      this.$message({
+        message: "修改成功",
+        type: "success",
+      });
     },
   },
 };
@@ -168,9 +232,10 @@ export default {
 <style scoped>
 .addUser {
   width: 560px;
-  height: 456px;
+  height: 521px;
   margin: auto;
   background: #fff;
+  border-radius: 6px;
 }
 .cancel {
   width: 100%;
@@ -187,10 +252,11 @@ export default {
 .cancel p {
   width: 20px;
   height: 20px;
-  padding: 10px;
+  padding: 14px;
 }
 .fromStyle {
-  padding: 0px 24px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 </style>
 

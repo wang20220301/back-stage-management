@@ -6,7 +6,7 @@
 <script>
 import Menu from "./menu.vue";
 export default {
-  name: "agencyPage",
+  name: "userPage",
   components: {
     Menu,
   },

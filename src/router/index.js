@@ -18,7 +18,7 @@ import Login from "../components/login/login.vue"
 import User from "../components/utils/user/inde.vue"
 import Device from "../components/utils/Device/index.vue"
 import Home from "../components/utils/home/index.vue"
-import Dealer from "../components/utils/dealer/inde.vue"
+import Mer from "../components/utils/mer/inde.vue"
 // Device页面子路由
 import DeviceData from "@/components/utils/Device/popup/deData.vue"
 import DeviceMsg from '@/components/utils/Device/popup/deMsg.vue'
@@ -60,8 +60,8 @@ const routes = [{
       component: Home
     },
     {
-      path: "dealer",
-      component:Dealer
+      path: "mer",
+      component:Mer
     },
 
   ]

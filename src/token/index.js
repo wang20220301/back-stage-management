@@ -55,7 +55,7 @@ let alter = (name, long, address, shop_id, kind,) => {
     param.append("long", long);
     param.append("name", name);
     param.append("shop_id", shop_id);
-    param.append("address", address)
+    param.append("last_area", address)
     param.append("kind", kind)
     return param
 }
@@ -107,7 +107,42 @@ let getHourDate = (day, hour) => {
     param.append("day", day)
     return param
 }
+let addMer = (username, password, email, mobile, role_id) => {
+    let tok = token()
+    let id = cookieValue("id")
+    var param = new FormData()
+    param.append("token", tok);
+    param.append("group_id", id);
+    param.append("username", username)
+    param.append("password", password)
+    param.append("mobile", mobile)
+    param.append("email", email)
+    param.append("role_id", role_id)
+    return param
+}
+let alertMer2 = (obj, string) => {
+    let tok = token()
+    var param = new FormData()
+    param.append("token", tok);
+    param.append("user_id", string);
+    param.append("username", obj.userName)
+    console.log(obj.password, "密码")
+    if (obj.pass) {
+        param.append("password", obj.pass)
+    }
+    param.append("mobile", obj.phone)
+    param.append("email", obj.email)
+    if (obj.role_id) {
+        param.append("role_id", obj.role_id)
+    }
+    param.append("address", obj.address)
+    if (obj.name) {
+        param.append("name", obj.name)
+    }
 
+    return param
+
+}
 function token() {
     return cookieValue("token")
 }
@@ -123,5 +158,7 @@ export {
     queryHome,
     queryAllDevilce,
     getDate,
-    getHourDate
+    getHourDate,
+    addMer,
+    alertMer2
 }

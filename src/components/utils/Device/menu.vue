@@ -154,6 +154,7 @@ export default {
       value: "",
       input: "",
       high: 0,
+      // popup:"",
       tableData: [],
       multipleSelection: [],
       visible: false,
@@ -219,6 +220,10 @@ export default {
     // 点击×隐藏弹窗
     clickHidePopup() {
       this.$data.popupShow = false;
+      this.$data.high=0
+      this.$data.popup="cupboardState"
+      // this.$data.
+      // 样式恢复初始化
       this.$router.push("/superAdmin/device");
     },
     highClick(index) {
@@ -339,7 +344,6 @@ export default {
   top: 0px;
   z-index: 10;
   background: rgba(0, 0, 0, 0.4);
-  /* display: none; */
 }
 /* 弹窗共用样式 */
 .popupStyle {

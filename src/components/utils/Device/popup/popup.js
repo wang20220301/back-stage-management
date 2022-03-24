@@ -202,13 +202,13 @@ let getFacilityData = () => {
 
 // 获取vuex里存的详细的设备数据
 let msg2 = (fun) => {
-    let time = setTimeout(() => {
+    let time = setInterval(() => {
         let data = store.state.popup.detailsMsg
         if (data != null) {
             clearInterval(time);
             fun(data)
         }
-    }, 300)
+    }, 50)
 
 }
 // 获取指定设备的指定日期区间数据

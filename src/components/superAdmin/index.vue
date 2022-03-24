@@ -65,8 +65,8 @@ export default {
           path: "/superAdmin/user",
         },
         {
-          title: "经销商管理",
-          path: "/superAdmin/dealer",
+          title: "商户管理",
+          path: "/superAdmin/mer",
         },
       ],
       menu: [

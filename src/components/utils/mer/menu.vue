@@ -55,7 +55,7 @@
         <el-table-column prop="name" label="用户名称"> </el-table-column>
         <el-table-column prop="create_time" label="注册时间"> </el-table-column>
         <el-table-column prop="role_name" label="角色信息"> </el-table-column>
-        <el-table-column prop="last_area" label="地址"> </el-table-column>
+        <el-table-column prop="address" label="地址"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="150">
           <template slot-scope="scope">
             <el-button type="text" size="small">锁定</el-button>
@@ -86,7 +86,7 @@
   </div>
 </template>
 <script>
-import { gitData, del, searchUres, commercialType } from "./userA";
+import { gitData, del, searchUres, commercialType } from "./merchantApi";
 import AddUser from "./addMerchant.vue";
 import UpData from "./upData.vue";
 export default {
