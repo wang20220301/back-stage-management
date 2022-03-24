@@ -24,24 +24,10 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="用户名" prop="userName">
+        <el-form-item label="用户名" prop="name">
           <el-input
             type="text"
-            v-model="ruleForm.userName"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="pass">
-          <el-input
-            type="password"
-            v-model="ruleForm.pass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input
-            type="password"
-            v-model="ruleForm.checkPass"
+            v-model="ruleForm.name"
             autocomplete="off"
           ></el-input>
         </el-form-item>
@@ -59,6 +45,13 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
+        <el-form-item label="地址" prop="addr">
+          <el-input
+            type="text"
+            v-model="ruleForm.addr"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')"
             >保存</el-button
@@ -70,7 +63,7 @@
   </div>
 </template>
 <script>
-import { addMerchants } from "./userA.js";
+import { addUser } from "./merchantApi";
 export default {
   props: ["mertype"],
   data() {
@@ -98,25 +91,6 @@ export default {
         }
       }, 1000);
     };
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        if (this.ruleForm.checkPass !== "") {
-          this.$refs.ruleForm.validateField("checkPass");
-        }
-        callback();
-      }
-    };
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error("两次输入密码不一致!"));
-      } else {
-        callback();
-      }
-    };
     var checkAge2 = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("手机号不能为空"));
@@ -134,21 +108,26 @@ export default {
         }
       }, 1000);
     };
+    let validatePass4 = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("地址不能为空"));
+      } else {
+        return callback();
+      }
+    };
     return {
       region: "",
       ruleForm: {
-        userName: "",
-        pass: "",
-        checkPass: "",
+        name: "",
         email: "",
         phone: "",
+        addr: "",
       },
       rules: {
-        userName: [{ validator: validatePass3, trigger: "blur" }],
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
+        name: [{ validator: validatePass3, trigger: "blur" }],
         email: [{ validator: checkAge, trigger: "blur" }],
         phone: [{ validator: checkAge2, trigger: "blur" }],
+        addr: [{ validator: validatePass4, trigger: "blur" }],
       },
     };
   },
@@ -160,14 +139,13 @@ export default {
       } else {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            let res = addMerchants(this.$data.ruleForm, region);
-            console.log(res,"res的值")
-            if (res==2) {
+            let res = addUser(this.$data.ruleForm, this.$data.region);
+            if (res == 2) {
               // 关闭弹窗
               this.open3();
               this.ckickClose();
-            }else{
-              this.open4()
+            } else {
+              this.open4();
             }
           } else {
             return false;

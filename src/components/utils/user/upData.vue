@@ -84,7 +84,7 @@
   </div>
 </template>
 <script>
-import { alterMsg } from "./userA.js";
+import { alterMsg } from "./merchantApi.js";
 export default {
   // 接收父组件传过来的参数
   props: ["msg", "mertype"],
@@ -190,7 +190,7 @@ export default {
         ruleForm.email = val.email;
         ruleForm.name = val.name;
         ruleForm.phone = val.mobile * 1;
-        ruleForm.address = val.last_area;
+        ruleForm.address = val.address;
         ruleForm.region = val.role_id;
         this.$data.shop_id = val.user_id;
         console.log(val, "监听成功");

@@ -141,6 +141,18 @@ let alertMer2 = (obj, string) => {
     }
 
     return param
+}
+// 添加用户
+let add = (value,account_type) => {
+    let tok = token()
+    var param = new FormData()
+    param.append("token", tok);
+    param.append("name", value.name);
+    param.append("email", value.email);
+    param.append("mobile", value.phone);
+    param.append("addr", value.addr);
+    param.append("account_type", account_type);
+    return param
 
 }
 function token() {
@@ -160,5 +172,6 @@ export {
     getDate,
     getHourDate,
     addMer,
-    alertMer2
+    alertMer2,
+    add,
 }

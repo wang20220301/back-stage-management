@@ -14,7 +14,7 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item label="分组">
+        <el-form-item label="账号类型">
           <el-select v-model="region" placeholder="请选择用户组">
             <el-option
               v-for="(item, index) in mertype"

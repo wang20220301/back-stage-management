@@ -1,5 +1,5 @@
 import { post } from "@/Api/index";
-import { query, queryOnce, deleteDevice, queryHome, addMer, alertMer2 } from "@/token/index";
+import { query, queryOnce, deleteDevice, queryHome, addMer, alertMer2, add } from "@/token/index";
 import { url } from "@/Api/http.js";
 import { backLoginPage } from "@/utils/index.js"
 
@@ -23,25 +23,22 @@ let gitData = async () => {
                 item.class = "offNormal "
             }
 
-            let id = item.role_id * 1
+            let id = item.source * 1
             switch (id) {
                 case 1:
-                    item.role_name = "超级管理员"
+                    item.role_name = "小程序"
                     break;
-                case 5:
-                    item.role_name = "经销商"
+                case 2:
+                    item.role_name = "后台"
                     break;
-                case 7:
-                    item.role_name = "运营商"
-                    break
-                case 8:
-                    item.role_name = "大客户"
+                case 3:
+                    item.role_name = "其他"
                     break
                 default:
             }
         }
-        console.log(data.data.data.list,"用户信息")
-        return data.data.data.list
+        console.log(data.data.data, "用户管理数据")
+        return data.data.data
     }
 
 }
@@ -91,9 +88,9 @@ let del = async (value) => {
     // 处理选中的值
     // 遍历数组
     let msg = value.map(Item => {
-        return Item.user_id
+        return Item.member_id
     });
-    let data = await post(`${url}/api/members/del_users`, deleteDevice("user_id", msg.toString()))
+    let data = await post(`${url}/api/members/del_members`, deleteDevice("member_id", msg.toString()))
     if (data.data.err_code == 2) {
         backLoginPage()
     }
@@ -119,9 +116,9 @@ let addMerchants = async (obj, string) => {
         alert("登录已过期,请重新登录")
         backLoginPage()
     } else if (data.data.err_code == -1) {
-       return 1
-    }else{
-        console.log(data.data.err_code,"jin")
+        return 1
+    } else {
+        console.log(data.data.err_code, "jin")
         return 2
     }
 }
@@ -132,6 +129,21 @@ let alterMsg = async (obj, string) => {
     console.log(data, obj)
 }
 
+// 添加用户
+let addUser = async (value,account_type) => {
+    let data = await post(`${url}/api/members/add_members`, add(value,account_type))
+    console.log(data,"添加用户返回值")
+    if (data.data.err_code == -2) {
+        alert("登录已过期,请重新登录")
+        backLoginPage()
+    } else if (data.data.err_code == -1) {
+        return 1
+    } else {
+        console.log(data.data.err_code, "jin")
+        return 2
+    }
+}
+
 export {
     gitData,
     searchUres,
@@ -139,4 +151,5 @@ export {
     commercialType,
     addMerchants,
     alterMsg,
+    addUser,
 }

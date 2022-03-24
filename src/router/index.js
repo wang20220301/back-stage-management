@@ -15,7 +15,7 @@ import Login from "../components/login/login.vue"
 // 通过 Vue.extend() 创建的组件构造器，
 // 或者，只是一个组件配置对象。
 // 子路由
-import User from "../components/utils/user/inde.vue"
+import User from "../components/utils/user/index.vue"
 import Device from "../components/utils/Device/index.vue"
 import Home from "../components/utils/home/index.vue"
 import Mer from "../components/utils/mer/inde.vue"

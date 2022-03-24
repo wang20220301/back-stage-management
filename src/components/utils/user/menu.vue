@@ -42,9 +42,9 @@
       >
         <el-table-column type="selection" width="50px"> </el-table-column>
         <el-table-column label="id">
-          <template slot-scope="scope">{{ scope.row.user_id }}</template>
+          <template slot-scope="scope">{{ scope.row.member_id }}</template>
         </el-table-column>
-        <el-table-column prop="username" label="账号"> </el-table-column>
+        <el-table-column prop="name" label="用户名称"> </el-table-column>
         <el-table-column label="账号状态">
           <div slot-scope="scope" :class="scope.row.class">
             {{ scope.row.is_status }}
@@ -53,9 +53,13 @@
         <el-table-column prop="mobile" label="手机号"> </el-table-column>
         <el-table-column prop="email" label="邮箱"> </el-table-column>
         <el-table-column prop="name" label="用户名称"> </el-table-column>
-        <el-table-column prop="create_time" label="注册时间"> </el-table-column>
-        <el-table-column prop="role_name" label="角色信息"> </el-table-column>
-        <el-table-column prop="last_area" label="地址"> </el-table-column>
+        <el-table-column prop="regtime" label="注册时间"> </el-table-column>
+        <el-table-column label="来源">
+          <div slot-scope="scope">
+            {{ scope.row.role_name }}
+          </div>
+        </el-table-column>
+        <el-table-column prop="addr" label="地址"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="150">
           <template slot-scope="scope">
             <el-button type="text" size="small">锁定</el-button>
@@ -86,7 +90,7 @@
   </div>
 </template>
 <script>
-import { gitData, del, searchUres, commercialType } from "./userA";
+import { gitData, del, searchUres, commercialType } from "./merchantApi";
 import AddUser from "./addMerchant.vue";
 import UpData from "./upData.vue";
 export default {
@@ -114,9 +118,13 @@ export default {
   },
   methods: {
     async gitVuexData() {
-      this.$data.tableData = await gitData();
+      let data=await gitData();
+      // 这里获取总页数和分页
+      console.log(data)
+      this.$data.tableData =data.list
       // 把获取到的商户类型通过pops传给子组件
       this.$data.merType = await commercialType();
+      console.log(this.$data.tableData)
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -214,29 +222,6 @@ export default {
         type: "success",
       });
     },
-    // open3() {
-    //   this.$confirm("输入的两次密码不同", "提示", {
-    //     confirmButtonText: "确定",
-    //     cancelButtonText: "取消",
-    //     type: "warning",
-    //   })
-    //     .then(() => {
-    //       del(this.multipleSelection);
-    //       // 删除成功刷新页面
-    //       this.gitVuexData();
-    //       this.gitVuexData();
-    //       this.$message({
-    //         type: "success",
-    //         message: "删除成功!",
-    //       });
-    //     })
-    //     .catch(() => {
-    //       this.$message({
-    //         type: "info",
-    //         message: "已取消删除",
-    //       });
-    //     });
-    // },
   },
 };
 </script>
