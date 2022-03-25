@@ -13,7 +13,7 @@
           <!-- 下拉菜单 -->
           <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link">
-              王少川<i class="el-icon-arrow-down el-icon--right"></i>
+              {{ userName }}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="1">退出登录</el-dropdown-item>
@@ -37,10 +37,22 @@ export default {
     return {
       img: log,
       accountTyep: "",
+      userName: "",
     };
+  },
+  // watch监听路由改变
+  watch: {
+    //监听路由变化
+    $route(to, from) {
+      console.log(to, from, "路由变化");
+      // to , from 分别表示从哪跳转到哪，都是一个对象
+      // to.path  ( 表示的是要跳转到的路由的地址 eg: /home );
+    },
   },
   mounted() {
     let id = cookieValue("type");
+    let userName = cookieValue("username");
+    this.$data.userName = userName;
     switch (id) {
       case "1":
         this.$data.accountTyep = "超级管理员";
@@ -51,13 +63,11 @@ export default {
       case "7":
         this.$data.accountTyep = "运营商";
         break;
-      case "4":
+      case "8":
         this.$data.accountTyep = "大客户";
         break;
       default:
     }
-    // 页面更新执行
-    console.log("页面更新执行","123")
   },
   methods: {
     handleCommand(command) {
@@ -97,7 +107,7 @@ export default {
   box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.1);
 }
 .user {
-  width: 220px;
+  width: 280px;
   height: 60px;
   display: flex;
   align-items: center;

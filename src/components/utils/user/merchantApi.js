@@ -55,7 +55,7 @@ let gitData = async (page,page_num) => {
                 default:
             }
         }
-        console.log(data.data.data, "用户管理数据")
+        // console.log(data.data.data, "用户管理数据")
         return data.data.data
     }
 
@@ -121,7 +121,7 @@ let commercialType = async () => {
         alert("登录已过期,请重新登录")
         backLoginPage()
     } else {
-        console.log(data.data.data, "用户类型")
+        // console.log(data.data.data, "用户类型")
         return data.data.data
     }
 }
@@ -136,15 +136,15 @@ let addMerchants = async (obj, string) => {
     } else if (data.data.err_code == -1) {
         return 1
     } else {
-        console.log(data.data.err_code, "jin")
+        // console.log(data.data.err_code, "jin")
         return 2
     }
 }
 // 修改商户数据
 let alterMsg = async (obj, string) => {
 
-    let data = await post(`${url}/api/members/update_users`, alertMer2(obj, string))
-    console.log(data, obj)
+    await post(`${url}/api/members/update_users`, alertMer2(obj, string))
+    // console.log(data, obj)
 }
 
 // 添加用户
@@ -156,7 +156,7 @@ let addUser = async (value, account_type) => {
     } else if (data.data.err_code == -1) {
         return 1
     } else {
-        console.log(data.data.err_code, "jin")
+        // console.log(data.data.err_code, "jin")
         return 2
     }
 }
@@ -168,7 +168,7 @@ let alertUserDetails = async (value) => {
         alert("登录已过期,请重新登录")
         backLoginPage()
     } else {
-        console.log(data)
+        // console.log(data)
     }
 
 

@@ -20,7 +20,7 @@
     </div>
     <menu class="menu">
       <div class="choice">
-        <el-select v-model="value" placeholder="所有设备" size="small">
+        <el-select v-model="value" placeholder="所有设备" size="small" disabled>
           <el-option
             v-for="item in options"
             :key="item.value"

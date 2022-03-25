@@ -63,7 +63,7 @@ export default {
   mounted() {
     // 获取vuex数据
     msg((data) => {
-      console.log(data.detail);
+      // console.log(data.detail);
       this.$data.sizeForm = data.detail;
       this.$data.user = data.merchant;
     });
