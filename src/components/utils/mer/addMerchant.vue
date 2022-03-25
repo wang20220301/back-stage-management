@@ -158,16 +158,15 @@ export default {
       if (region == "") {
         this.open2();
       } else {
-        this.$refs[formName].validate((valid) => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {
-            let res = addMerchants(this.$data.ruleForm, region);
-            console.log(res,"res的值")
-            if (res==2) {
+            let res = await addMerchants(this.$data.ruleForm, region);
+            if (res == 2) {
               // 关闭弹窗
               this.open3();
               this.ckickClose();
-            }else{
-              this.open4()
+            } else {
+              this.open4();
             }
           } else {
             return false;

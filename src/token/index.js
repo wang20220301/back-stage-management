@@ -4,7 +4,7 @@ import {
 } from "../utils/index"
 
 // 查询所有设备，或所有用户
-let query = (page = 1, page_num = 12) => {
+let query = (page = 1, page_num = 13) => {
     var param = new FormData();
     let tok = token()
     param.append("token", tok);

@@ -101,20 +101,15 @@ export default {
   align-items: center;
 }
 .logText {
-  width: 330px;
-  height: 44px;
+  width: 500px;
+  height: 88px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.log {
-  height: 44px;
-  width: 140px;
-  background: black;
-}
 .log img {
-  height: 44px;
-  width: 140px;
+   height: calc(44px * 2);
+  width: calc(140px *2);
 }
 .text h2 {
   font-size: 16px;

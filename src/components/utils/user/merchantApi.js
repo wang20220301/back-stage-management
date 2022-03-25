@@ -4,8 +4,8 @@ import { url } from "@/Api/http.js";
 import { backLoginPage } from "@/utils/index.js"
 
 // 获取数据
-let gitData = async (page) => {
-    let data = await post(`${url}/api/members/get_user_list`, query(page))
+let gitData = async (page,page_num) => {
+    let data = await post(`${url}/api/members/get_user_list`, query(page,page_num))
     // 遍历数组
     if (data.data.err_code == -2) {
         alert("登录已过期,请重新登录")

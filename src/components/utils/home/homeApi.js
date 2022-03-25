@@ -27,7 +27,7 @@ let VuexMsg = (fun) => {
             fun(data)
             clearInterval(time);
         }
-    }, 100)
+    }, 50)
 }
 
 //  获取新增会员

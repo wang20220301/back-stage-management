@@ -38,6 +38,7 @@
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
+        height="830"
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="50px"> </el-table-column>
@@ -84,7 +85,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage4"
-            :page-sizes="[13]"
+            :page-sizes="[13,26,39,52]"
             :page-size="10"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total"
@@ -119,6 +120,7 @@ export default {
       total_page: 0,
       total: 0,
       currentPage4: 1,
+      page_num:"",
     };
   },
   mounted() {
@@ -127,8 +129,8 @@ export default {
     this.gitType();
   },
   methods: {
-    async gitVuexData(val) {
-      let data = await gitData(val);
+    async gitVuexData(val,page_num) {
+      let data = await gitData(val,page_num);
 
       // 这里获取总页数和分页
       console.log(data.total_page, data.page);
@@ -160,19 +162,22 @@ export default {
     },
     //获取选中结果，点击确定删除选中数据，点击取消不操作
     getSelected() {
-      this.open2();
+      let value = this.multipleSelection;
+      // 选中数据的个数
+      let len = this.multipleSelection.length;
+      this.open2(value, len);
     },
     handleClick(row) {
       console.log(row);
     },
-    open2() {
-      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示admin无法删除", {
+    open2(value, len) {
+      this.$confirm(`此操作将永久删除选中的${len}条数据, 是否继续?`, {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
         .then(() => {
-          del(this.multipleSelection);
+          del(value);
           // 删除成功刷新页面
           this.gitVuexData();
           this.$message({
@@ -225,12 +230,14 @@ export default {
       this.gitVuexData();
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+       // 存储每页显示的数据条数
+      this.$data.page_num=val
+      // 发送消息向服务器请求相同条数的数据
+      this.gitVuexData("",val)
     },
     handleCurrentChange(val) {
-      // 获取当前的页数发送服务器请求数据,渲染页面
-      this.gitVuexData(val);
-      console.log(`当前页: ${val}`);
+       // 获取当前的页数发送服务器请求数据,渲染页面,以及每次请求服务器的数据
+      this.gitVuexData(val,this.$data.page_num);
     },
     open3() {
       this.$message({
@@ -244,29 +251,6 @@ export default {
         type: "success",
       });
     },
-    // open3() {
-    //   this.$confirm("输入的两次密码不同", "提示", {
-    //     confirmButtonText: "确定",
-    //     cancelButtonText: "取消",
-    //     type: "warning",
-    //   })
-    //     .then(() => {
-    //       del(this.multipleSelection);
-    //       // 删除成功刷新页面
-    //       this.gitVuexData();
-    //       this.gitVuexData();
-    //       this.$message({
-    //         type: "success",
-    //         message: "删除成功!",
-    //       });
-    //     })
-    //     .catch(() => {
-    //       this.$message({
-    //         type: "info",
-    //         message: "已取消删除",
-    //       });
-    //     });
-    // },
   },
 };
 </script>
@@ -300,6 +284,7 @@ export default {
   margin-left: 22px;
   margin-right: 20px;
 }
+/* 底部弹窗样式 */
 .hah {
   display: flex;
   justify-content: space-between;
@@ -307,9 +292,6 @@ export default {
   background: #fff;
   margin-top: 20px;
   align-items: center;
-  position: absolute;
-  width: calc(100% - 200px);
-  bottom: 0px;
 }
 .delete {
   margin-left: 30px;

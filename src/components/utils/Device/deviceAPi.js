@@ -6,13 +6,13 @@ import { backLoginPage } from "@/utils/index.js"
 import router from "@/router/index.js"
 
 // 获取数据
-let gitData = async () => {
-    let data = await post(`${url}/api/monitor/sark_list`, query())
+let gitData = async (value,page_num) => {
+    let data = await post(`${url}/api/monitor/sark_list`, query(value,page_num))
     if (data.data.err_code == -2) {
         backLoginPage()
         alert("登录已过期,请重新登录")
     } else {
-        return data.data.data.list
+        return data.data.data
     }
 
 }

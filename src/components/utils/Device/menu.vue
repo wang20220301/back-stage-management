@@ -51,6 +51,7 @@
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
+        height="830"
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55"> </el-table-column>
@@ -79,16 +80,6 @@
         <el-table-column prop="add_time" label="添加时间" width="">
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="160">
-          <!-- <template slot-scope="scope">
-            <el-butto
-              @click="handleClick(scope.row.group_id)"
-              type="text"
-              size="small"
-              name="buttom"
-              style="color: #1890ff"
-              >查看详情</el-butto
-            >
-          </template> -->
           <template slot-scope="scope">
             <el-button type="text" size="small">离线</el-button>
             <el-button
@@ -114,8 +105,18 @@
           删除选中</el-button
         >
       </div>
-      <el-pagination background layout="prev, pager, next" :total="1000">
-      </el-pagination>
+      <div class="block">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[13,26,39,52]"
+          :page-size="10"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+        >
+        </el-pagination>
+      </div>
     </footer>
   </div>
 </template>
@@ -154,13 +155,16 @@ export default {
       value: "",
       input: "",
       high: 0,
-      // popup:"",
       tableData: [],
       multipleSelection: [],
       visible: false,
       popup: "deData",
       popupShow: false,
       popupStyle: "popupStyle",
+      total_page: 0,
+      total: 0,
+      currentPage4: 1,
+      page_num:""
     };
   },
   mounted() {
@@ -168,8 +172,13 @@ export default {
     this.gitVuexData();
   },
   methods: {
-    async gitVuexData() {
-      this.$data.tableData = await gitData();
+    async gitVuexData(val,page_num) {
+      let data = await gitData(val,page_num);
+      // 这里获取总页数和分页
+      console.log(data,"data里的数据");
+      this.$data.tableData = data.list;
+      // 获取当前的总数据
+      this.$data.total = data.total * 1;
     },
     async click() {
       if (this.input == "") {
@@ -206,7 +215,10 @@ export default {
     },
     //获取选中结果
     getSelected() {
-      this.open2();
+      let value = this.multipleSelection;
+      // 选中数据的个数
+      let len = this.multipleSelection.length;
+      this.open2(value, len);
     },
 
     // 点击查看详情显示弹窗
@@ -233,14 +245,25 @@ export default {
       // 根据id显示不同的路由
       routers(index);
     },
-    open2() {
-      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+     handleSizeChange(val) {
+       // 存储每页显示的数据条数
+      this.$data.page_num=val
+      // 发送消息向服务器请求相同条数的数据
+      this.gitVuexData("",val)
+    },
+    handleCurrentChange(val) {
+     // 获取当前的页数发送服务器请求数据,渲染页面,以及每次请求服务器的数据
+      this.gitVuexData(val,this.$data.page_num)
+      // console.log(`当前页: ${val}`);
+    },
+    open2(value, len) {
+      this.$confirm(`此操作将永久删除选中${len}条数据?`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
         .then(() => {
-          del(this.multipleSelection);
+          del(value);
           // 删除成功刷新页面
           this.gitVuexData();
           this.$message({
@@ -401,5 +424,8 @@ export default {
   float: right;
   width: 20px;
   height: 48px;
+}
+.block {
+  padding-right: 30px;
 }
 </style>

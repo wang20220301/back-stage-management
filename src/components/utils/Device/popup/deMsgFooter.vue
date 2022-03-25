@@ -21,6 +21,7 @@
         <el-table
           :data="tableData"
           style="width: 100%"
+          height="380"
           stripe
           :header-cell-class-name="handlemyclass"
           :row-class-name="handrowclass"
@@ -101,7 +102,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
 .foo {
   background: #fff;
   margin-left: 20px;
@@ -110,9 +111,6 @@ export default {
 .footList2 {
   margin-left: 10px;
   margin-top: 10px;
-  height: 385px;
-  /* overflow: hidden; */
-  overflow: scroll;
 }
 .fooTitle {
   height: 40px;

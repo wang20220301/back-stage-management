@@ -4,8 +4,8 @@ import { url } from "@/Api/http.js";
 import { backLoginPage } from "@/utils/index.js"
 
 // 获取数据
-let gitData = async (val) => {
-    let data = await post(`${url}/api/members/get_member_list`, query(val))
+let gitData = async (val,page_num) => {
+    let data = await post(`${url}/api/members/get_member_list`, query(val,page_num))
     // 遍历数组
     if (data.data.err_code == -2) {
         alert("登录已过期,请重新登录")
@@ -40,7 +40,6 @@ let gitData = async (val) => {
                 default:
             }
         }
-        // console.log(data.data.data.list)
         return data.data.data
     }
 
@@ -84,8 +83,7 @@ let searchUres = async (key, value) => {
     }
 
 }
-
-// 删除用户
+// 删除商户
 
 let del = async (value) => {
     // 处理选中的值
@@ -96,6 +94,8 @@ let del = async (value) => {
     let data = await post(`${url}/api/members/del_users`, deleteDevice("user_id", msg.toString()))
     if (data.data.err_code == 2) {
         backLoginPage()
+    } {
+        console.log(data)
     }
 }
 
@@ -119,9 +119,9 @@ let addMerchants = async (obj, string) => {
         alert("登录已过期,请重新登录")
         backLoginPage()
     } else if (data.data.err_code == -1) {
-       return 1
-    }else{
-        console.log(data.data.err_code,"jin")
+        return 1
+    } else {
+        console.log(data.data.err_code, "jin")
         return 2
     }
 }
