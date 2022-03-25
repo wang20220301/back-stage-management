@@ -52,7 +52,8 @@
         </el-table-column>
         <el-table-column prop="mobile" label="手机号"> </el-table-column>
         <el-table-column prop="email" label="邮箱"> </el-table-column>
-        <el-table-column prop="name" label="用户名称"> </el-table-column>
+        <el-table-column prop="account_name" label="角色信息">
+        </el-table-column>
         <el-table-column prop="regtime" label="注册时间"> </el-table-column>
         <el-table-column label="来源">
           <div slot-scope="scope">
@@ -83,8 +84,18 @@
         >
       </div>
       <div class="right">
-        <el-pagination background layout="prev, pager, next" :total="1000">
-        </el-pagination>
+        <div class="block">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage4"
+            :page-sizes="[13]"
+            :page-size="10"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+          >
+          </el-pagination>
+        </div>
       </div>
     </footer>
   </div>
@@ -110,21 +121,29 @@ export default {
       updataShow: false,
       merType: [],
       details: [],
+      total_page: 0,
+      total: 0,
+      currentPage4: 1,
     };
   },
   mounted() {
     // 创建完成发送请求获取数据
     this.gitVuexData();
+    this.gitType();
   },
   methods: {
-    async gitVuexData() {
-      let data=await gitData();
+    async gitVuexData(val) {
+      let data = await gitData(val);
+
       // 这里获取总页数和分页
-      console.log(data)
-      this.$data.tableData =data.list
+      console.log(data.total_page, data.page);
+      this.$data.tableData = data.list;
+      // 获取当前的总数据
+      this.$data.total = data.total * 1;
+    },
+    async gitType() {
       // 把获取到的商户类型通过pops传给子组件
       this.$data.merType = await commercialType();
-      console.log(this.$data.tableData)
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -178,6 +197,15 @@ export default {
       // 获取输入框的值
       let value = this.$data.input;
       this.$data.tableData = await searchUres("keyword", value);
+    },
+
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      // 获取当前的页数发送服务器请求数据,渲染页面
+      this.gitVuexData(val);
+      console.log(`当前页: ${val}`);
     },
 
     clickAddUserName() {

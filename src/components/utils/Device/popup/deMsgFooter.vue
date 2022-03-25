@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <div class="footList">
+      <div class="footList2">
         <el-table
           :data="tableData"
           style="width: 100%"
@@ -101,16 +101,17 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .foo {
   background: #fff;
   margin-left: 20px;
   margin-right: 20px;
 }
-.footList {
+.footList2 {
   margin-left: 10px;
   margin-top: 10px;
-  height: 480px;
+  height: 385px;
+  /* overflow: hidden; */
   overflow: scroll;
 }
 .fooTitle {

@@ -150,7 +150,7 @@ export default {
           label: "北京烤鸭",
         },
       ],
-      popupMenu: ["柜格状态", "设备信息", "设备数据"],
+      popupMenu: ["设备信息", "柜格状态", "设备数据"],
       value: "",
       input: "",
       high: 0,
@@ -158,7 +158,7 @@ export default {
       tableData: [],
       multipleSelection: [],
       visible: false,
-      popup: "cupboardState",
+      popup: "deData",
       popupShow: false,
       popupStyle: "popupStyle",
     };
@@ -214,14 +214,14 @@ export default {
       baseCookie("id", id);
       // 获取传过来的id储存到cookie里
       // 点击弹出弹窗
-      this.$router.push("/superAdmin/device/state");
+      this.$router.push("/superAdmin/device/deviceMsg");
       this.$data.popupShow = true;
     },
     // 点击×隐藏弹窗
     clickHidePopup() {
       this.$data.popupShow = false;
-      this.$data.high=0
-      this.$data.popup="cupboardState"
+      this.$data.high = 0;
+      this.$data.popup = "deData";
       // this.$data.
       // 样式恢复初始化
       this.$router.push("/superAdmin/device");
@@ -371,7 +371,7 @@ export default {
 /* 设备数据弹窗样式 */
 .deMsg {
   width: 1300px;
-  height: 1000px;
+  height: 900px;
   top: 47px;
 }
 

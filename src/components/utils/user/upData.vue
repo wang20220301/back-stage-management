@@ -15,32 +15,35 @@
         class="demo-ruleForm"
       >
         <el-form-item label="角色信息">
-          <el-select v-model="ruleForm.role_id" popos="role_id">
+          <el-select v-model="ruleForm.account_type" popos="role_id">
             <el-option
               v-for="(item, index) in mertype"
               :key="index"
-              :label="item.role_name"
-              :value="item.role_id"
+              :label="item.name"
+              :value="item.account_type"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="账号" prop="userName">
-          <el-input
-            type="text"
-            v-model="ruleForm.userName"
-            autocomplete="off"
-          ></el-input>
+        <el-form-item label="账号状态">
+          <el-select v-model="ruleForm.is_state" popos="is_state">
+            <el-option
+              v-for="(item, index) in AccountStatus"
+              :key="index"
+              :label="item"
+              :value="index"
+            ></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="商户名称" prop="name">
+        <el-form-item label="用户名" prop="name">
           <el-input
             type="text"
             v-model="ruleForm.name"
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="手机号" prop="phone">
+        <el-form-item label="手机号" prop="mobile">
           <el-input
-            v-model.number="ruleForm.phone"
+            v-model.number="ruleForm.mobile"
             autocomplete="off"
             type="text"
           ></el-input>
@@ -52,24 +55,10 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="修改密码" prop="pass">
-          <el-input
-            type="password"
-            v-model="ruleForm.pass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input
-            type="password"
-            v-model="ruleForm.checkPass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="地址" prop="address">
+        <el-form-item label="地址" prop="addr">
           <el-input
             type="text"
-            v-model="ruleForm.address"
+            v-model="ruleForm.addr"
             autocomplete="off"
           ></el-input>
         </el-form-item>
@@ -84,7 +73,7 @@
   </div>
 </template>
 <script>
-import { alterMsg } from "./merchantApi.js";
+import { alertUserDetails } from "./merchantApi.js";
 export default {
   // 接收父组件传过来的参数
   props: ["msg", "mertype"],
@@ -109,19 +98,6 @@ export default {
           return callback();
         }
       }, 1000);
-    };
-    var validatePass = (rule, value, callback) => {
-      if (this.ruleForm.checkPass !== "") {
-        this.$refs.ruleForm.validateField("checkPass");
-      }
-      callback();
-    };
-    var validatePass2 = (rule, value, callback) => {
-      if (value !== this.ruleForm.pass) {
-        callback(new Error("两次输入密码不一致!"));
-      } else {
-        callback();
-      }
     };
     var checkAge2 = (rule, value, callback) => {
       if (!value) {
@@ -157,23 +133,21 @@ export default {
     };
     return {
       shop_id: "",
+      AccountStatus: ["封禁", "正常"],
       ruleForm: {
-        userName: "",
-        pass: "",
-        checkPass: "",
         email: "",
-        phone: "",
-        address: "",
+        mobile: "",
+        addr: "",
         name: "",
-        role_id: "",
+        is_state: "",
+        account_type: "",
+        member_id: "",
       },
       rules: {
         userName: [{ validator: validatePass3, trigger: "blur" }],
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
         email: [{ validator: checkAge, trigger: "blur" }],
-        phone: [{ validator: checkAge2, trigger: "blur" }],
-        address: [{ validator: validatePass4, trigger: "blur" }],
+        mobile: [{ validator: checkAge2, trigger: "blur" }],
+        addr: [{ validator: validatePass4, trigger: "blur" }],
         title: [{ validator: validatePass5, trigger: "blur" }],
       },
     };
@@ -184,16 +158,16 @@ export default {
     // immediate 表示在 watch 中首次绑定数据的时候是否执行 handler
     msg: {
       handler(val) {
+        console.log(val, "watch监听的父组件传过来的值");
         // val表示监听对象的值
         let ruleForm = this.$data.ruleForm;
-        ruleForm.userName = val.username;
-        ruleForm.email = val.email;
         ruleForm.name = val.name;
-        ruleForm.phone = val.mobile * 1;
-        ruleForm.address = val.address;
-        ruleForm.region = val.role_id;
-        this.$data.shop_id = val.user_id;
-        console.log(val, "监听成功");
+        ruleForm.email = val.email;
+        ruleForm.account_type = val.account_type * 1;
+        ruleForm.mobile = val.mobile * 1;
+        ruleForm.addr = val.addr;
+        ruleForm.is_state = val.is_state * 1;
+        ruleForm.member_id = val.member_id;
       },
       immediate: true,
     },
@@ -202,10 +176,10 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // 获取当前的值
-          alterMsg(this.$data.ruleForm, this.$data.shop_id);
+          // 获取需要修改的用户详情的值
+          alertUserDetails(this.$data.ruleForm);
           this.ckickClose();
-          this.open3()
+          this.open3();
         } else {
           return false;
         }
@@ -219,7 +193,7 @@ export default {
       // 点击触发父组件方法
       this.$emit("increment", 1);
     },
-     open3() {
+    open3() {
       this.$message({
         message: "修改成功",
         type: "success",

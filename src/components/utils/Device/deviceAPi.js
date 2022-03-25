@@ -45,10 +45,10 @@ let del = async (value) => {
 // 设置弹窗样式
 let setPopupStyle = (index, data) => {
     switch (index) {
-        case 0:
+        case 1:
             data.popup = "cupboardState";
             break
-        case 1:
+        case 0:
             data.popup = "deData";
             break
         case 2:
@@ -60,10 +60,10 @@ let setPopupStyle = (index, data) => {
 // 路由跳转
 let routers = (index) => {
     switch (index) {
-        case 0:
+        case 1:
             router.push("/superAdmin/device/state")
             break
-        case 1:
+        case 0:
             router.push("/superAdmin/device/deviceMsg")
             break
         case 2:

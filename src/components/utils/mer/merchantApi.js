@@ -4,8 +4,8 @@ import { url } from "@/Api/http.js";
 import { backLoginPage } from "@/utils/index.js"
 
 // 获取数据
-let gitData = async () => {
-    let data = await post(`${url}/api/members/get_member_list`, query())
+let gitData = async (val) => {
+    let data = await post(`${url}/api/members/get_member_list`, query(val))
     // 遍历数组
     if (data.data.err_code == -2) {
         alert("登录已过期,请重新登录")
@@ -16,7 +16,7 @@ let gitData = async () => {
         for (let item of data.data.data.list) {
             //    如果为1就正常,2就锁定,并且添加class属性
             if (item.is_status == 1) {
-                item.is_status = "正常"
+                item.type = "正常"
                 item.class = "normal "
             } else {
                 item.is_status = "锁定"
@@ -40,8 +40,8 @@ let gitData = async () => {
                 default:
             }
         }
-        console.log(data.data.data.list)
-        return data.data.data.list
+        // console.log(data.data.data.list)
+        return data.data.data
     }
 
 }
@@ -56,10 +56,10 @@ let searchUres = async (key, value) => {
         for (let item of data.data.data) {
             //    如果为1就正常,2就锁定,并且添加class属性
             if (item.is_status == 1) {
-                item.is_status = "正常"
+                item.type = "正常"
                 item.class = "normal "
             } else {
-                item.is_status = "锁定"
+                item.type = "锁定"
                 item.class = "offNormal "
             }
             // 判断是经销商还是管理员

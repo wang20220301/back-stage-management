@@ -4,7 +4,7 @@ import {
 } from "../utils/index"
 
 // 查询所有设备，或所有用户
-let query = (page = 1, page_num = 10) => {
+let query = (page = 1, page_num = 12) => {
     var param = new FormData();
     let tok = token()
     param.append("token", tok);
@@ -143,7 +143,7 @@ let alertMer2 = (obj, string) => {
     return param
 }
 // 添加用户
-let add = (value,account_type) => {
+let add = (value, account_type) => {
     let tok = token()
     var param = new FormData()
     param.append("token", tok);
@@ -155,6 +155,22 @@ let add = (value,account_type) => {
     return param
 
 }
+//  修改用户详情数据
+let alertUser = (value) => {
+    console.log("需要修改的用户详情数据", value)
+    let tok = token()
+    var param = new FormData()
+    param.append("token", tok);
+    param.append("name", value.name);
+    param.append("email", value.email);
+    param.append("mobile", value.mobile);
+    param.append("addr", value.addr);
+    param.append("account_type", value.account_type);
+    param.append("is_state", value.is_state)
+    param.append("member_id", value.member_id)
+    return param
+}
+
 function token() {
     return cookieValue("token")
 }
@@ -174,4 +190,5 @@ export {
     addMer,
     alertMer2,
     add,
+    alertUser,
 }

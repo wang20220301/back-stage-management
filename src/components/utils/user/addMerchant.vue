@@ -15,12 +15,12 @@
         class="demo-ruleForm"
       >
         <el-form-item label="分组">
-          <el-select v-model="region" placeholder="请选择用户组">
+          <el-select v-model="account_type" placeholder="请选择用户组">
             <el-option
               v-for="(item, index) in mertype"
               :key="index"
-              :label="item.role_name"
-              :value="item.role_id"
+              :label="item.name"
+              :value="item.account_type"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -69,11 +69,9 @@ export default {
   data() {
     //   验证用户名不能为空
     let validatePass3 = (rule, value, callback) => {
-      let reg = /^[\u4E00-\u9FA5]{2,4}$/;
+      // let reg = /^[\u4E00-\u9FA5]{2,4}$/;
       if (!value) {
         return callback(new Error("用户名不能为空"));
-      } else if (reg.test(value)) {
-        return callback(new Error("用户名不能为中文"));
       } else {
         return callback();
       }
@@ -116,7 +114,7 @@ export default {
       }
     };
     return {
-      region: "",
+      account_type: "",
       ruleForm: {
         name: "",
         email: "",
@@ -137,9 +135,13 @@ export default {
       if (region == "") {
         this.open2();
       } else {
-        this.$refs[formName].validate((valid) => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {
-            let res = addUser(this.$data.ruleForm, this.$data.region);
+            let res = await addUser(
+              this.$data.ruleForm,
+              this.$data.account_type
+            );
+            console.log(res, "打印认识的值");
             if (res == 2) {
               // 关闭弹窗
               this.open3();
@@ -177,7 +179,7 @@ export default {
     open4() {
       this.$notify({
         title: "警告",
-        message: "用户已存在",
+        message: "当前手机号已存在",
         type: "warning",
       });
     },
