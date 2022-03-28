@@ -362,11 +362,11 @@ export default {
     },
     // 样式高亮
     handlemyclass: function (row, column, rowIndex, columnIndex) {
-      console.log(row, column, rowIndex, columnIndex, "1213434");
+      // console.log(row, column, rowIndex, columnIndex, "1213434");
       return "test";
     },
     handrowclass: function (row, column, rowIndex, columnIndex) {
-      console.log(row, column, rowIndex, columnIndex);
+      // console.log(row, column, rowIndex, columnIndex);
       return "text";
     },
   },

@@ -164,7 +164,7 @@ let alterData = (name, long, address, shop_id, kind) => {
 let getBoxSize = (fun) => {
     let obj = {}
     msg((data) => {
-        console.log(data.all_position, "12121")
+        // console.log(data.all_position, "12121")
         // 格式化数据
 
         let arr = data.all_position

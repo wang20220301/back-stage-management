@@ -158,7 +158,7 @@ export default {
     // immediate 表示在 watch 中首次绑定数据的时候是否执行 handler
     msg: {
       handler(val) {
-        console.log(val, "watch监听的父组件传过来的值");
+        // console.log(val, "watch监听的父组件传过来的值");
         // val表示监听对象的值
         let ruleForm = this.$data.ruleForm;
         ruleForm.name = val.name;

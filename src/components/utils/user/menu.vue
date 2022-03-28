@@ -38,7 +38,7 @@
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
-        height="830"
+        height="754"
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="50px"> </el-table-column>
@@ -62,9 +62,9 @@
           </div>
         </el-table-column>
         <el-table-column prop="addr" label="地址"> </el-table-column>
-        <el-table-column fixed="right" label="操作" width="150">
+        <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
-            <el-button type="text" size="small">锁定</el-button>
+            <!-- <el-button type="text" size="small">锁定</el-button> -->
             <el-button @click="clickTrue(scope.row)" type="text" size="small"
               >查看/更新</el-button
             >
@@ -90,7 +90,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage4"
-            :page-sizes="[13, 26, 39,52]"
+            :page-sizes="[12, 24, 36,48]"
             :page-size="10"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total"
@@ -125,7 +125,7 @@ export default {
       total_page: 0,
       total: 0,
       currentPage4: 1,
-      page_num:""
+      page_num:12
     };
   },
   mounted() {
@@ -138,7 +138,7 @@ export default {
       let data = await gitData(val,page_num);
 
       // 这里获取总页数和分页
-      console.log(data.total_page, data.page);
+      // console.log(data.total_page, data.page);
       this.$data.tableData = data.list;
       // 获取当前的总数据
       this.$data.total = data.total * 1;
@@ -147,12 +147,12 @@ export default {
       // 把获取到的商户类型通过pops传给子组件
       this.$data.merType = await commercialType();
     },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
+    // handleOpen(key, keyPath) {
+    //   console.log(key, keyPath);
+    // },
+    // handleClose(key, keyPath) {
+    //   console.log(key, keyPath);
+    // },
     toggleSelection(rows) {
       if (rows) {
         rows.forEach((row) => {
@@ -173,9 +173,9 @@ export default {
       let len = this.multipleSelection.length;
       this.open2(value, len);
     },
-    handleClick(row) {
-      console.log(row);
-    },
+    // handleClick(row) {
+    //   console.log(row);
+    // },
     open2(value, len) {
       this.$confirm(`此操作将永久删除选中的${len}条数据, 是否继续?"`, {
         confirmButtonText: "确定",
@@ -213,22 +213,23 @@ export default {
     },
     handleCurrentChange(val) {
       // 获取当前的页数发送服务器请求数据,渲染页面,以及每次请求服务器的数据
+      console.log(this.$data.page_num,"打印出现的值")
       this.gitVuexData(val,this.$data.page_num);
       // console.log(`当前页: ${val}`);
     },
 
     clickAddUserName() {
-      let { form } = this.$data.form;
-      console.log(form, "1212");
+      // let { form } = this.$data.form;
+      // console.log(form, "1212");
       this.$data.dialogFormVisible = false;
-      console.log(this.$data.form, "12");
+      // console.log(this.$data.form, "12");
     },
     // 点击查看更新显示弹窗
     clickTrue(value) {
       this.$data.updataShow = true;
       // 父组件把当前选中的数据传给子组件
       this.$data.details = value;
-      console.log(value, "查看更新");
+      // console.log(value, "查看更新");
     },
     clickFase() {
       this.$data.dialogFormVisible2 = false;

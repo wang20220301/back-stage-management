@@ -245,7 +245,7 @@ export default {
       let dataX2 = msg.data.data.power.y;
       let datay2 = msg.data.data.power.data;
       this.elect2(dataX2, datay2);
-      console.log(msg.data.data);
+      // console.log(msg.data.data);
     },
   },
 };

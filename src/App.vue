@@ -1,27 +1,13 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <!-- <Layout></Layout> -->
-    <!-- <Menu></Menu> -->
   </div>
 </template>
 
 <script>
-// import Menu from './components/utils/menu.vue'
-// import Login from "./components/login/login.vue"
-// import layout from "./components/layout/index.vue"
-// import Menu from "./components/utils/menu.vue"
 export default {
   name: "App",
   components: {
-    // Menu
-    // Login,
-    // Layout
-  },
-  methods: {
-    click() {
-      console.log(this.$store.state.count);
-    },
   },
 };
 </script>

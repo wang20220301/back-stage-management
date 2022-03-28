@@ -24,7 +24,7 @@
               <h4>请选择登录方式</h4>
             </div>
             <div class="chexk">
-              <el-select v-model="value" placeholder="请选择登录方式">
+              <el-select v-model="value" placeholder="请选择登录方式" disabled>
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -61,18 +61,18 @@ export default {
           value: "1",
           label: "超级管理员",
         },
-        {
-          value: "2",
-          label: "运营管理员",
-        },
-        {
-          value: "3",
-          label: "学校管理员",
-        },
-        {
-          value: "4",
-          label: "班级管理员",
-        },
+        // {
+        //   value: "2",
+        //   label: "运营管理员",
+        // },
+        // {
+        //   value: "3",
+        //   label: "学校管理员",
+        // },
+        // {
+        //   value: "4",
+        //   label: "班级管理员",
+        // },
       ],
       value: "",
     };
@@ -80,6 +80,7 @@ export default {
   mounted() {
     // 加载页面判断是否有值,有就获取没有就默认值
     this.value = localStorageValue("loginType");
+    this.value = "1";
   },
   methods: {},
 };
@@ -108,8 +109,8 @@ export default {
   align-items: center;
 }
 .log img {
-   height: calc(44px * 2);
-  width: calc(140px *2);
+  height: calc(44px * 2);
+  width: calc(140px * 2);
 }
 .text h2 {
   font-size: 16px;

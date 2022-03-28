@@ -1,7 +1,11 @@
 <template>
   <div class="title">
-    <span>用户管理</span>
-    <span>用户管理</span>
+    <div class="da">设备管理</div>
+    <div class="xiao">
+      <span>设备管理></span>
+      <span>柜子管理></span>
+      <span>蜂巢智能电源</span>
+    </div>
   </div>
 </template>
 
@@ -15,10 +19,10 @@ export default {
 .title {
   display: flex;
   margin-bottom: 17px;
-  color: #282d30;
-  margin-left: 22px;
+  color: #282D30;
+  /* margin-top: 20px; */
 }
-.title span:nth-child(1) {
+.da {
   font-size: 18px;
   font-style: normal;
   font-weight: 800;
@@ -26,7 +30,7 @@ export default {
   letter-spacing: 0px;
   text-align: left;
 }
-.title span:nth-child(2) {
+.xiao {
   font-size: 14px;
   font-weight: 300;
   line-height: 21px;

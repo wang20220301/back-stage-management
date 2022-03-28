@@ -39,7 +39,7 @@ export default {
   mounted() {
     // 异步获取vuex数据
     VuexMsg((data) => {
-      console.log(data);
+      // console.log(data);
       this.$data.data = data;
     });
   },

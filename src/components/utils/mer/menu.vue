@@ -38,7 +38,7 @@
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
-        height="830"
+        height="754"
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="50px"> </el-table-column>
@@ -85,7 +85,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage4"
-            :page-sizes="[13,26,39,52]"
+            :page-sizes="[12, 24, 36, 48]"
             :page-size="10"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total"
@@ -120,7 +120,7 @@ export default {
       total_page: 0,
       total: 0,
       currentPage4: 1,
-      page_num:"",
+      page_num: 12,
     };
   },
   mounted() {
@@ -129,8 +129,8 @@ export default {
     this.gitType();
   },
   methods: {
-    async gitVuexData(val,page_num) {
-      let data = await gitData(val,page_num);
+    async gitVuexData(val, page_num) {
+      let data = await gitData(val, page_num);
 
       // 这里获取总页数和分页
       console.log(data.total_page, data.page);
@@ -200,10 +200,10 @@ export default {
     },
 
     clickAddUserName() {
-      let { form } = this.$data.form;
-      console.log(form, "1212");
+      // let { form } = this.$data.form;
+      // console.log(form, "1212");
       this.$data.dialogFormVisible = false;
-      console.log(this.$data.form, "12");
+      // console.log(this.$data.form, "12");
     },
     // 点击查看更新显示弹窗
     clickTrue(value) {
@@ -230,14 +230,14 @@ export default {
       this.gitVuexData();
     },
     handleSizeChange(val) {
-       // 存储每页显示的数据条数
-      this.$data.page_num=val
+      // 存储每页显示的数据条数
+      this.$data.page_num = val;
       // 发送消息向服务器请求相同条数的数据
-      this.gitVuexData("",val)
+      this.gitVuexData("", val);
     },
     handleCurrentChange(val) {
-       // 获取当前的页数发送服务器请求数据,渲染页面,以及每次请求服务器的数据
-      this.gitVuexData(val,this.$data.page_num);
+      // 获取当前的页数发送服务器请求数据,渲染页面,以及每次请求服务器的数据
+      this.gitVuexData(val, this.$data.page_num);
     },
     open3() {
       this.$message({

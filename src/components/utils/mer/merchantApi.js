@@ -95,7 +95,7 @@ let del = async (value) => {
     if (data.data.err_code == 2) {
         backLoginPage()
     } {
-        console.log(data)
+        // console.log(data)
     }
 }
 
@@ -106,7 +106,7 @@ let commercialType = async () => {
         alert("登录已过期,请重新登录")
         backLoginPage()
     } else {
-        console.log(data.data.data, "商户类型")
+        // console.log(data.data.data, "商户类型")
         return data.data.data
     }
 }
@@ -121,15 +121,15 @@ let addMerchants = async (obj, string) => {
     } else if (data.data.err_code == -1) {
         return 1
     } else {
-        console.log(data.data.err_code, "jin")
+        // console.log(data.data.err_code, "jin")
         return 2
     }
 }
 // 修改商户数据
 let alterMsg = async (obj, string) => {
 
-    let data = await post(`${url}/api/members/update_users`, alertMer2(obj, string))
-    console.log(data, obj)
+     await post(`${url}/api/members/update_users`, alertMer2(obj, string))
+    // console.log(data, obj)
 }
 
 export {

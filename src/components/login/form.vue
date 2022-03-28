@@ -110,7 +110,7 @@ export default {
             // 根据选项执行不同的请求路径
             let path = RequestUrl(this.value);
             post(path, param).then((res) => {
-              console.log(res.data);
+              console.log(res.data,"登录成功返回值");
               if (res.data.err_code == 1) {
                 // console.log(res.data.data.role_id,'12133')
                 let type = res.data.data.role_id;
