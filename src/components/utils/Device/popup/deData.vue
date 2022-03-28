@@ -307,7 +307,7 @@ export default {
   padding-right: 20px;
 }
 .electric {
-  height: 300px;
+  height: 28vh;
   margin-top: 20px;
   margin-left: 20px;
   margin-right: 20px;

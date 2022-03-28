@@ -21,7 +21,7 @@
         <el-table
           :data="tableData"
           style="width: 100%"
-          height="380"
+          height="34vh"
           stripe
           :header-cell-class-name="handlemyclass"
           :row-class-name="handrowclass"

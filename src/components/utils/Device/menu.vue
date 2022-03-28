@@ -394,7 +394,7 @@ export default {
 /* 设备数据弹窗样式 */
 .deMsg {
   width: 1300px;
-  height: 900px;
+  height: 83vh;
   top: 47px;
 }
 

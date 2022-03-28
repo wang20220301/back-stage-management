@@ -33,7 +33,7 @@
 </template>
 <script>
 import log from "../../assets/log.jpg";
-import { cookieValue } from "@/utils/index.js";
+import { cookieValue, backLoginPage } from "@/utils/index.js";
 export default {
   name: "homePage",
   data() {
@@ -68,9 +68,11 @@ export default {
         default:
       }
     },
+    },
     mounted() {
       let id = cookieValue("type");
       let userName = cookieValue("username");
+      console.log(userName, "的值为");
       this.$data.userName = userName;
       switch (id) {
         case "1":
@@ -88,15 +90,14 @@ export default {
         default:
       }
     },
-    // methods: {
-    //   handleCommand(command) {
-    //     if (command == 1) {
-    //       backLoginPage();
-    //     }
-    //   },
-    // },
-  },
-};
+    methods: {
+      handleCommand(command) {
+        if (command == 1) {
+          backLoginPage();
+        }
+      },
+    },
+  }
 </script>
 <style scoped>
 .header {
