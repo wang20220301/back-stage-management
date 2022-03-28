@@ -114,7 +114,7 @@ export default {
 }
 .right {
   width: 100%;
-  min-height: calc(100vh - 60px);
+  min-height:100vh;
   background: #ecf0f5;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
@@ -122,6 +122,6 @@ export default {
   min-height: 400px;
 }
 .el-menu-vertical-demo {
-  height: calc(100vh - 60px);
+  height: 100vh;
 }
 </style>

@@ -14,7 +14,7 @@
         </div>
         <div class="userName">
           <!-- 下拉菜单 -->
-          <el-dropdown @command="handleCommand">
+          <el-dropdown>
             <span class="el-dropdown-link">
               {{ userName }}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
@@ -33,7 +33,7 @@
 </template>
 <script>
 import log from "../../assets/log.jpg";
-import { cookieValue, backLoginPage } from "@/utils/index.js";
+import { cookieValue } from "@/utils/index.js";
 export default {
   name: "homePage",
   data() {
@@ -68,33 +68,33 @@ export default {
         default:
       }
     },
-  },
-  mounted() {
-    let id = cookieValue("type");
-    let userName = cookieValue("username");
-    this.$data.userName = userName;
-    switch (id) {
-      case "1":
-        this.$data.accountTyep = "超级管理员";
-        break;
-      case "5":
-        this.$data.accountTyep = "经销商";
-        break;
-      case "7":
-        this.$data.accountTyep = "运营商";
-        break;
-      case "8":
-        this.$data.accountTyep = "大客户";
-        break;
-      default:
-    }
-  },
-  methods: {
-    handleCommand(command) {
-      if (command == 1) {
-        backLoginPage();
+    mounted() {
+      let id = cookieValue("type");
+      let userName = cookieValue("username");
+      this.$data.userName = userName;
+      switch (id) {
+        case "1":
+          this.$data.accountTyep = "超级管理员";
+          break;
+        case "5":
+          this.$data.accountTyep = "经销商";
+          break;
+        case "7":
+          this.$data.accountTyep = "运营商";
+          break;
+        case "8":
+          this.$data.accountTyep = "大客户";
+          break;
+        default:
       }
     },
+    // methods: {
+    //   handleCommand(command) {
+    //     if (command == 1) {
+    //       backLoginPage();
+    //     }
+    //   },
+    // },
   },
 };
 </script>

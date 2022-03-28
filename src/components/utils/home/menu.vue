@@ -361,11 +361,11 @@ export default {
       option && myChart.setOption(option);
     },
     // 样式高亮
-    handlemyclass: function (row, column, rowIndex, columnIndex) {
+    handlemyclass: function () {
       // console.log(row, column, rowIndex, columnIndex, "1213434");
       return "test";
     },
-    handrowclass: function (row, column, rowIndex, columnIndex) {
+    handrowclass: function () {
       // console.log(row, column, rowIndex, columnIndex);
       return "text";
     },
