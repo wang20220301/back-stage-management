@@ -15,7 +15,7 @@
         <div class="input">
           <el-input
             v-model="input"
-            placeholder="请输入商户信息"
+            placeholder="输入用户名或手机号查找"
             suffix-icon="el-icon-search"
             size="small"
             @change="search"
@@ -27,7 +27,7 @@
             type="primary"
             size="small"
             autosize
-            >添加商户</el-button
+            >添加用户</el-button
           >
         </div>
       </div>
@@ -39,6 +39,7 @@
         tooltip-effect="dark"
         style="width: 100%"
         height="77vh"
+        highlight-current-row
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="50px"> </el-table-column>
@@ -61,12 +62,18 @@
             {{ scope.row.role_name }}
           </div>
         </el-table-column>
-        <el-table-column prop="addr" label="地址"> </el-table-column>
+        <el-table-column
+          prop="addr"
+          label="地址"
+          class-name="addres"
+          show-overflow-tooltip
+        >
+        </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
             <!-- <el-button type="text" size="small">锁定</el-button> -->
             <el-button @click="clickTrue(scope.row)" type="text" size="small"
-              >查看/更新</el-button
+              >修改</el-button
             >
           </template>
         </el-table-column>
@@ -90,7 +97,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage4"
-            :page-sizes="[12, 24, 36,48]"
+            :page-sizes="[12, 24, 36, 48]"
             :page-size="10"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total"
@@ -102,7 +109,7 @@
   </div>
 </template>
 <script>
-import { gitData, del, searchUres, commercialType } from "./merchantApi";
+import { gitData, del, searchUres, commercialType } from "./userApi.js";
 import AddUser from "./addMerchant.vue";
 import UpData from "./upData.vue";
 export default {
@@ -125,7 +132,7 @@ export default {
       total_page: 0,
       total: 0,
       currentPage4: 1,
-      page_num:12
+      page_num: 12,
     };
   },
   mounted() {
@@ -134,8 +141,8 @@ export default {
     this.gitType();
   },
   methods: {
-    async gitVuexData(val,page_num) {
-      let data = await gitData(val,page_num);
+    async gitVuexData(val, page_num) {
+      let data = await gitData(val, page_num);
 
       // 这里获取总页数和分页
       // console.log(data.total_page, data.page);
@@ -147,12 +154,6 @@ export default {
       // 把获取到的商户类型通过pops传给子组件
       this.$data.merType = await commercialType();
     },
-    // handleOpen(key, keyPath) {
-    //   console.log(key, keyPath);
-    // },
-    // handleClose(key, keyPath) {
-    //   console.log(key, keyPath);
-    // },
     toggleSelection(rows) {
       if (rows) {
         rows.forEach((row) => {
@@ -173,9 +174,6 @@ export default {
       let len = this.multipleSelection.length;
       this.open2(value, len);
     },
-    // handleClick(row) {
-    //   console.log(row);
-    // },
     open2(value, len) {
       this.$confirm(`此操作将永久删除选中的${len}条数据, 是否继续?"`, {
         confirmButtonText: "确定",
@@ -186,6 +184,9 @@ export default {
           del(value);
           // 删除成功刷新页面
           this.gitVuexData();
+          // 删除成功跳转到第一页
+          console.log(this.$data, "打印");
+          this.$data.total_page = 1;
           this.$message({
             type: "success",
             message: "删除成功!",
@@ -207,22 +208,19 @@ export default {
 
     handleSizeChange(val) {
       // 存储每页显示的数据条数
-      this.$data.page_num=val
+      this.$data.page_num = val;
       // 发送消息向服务器请求相同条数的数据
-      this.gitVuexData("",val)
+      this.gitVuexData("", val);
     },
     handleCurrentChange(val) {
       // 获取当前的页数发送服务器请求数据,渲染页面,以及每次请求服务器的数据
-      console.log(this.$data.page_num,"打印出现的值")
-      this.gitVuexData(val,this.$data.page_num);
+      console.log(this.$data.page_num, "打印出现的值");
+      this.gitVuexData(val, this.$data.page_num);
       // console.log(`当前页: ${val}`);
     },
 
     clickAddUserName() {
-      // let { form } = this.$data.form;
-      // console.log(form, "1212");
       this.$data.dialogFormVisible = false;
-      // console.log(this.$data.form, "12");
     },
     // 点击查看更新显示弹窗
     clickTrue(value) {

@@ -2,15 +2,17 @@
   <div>
     <div class="foo">
       <div class="fooTitle">
-        <div><p>一个小时内的设备数据</p></div>
+        <div><p>设备数据表</p></div>
         <div>
           <div class="block">
             <el-date-picker
               v-model="value3"
-              type="datetime"
-              size="mini"
-              placeholder="选择日期时间"
+              type="datetimerange"
+              range-separator="至"
+              start-placeholder="开始日期"
               value-format="yyyy-MM-dd,H"
+              size="mini"
+              end-placeholder="结束日期"
               @change="getHousData"
             >
             </el-date-picker>
@@ -68,6 +70,7 @@ export default {
   mounted() {
     // 页面更新获取数据
     msg2((data) => {
+      console.log(data, "打印data数据");
       if (data.monitor_data == false) {
         this.$data.tableData = [];
       } else {

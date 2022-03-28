@@ -1,7 +1,7 @@
 <template>
   <div class="addUser">
     <div class="cancel">
-      <h4>查看/更新</h4>
+      <h4>修改</h4>
       <p @click="ckickClose"><i class="el-icon-close"></i></p>
     </div>
     <div class="fromStyle">
@@ -77,7 +77,7 @@
           <el-button type="primary" @click="submitForm('ruleForm')"
             >保存</el-button
           >
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button @click="resetForm()">取消</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -91,8 +91,13 @@ export default {
   data() {
     //   验证用户名不能为空
     let validatePass3 = (rule, value, callback) => {
+      let reg = /^[\u4E00-\u9FA5]{2,4}$/;
       if (!value) {
         return callback(new Error("用户名不能为空"));
+      } else if (reg.test(value)) {
+        return callback(new Error("用户名不能为中文"));
+      } else if (value.length > 10) {
+        return callback(new Error("用户名不能超过10个字符"));
       } else {
         return callback();
       }
@@ -130,12 +135,12 @@ export default {
       let pattern = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
       setTimeout(() => {
         if (!Number.isInteger(value)) {
-          callback(new Error("请输入数字值"));
+          return callback(new Error("请输入数字值"));
         } else {
           if (!pattern.test(value)) {
-            callback(new Error("请输入正确的手机号"));
+            return callback(new Error("请输入正确的手机号"));
           } else {
-            callback();
+            return callback();
           }
         }
       }, 1000);
@@ -144,6 +149,8 @@ export default {
     let validatePass4 = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("地址不能为空"));
+      } else if (value.length > 30) {
+        return callback(new Error("最多不能超过30个字符"));
       } else {
         return callback();
       }
@@ -205,21 +212,21 @@ export default {
           // 获取当前的值
           alterMsg(this.$data.ruleForm, this.$data.shop_id);
           this.ckickClose();
-          this.open3()
+          this.open3();
         } else {
           return false;
         }
       });
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    resetForm() {
+     this.ckickClose()
     },
     // 点击关闭
     ckickClose() {
       // 点击触发父组件方法
       this.$emit("increment", 1);
     },
-     open3() {
+    open3() {
       this.$message({
         message: "修改成功",
         type: "success",

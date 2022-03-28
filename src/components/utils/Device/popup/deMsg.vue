@@ -12,6 +12,7 @@
               :label="item.username"
               :value="item.user_id"
               :key="item.user_id"
+              disabled
             >
             </el-option>
           </el-select>
@@ -20,6 +21,7 @@
           <el-select
             v-model="value2"
             :placeholder="sizeForm.kind == 1 ? count[1] : count[0]"
+            disabled
           >
             <el-option value="1" label="36格"></el-option>
             <el-option value="2" label="64格"></el-option>
@@ -47,7 +49,7 @@
 </template>
 
 <script>
-import { msg, alterData } from "./popup.js";
+import { msg, alterData, gitData } from "./popup.js";
 export default {
   name: "fromMmodul",
   data() {
@@ -61,9 +63,9 @@ export default {
     };
   },
   mounted() {
-    // 获取vuex数据
+    // 进入页面获取数据
+    gitData();
     msg((data) => {
-      // console.log(data.detail);
       this.$data.sizeForm = data.detail;
       this.$data.user = data.merchant;
     });

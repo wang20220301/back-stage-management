@@ -48,6 +48,8 @@ let gitData = async (val,page_num) => {
 // 搜索
 let searchUres = async (key, value) => {
     let data = await post(`${url}/api/members/select_member`, queryOnce(key, value))
+    // 打印查找的值
+    console.log(data,"搜索回来的数据")
     if (data.data.err_code == -2) {
         backLoginPage()
         alert("登录已过期,请重新登录")

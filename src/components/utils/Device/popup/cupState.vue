@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import { getBoxSize, controData, gitData } from "./popup.js";
+import { getBoxSize, controData } from "./popup.js";
 import { StatusMsg } from "./popup.js";
 import openImg from "@/assets/open.png";
 import offImg from "@/assets/off.png";
@@ -73,7 +73,7 @@ export default {
     };
   },
   created() {
-    gitData();
+    // gitData();
     getBoxSize((data) => {
       this.$data.msg = data;
     });

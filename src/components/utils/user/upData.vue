@@ -1,7 +1,7 @@
 <template>
   <div class="addUser">
     <div class="cancel">
-      <h4>查看/更新</h4>
+      <h4>修改</h4>
       <p @click="ckickClose"><i class="el-icon-close"></i></p>
     </div>
     <div class="fromStyle">
@@ -66,14 +66,14 @@
           <el-button type="primary" @click="submitForm('ruleForm')"
             >保存</el-button
           >
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button @click="resetForm('ruleForm')">取消</el-button>
         </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
 <script>
-import { alertUserDetails } from "./merchantApi.js";
+import { alertUserDetails } from "./userApi.js";
 export default {
   // 接收父组件传过来的参数
   props: ["msg", "mertype"],
@@ -82,6 +82,8 @@ export default {
     let validatePass3 = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("用户名不能为空"));
+      } else if (value.length > 5) {
+        return callback(new Error("用户名最多不能超过6个字符"));
       } else {
         return callback();
       }
@@ -120,6 +122,8 @@ export default {
     let validatePass4 = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("地址不能为空"));
+      } else if (value.length > 30) {
+        return callback(new Error("最多不能超过30个字符"));
       } else {
         return callback();
       }
@@ -185,8 +189,9 @@ export default {
         }
       });
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    // 点击按钮取消关闭弹窗
+    resetForm() {
+      this.ckickClose();
     },
     // 点击关闭
     ckickClose() {
@@ -205,8 +210,8 @@ export default {
 
 <style scoped>
 .addUser {
-  width: 560px;
-  height: 521px;
+  width: 500px;
+  height: 410px;
   margin: auto;
   background: #fff;
   border-radius: 6px;
@@ -220,8 +225,10 @@ export default {
   align-items: center;
 }
 .cancel {
-  /* padding:10px */
   padding-left: 10px;
+}
+.cancel h4{
+  padding-top: 10px;
 }
 .cancel p {
   width: 20px;

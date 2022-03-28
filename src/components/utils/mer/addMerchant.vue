@@ -24,7 +24,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="用户名" prop="userName">
+        <el-form-item label="账号" prop="userName">
           <el-input
             type="text"
             v-model="ruleForm.userName"
@@ -78,9 +78,11 @@ export default {
     let validatePass3 = (rule, value, callback) => {
       let reg = /^[\u4E00-\u9FA5]{2,4}$/;
       if (!value) {
-        return callback(new Error("用户名不能为空"));
+        return callback(new Error("账号不能为空"));
       } else if (reg.test(value)) {
-        return callback(new Error("用户名不能为中文"));
+        return callback(new Error("账号不能为中文"));
+      } else if (value.length > 10) {
+        return callback(new Error("账号不能超过10个字符"));
       } else {
         return callback();
       }
@@ -208,8 +210,8 @@ export default {
 
 <style scoped>
 .addUser {
-  width: 560px;
-  height: 456px;
+  width: 468px;
+  height: 400px;
   margin: auto;
   background: #fff;
   border-radius: 6px;
@@ -217,7 +219,7 @@ export default {
 .cancel {
   width: 100%;
   height: 30px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -232,7 +234,8 @@ export default {
   padding: 10px;
 }
 .fromStyle {
-  padding: 0px 24px;
+  padding: 20px;
+  padding-right: 40px;
 }
 </style>
 

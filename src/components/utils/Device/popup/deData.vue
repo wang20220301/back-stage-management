@@ -2,37 +2,23 @@
   <div>
     <header class="head">
       <div class="headLeft">
-        <h4>{{ details.monitor_name }}</h4>
+        <h3>{{ details.monitor_name }}</h3>
         <div class="text">
-          <p>{{ details.type }}</p>
-          <p>/{{ details.name }}</p>
-        </div>
-        <div class="text2">
-          <p>{{ details.address }}</p>
-        </div>
-      </div>
-      <div class="headRight">
-        <div class="block">
-          <el-date-picker
-            v-model="value1"
-            type="daterange"
-            size="mini"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            value-format="yyyy-MM-dd"
-            @change="getDateRequest"
-          >
-          </el-date-picker>
+          <el-select v-model="value" placeholder="请选择" size="mini" >
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
         </div>
       </div>
     </header>
     <div class="electric">
       <div class="electrc1">
         <div id="elect1" style="width: 100%; height: 100%"></div>
-      </div>
-      <div class="electrc2">
-        <div id="elect2" style="width: 100%; height: 100%"></div>
       </div>
     </div>
     <Footer></Footer>
@@ -41,7 +27,7 @@
 
 <script>
 import Footer from "./deMsgFooter.vue";
-import { getFacilityData, msg2, getDateSection } from "./popup.js";
+import { getFacilityData, msg2 } from "./popup.js";
 export default {
   name: "deviceData",
   components: {
@@ -65,7 +51,7 @@ export default {
   },
   data() {
     return {
-      value1: "",
+      // value1: "",
       value2: "",
       details: "",
     };
@@ -78,7 +64,7 @@ export default {
 
       option = {
         title: {
-          text: "设备实时电量(百分比)",
+          subtext: "设备实时电量",
           top: "10px",
         },
         tooltip: {
@@ -149,104 +135,104 @@ export default {
 
       option && myChart.setOption(option);
     },
-    elect2(dataX2, datay2) {
-      var chartDom = document.getElementById("elect2");
-      var myChart = this.$echarts.init(chartDom);
-      var option;
+    // elect2(dataX2, datay2) {
+    //   var chartDom = document.getElementById("elect2");
+    //   var myChart = this.$echarts.init(chartDom);
+    //   var option;
 
-      option = {
-        title: {
-          text: "设备充电功率(w)",
-          top: "10px",
-        },
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-          },
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            saveAsImage: {},
-          },
-        },
-        xAxis: {
-          type: "category",
-          boundaryGap: false,
-          // prettier-ignore
-          data: dataX2,
-        },
-        yAxis: {
-          type: "value",
-          axisLabel: {
-            formatter: "{value} W",
-          },
-          axisPointer: {
-            snap: true,
-          },
-        },
-        visualMap: {
-          show: false,
-          dimension: 0,
-          pieces: [
-            {
-              lte: 6,
-              color: "green",
-            },
-            {
-              gt: 6,
-              lte: 8,
-              color: "green",
-            },
-            {
-              gt: 8,
-              lte: 14,
-              color: "green",
-            },
-            {
-              gt: 14,
-              lte: 17,
-              color: "green",
-            },
-            {
-              gt: 17,
-              color: "green",
-            },
-          ],
-        },
-        series: [
-          {
-            name: "设备充电功率(w)",
-            type: "line",
-            smooth: true,
-            data: datay2,
-            markArea: {},
-          },
-        ],
-      };
+    //   option = {
+    //     title: {
+    //       text: "设备充电功率(w)",
+    //       top: "10px",
+    //     },
+    //     tooltip: {
+    //       trigger: "axis",
+    //       axisPointer: {
+    //         type: "cross",
+    //       },
+    //     },
+    //     toolbox: {
+    //       show: true,
+    //       feature: {
+    //         saveAsImage: {},
+    //       },
+    //     },
+    //     xAxis: {
+    //       type: "category",
+    //       boundaryGap: false,
+    //       // prettier-ignore
+    //       data: dataX2,
+    //     },
+    //     yAxis: {
+    //       type: "value",
+    //       axisLabel: {
+    //         formatter: "{value} W",
+    //       },
+    //       axisPointer: {
+    //         snap: true,
+    //       },
+    //     },
+    //     visualMap: {
+    //       show: false,
+    //       dimension: 0,
+    //       pieces: [
+    //         {
+    //           lte: 6,
+    //           color: "green",
+    //         },
+    //         {
+    //           gt: 6,
+    //           lte: 8,
+    //           color: "green",
+    //         },
+    //         {
+    //           gt: 8,
+    //           lte: 14,
+    //           color: "green",
+    //         },
+    //         {
+    //           gt: 14,
+    //           lte: 17,
+    //           color: "green",
+    //         },
+    //         {
+    //           gt: 17,
+    //           color: "green",
+    //         },
+    //       ],
+    //     },
+    //     series: [
+    //       {
+    //         name: "设备充电功率(w)",
+    //         type: "line",
+    //         smooth: true,
+    //         data: datay2,
+    //         markArea: {},
+    //       },
+    //     ],
+    //   };
 
-      option && myChart.setOption(option);
-    },
+    //   option && myChart.setOption(option);
+    // },
 
-    //  当选择了日期点击确认即发送请求
-    async getDateRequest() {
-      // 获取请求数据渲染页面
-      console.log(this.$data.value1);
-      let msg = await getDateSection(
-        this.$data.value1[0],
-        this.$data.value1[1]
-      );
-      // // 设备实时电量百分比
-      let dataX = msg.data.data.battery.y;
-      let datay = msg.data.data.battery.data;
-      this.elect1(dataX, datay);
-      // // 设备充电功率
-      let dataX2 = msg.data.data.power.y;
-      let datay2 = msg.data.data.power.data;
-      this.elect2(dataX2, datay2);
-      // console.log(msg.data.data);
-    },
+    // //  当选择了日期点击确认即发送请求
+    // async getDateRequest() {
+    //   // 获取请求数据渲染页面
+    //   console.log(this.$data.value1);
+    //   let msg = await getDateSection(
+    //     this.$data.value1[0],
+    //     this.$data.value1[1]
+    //   );
+    //   // // 设备实时电量百分比
+    //   let dataX = msg.data.data.battery.y;
+    //   let datay = msg.data.data.battery.data;
+    //   this.elect1(dataX, datay);
+    //   // // 设备充电功率
+    //   let dataX2 = msg.data.data.power.y;
+    //   let datay2 = msg.data.data.power.data;
+    //   this.elect2(dataX2, datay2);
+    //   // console.log(msg.data.data);
+    // },
   },
 };
 </script>
@@ -265,15 +251,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.headLeft h4 {
-  width: 160px;
-  font-size: 18px;
-  font-weight: 500;
-  text-align: LEFT;
-  color: #20253a;
-  margin-left: 20px;
-  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  padding-left: 20px;
 }
 .headLeft .text {
   margin-left: 30px;
@@ -314,15 +292,9 @@ export default {
   display: flex;
 }
 .electrc1 {
-  width: 49.5%;
+  width: 100%;
   height: 100%;
-  margin-right: 20px;
-  background: #fff;
-  border-radius: 5px;
-}
-.electrc2 {
-  width: 49.5%;
-  height: 100%;
+  margin-right: 10px;
   background: #fff;
   border-radius: 5px;
 }

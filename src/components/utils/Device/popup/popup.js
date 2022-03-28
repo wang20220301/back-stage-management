@@ -24,13 +24,13 @@ let gitData = () => {
 
 // 获取通过计时器异步获取vuex里的data数据
 let msg = (fun) => {
-    let time = setTimeout(() => {
+    let time = setInterval(() => {
         let data = store.state.popup.data
         if (data != null) {
             clearInterval(time);
             fun(data)
         }
-    }, 100)
+    }, 130)
 
 }
 
@@ -164,9 +164,6 @@ let alterData = (name, long, address, shop_id, kind) => {
 let getBoxSize = (fun) => {
     let obj = {}
     msg((data) => {
-        // console.log(data.all_position, "12121")
-        // 格式化数据
-
         let arr = data.all_position
         for (let key in arr) {
             obj[key] = {}
@@ -208,7 +205,7 @@ let msg2 = (fun) => {
             clearInterval(time);
             fun(data)
         }
-    }, 50)
+    }, 130)
 
 }
 // 获取指定设备的指定日期区间数据

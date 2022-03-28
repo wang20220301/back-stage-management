@@ -45,7 +45,7 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="地址" prop="addr">
+        <el-form-item label="地址" prop="addr" size="">
           <el-input
             type="text"
             v-model="ruleForm.addr"
@@ -63,7 +63,7 @@
   </div>
 </template>
 <script>
-import { addUser } from "./merchantApi";
+import { addUser } from "./userApi.js";
 export default {
   props: ["mertype"],
   data() {
@@ -72,6 +72,8 @@ export default {
       // let reg = /^[\u4E00-\u9FA5]{2,4}$/;
       if (!value) {
         return callback(new Error("用户名不能为空"));
+      } else if (value.length > 5) {
+        return callback(new Error("用户名最多不能超过6个字符"));
       } else {
         return callback();
       }
@@ -109,6 +111,8 @@ export default {
     let validatePass4 = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("地址不能为空"));
+      } else if (value.length > 30) {
+        return callback(new Error("最多不能超过30个字符"));
       } else {
         return callback();
       }
@@ -131,8 +135,8 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      let region = this.$data.region;
-      if (region == "") {
+      let account_type = this.$data.account_type;
+      if (account_type == "") {
         this.open2();
       } else {
         this.$refs[formName].validate(async (valid) => {
@@ -141,11 +145,13 @@ export default {
               this.$data.ruleForm,
               this.$data.account_type
             );
-            console.log(res, "打印认识的值");
             if (res == 2) {
               // 关闭弹窗
-              this.open3();
               this.ckickClose();
+              //  弹出成功信息
+              this.open3();
+              // 添加成功清除数据
+              this.resetForm(formName);
             } else {
               this.open4();
             }
@@ -189,8 +195,8 @@ export default {
 
 <style scoped>
 .addUser {
-  width: 560px;
-  height: 456px;
+  width: 464px;
+  height: 384px;
   margin: auto;
   background: #fff;
   border-radius: 6px;
@@ -198,22 +204,22 @@ export default {
 .cancel {
   width: 100%;
   height: 30px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .cancel {
-  /* padding:10px */
   padding-left: 10px;
 }
 .cancel p {
   width: 20px;
   height: 20px;
-  padding: 10px;
+  padding: 14px;
 }
 .fromStyle {
-  padding: 0px 24px;
+  padding: 20px;
+  padding-right: 40px;
 }
 </style>
 

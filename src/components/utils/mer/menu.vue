@@ -56,12 +56,12 @@
         <el-table-column prop="name" label="用户名称"> </el-table-column>
         <el-table-column prop="create_time" label="注册时间"> </el-table-column>
         <el-table-column prop="role_name" label="角色信息"> </el-table-column>
-        <el-table-column prop="address" label="地址"> </el-table-column>
+        <el-table-column prop="address" label="地址" show-overflow-tooltip> </el-table-column>
         <el-table-column fixed="right" label="操作" width="150">
           <template slot-scope="scope">
             <el-button type="text" size="small">锁定</el-button>
             <el-button @click="clickTrue(scope.row)" type="text" size="small"
-              >查看/更新</el-button
+              >修改</el-button
             >
           </template>
         </el-table-column>
