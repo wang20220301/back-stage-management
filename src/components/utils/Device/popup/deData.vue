@@ -51,7 +51,6 @@ export default {
   },
   data() {
     return {
-      // value1: "",
       value2: "",
       details: "",
     };

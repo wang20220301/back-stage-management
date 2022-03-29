@@ -15,7 +15,7 @@
         <div class="input">
           <el-input
             v-model="input"
-            placeholder="输入用户名或手机号查找"
+            placeholder="输入用户名或手机号"
             suffix-icon="el-icon-search"
             size="small"
             @change="search"
@@ -71,7 +71,6 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
-            <!-- <el-button type="text" size="small">锁定</el-button> -->
             <el-button @click="clickTrue(scope.row)" type="text" size="small"
               >修改</el-button
             >
@@ -92,11 +91,12 @@
         >
       </div>
       <div class="right">
-        <div class="block">
+        <div class="block" v-if="pageShow">
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="currentPage4"
+            :current-page.sync="currentPage4"
+            :page-count="10"
             :page-sizes="[12, 24, 36, 48]"
             :page-size="10"
             layout="total, sizes, prev, pager, next, jumper"
@@ -133,6 +133,7 @@ export default {
       total: 0,
       currentPage4: 1,
       page_num: 12,
+      pageShow: true,
     };
   },
   mounted() {
@@ -144,11 +145,11 @@ export default {
     async gitVuexData(val, page_num) {
       let data = await gitData(val, page_num);
 
-      // 这里获取总页数和分页
-      // console.log(data.total_page, data.page);
       this.$data.tableData = data.list;
       // 获取当前的总数据
       this.$data.total = data.total * 1;
+
+      console.log(this.$data.currentPage4, "打印分页数据");
     },
     async gitType() {
       // 把获取到的商户类型通过pops传给子组件
@@ -184,9 +185,13 @@ export default {
           del(value);
           // 删除成功刷新页面
           this.gitVuexData();
-          // 删除成功跳转到第一页
-          console.log(this.$data, "打印");
-          this.$data.total_page = 1;
+          // 设置页码为1
+          this.$data.currentPage4 = 1;
+          this.$data.pageshow = false; //让分页隐藏
+          this.$nextTick(() => {
+            //重新渲染分页
+            this.$data.pageshow = true;
+          });
           this.$message({
             type: "success",
             message: "删除成功!",
@@ -214,9 +219,8 @@ export default {
     },
     handleCurrentChange(val) {
       // 获取当前的页数发送服务器请求数据,渲染页面,以及每次请求服务器的数据
-      console.log(this.$data.page_num, "打印出现的值");
+      // console.log(this.$data.page_num, "打印出现的值");
       this.gitVuexData(val, this.$data.page_num);
-      // console.log(`当前页: ${val}`);
     },
 
     clickAddUserName() {
@@ -227,7 +231,6 @@ export default {
       this.$data.updataShow = true;
       // 父组件把当前选中的数据传给子组件
       this.$data.details = value;
-      // console.log(value, "查看更新");
     },
     clickFase() {
       this.$data.dialogFormVisible2 = false;

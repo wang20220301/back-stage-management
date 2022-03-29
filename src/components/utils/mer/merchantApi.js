@@ -60,23 +60,23 @@ let searchUres = async (key, value) => {
                 item.type = "正常"
                 item.class = "normal "
             } else {
-                item.type = "锁定"
+                item.is_status = "锁定"
                 item.class = "offNormal "
             }
-            // 判断是经销商还是管理员
+
             let id = item.role_id * 1
             switch (id) {
                 case 1:
-                    item.role_id = "超级管理员"
+                    item.role_name = "超级管理员"
                     break;
                 case 5:
-                    item.role_id = "经销商"
+                    item.role_name = "经销商"
                     break;
                 case 7:
-                    item.role_id = "运营商"
+                    item.role_name = "运营商"
                     break
                 case 8:
-                    item.role_id = "大客户"
+                    item.role_name = "大客户"
                     break
                 default:
             }

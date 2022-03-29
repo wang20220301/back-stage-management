@@ -15,7 +15,7 @@
         <div class="input">
           <el-input
             v-model="input"
-            placeholder="请输入商户信息"
+            placeholder="请输入用户名或手机号"
             suffix-icon="el-icon-search"
             size="small"
             @change="search"
@@ -56,7 +56,8 @@
         <el-table-column prop="name" label="用户名称"> </el-table-column>
         <el-table-column prop="create_time" label="注册时间"> </el-table-column>
         <el-table-column prop="role_name" label="角色信息"> </el-table-column>
-        <el-table-column prop="address" label="地址" show-overflow-tooltip> </el-table-column>
+        <el-table-column prop="address" label="地址" show-overflow-tooltip>
+        </el-table-column>
         <el-table-column fixed="right" label="操作" width="150">
           <template slot-scope="scope">
             <el-button type="text" size="small">锁定</el-button>
@@ -167,9 +168,9 @@ export default {
       let len = this.multipleSelection.length;
       this.open2(value, len);
     },
-    handleClick(row) {
-      console.log(row);
-    },
+    // handleClick(row) {
+    //   console.log(row);
+    // },
     open2(value, len) {
       this.$confirm(`此操作将永久删除选中的${len}条数据, 是否继续?`, {
         confirmButtonText: "确定",
@@ -180,6 +181,9 @@ export default {
           del(value);
           // 删除成功刷新页面
           this.gitVuexData();
+          // 设置页码为1
+          this.$data.currentPage4 = 1;
+          this.$data.pageshow = false; //让分页隐藏
           this.$message({
             type: "success",
             message: "删除成功!",
@@ -210,7 +214,7 @@ export default {
       this.$data.updataShow = true;
       // 父组件把当前选中的数据传给子组件
       this.$data.details = value;
-      console.log(value, "查看更新");
+      // console.log(value, "查看更新");
     },
     clickFase() {
       this.$data.dialogFormVisible2 = false;

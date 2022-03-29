@@ -383,7 +383,7 @@ export default {
 /* 柜格状态弹窗样式 */
 .cupboardState {
   width: 860px;
-  height: 820px;
+  height: 732px;
   top: 0;
 }
 /* 设备信息弹窗样式 */

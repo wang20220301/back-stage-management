@@ -21,29 +21,21 @@
     <div class="control-cabinet">
       <p>柜子控制:</p>
       <div>
-        <el-button type="primary" size="mini">一键清货</el-button>
+        <el-button type="primary" size="mini" @click="clearStocks"
+          >一键清货</el-button
+        >
+        <el-button type="primary" size="mini" @click="open2">{{
+          list[8].value == "开启" ? "关灯" : "开灯"
+        }}</el-button>
+        <el-button type="primary" size="mini" @click="open3">{{
+          list[11].value == "开启" ? "关闭电源" : "开启电源"
+        }}</el-button>
       </div>
     </div>
     <p class="explain">
       说明:单个柜格操作-单击需要操作的柜格,选择,打开,或清货,全部柜格状态清空-
       -键清货
     </p>
-    <div class="lamp">
-      <span> 灯状态:</span>
-      <img
-        :src="list[8].value == `开启` ? img : img2"
-        alt=""
-        @click="lampStateCut()"
-      />
-    </div>
-    <div class="power">
-      <span> 电源控制：</span>
-      <img
-        :src="list[11].value == `开启` ? img : img2"
-        alt=""
-        @click="powerStateCut()"
-      />
-    </div>
     <div class="status">
       <div class="list">
         <div v-for="(item, index) in list" :key="index">
@@ -127,22 +119,25 @@ export default {
           });
       }
     },
-    lampStateCut() {
-      let list = this.$data.list[8];
+    // 一键清货
+    clearStocks() {
+      this.open4();
+    },
+    // 控制灯
+    lampStateCut(list) {
+      // let list = this.$data.list[8];
       if (list.value == "开启") {
         list.value = "关闭";
-        list.class = "highlight2";
         controData(1, "lamp", 0);
         this.$set(this.$data.list, 8, list);
       } else {
         list.value = "开启";
-        list.class = "highlight";
         controData(1, "lamp", 1);
         this.$set(this.$data.list, 8, list);
       }
     },
-    powerStateCut() {
-      let list = this.$data.list[11];
+    // 控制电
+    powerStateCut(list) {
       if (list.value == "开启") {
         list.value = "关闭";
         list.class = "highlight2";
@@ -154,6 +149,71 @@ export default {
         controData(2, "wire", 1);
         this.$set(this.$data.list, 11, list);
       }
+    },
+    // 控制灯
+    open2() {
+      let list = this.$data.list[8];
+      let str = list.value == "开启" ? "关闭" : "开启";
+      this.$confirm(`是否${str}灯?`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.lampStateCut(list);
+          this.$message({
+            type: "success",
+            message: `灯已${str}!`,
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "取消",
+          });
+        });
+    },
+    // 控制电
+    open3() {
+      let list = this.$data.list[11];
+      let str = list.value == "开启" ? "关闭" : "开启";
+      this.$confirm(`是否${str}电源?`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.powerStateCut(list);
+          this.$message({
+            type: "success",
+            message: `电源已${str}!`,
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "取消",
+          });
+        });
+    },
+    open4() {
+      this.$confirm(`将清空所有柜格状态,是否继续?`, "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: `已清空所有柜格`,
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "取消",
+          });
+        });
     },
   },
 };
