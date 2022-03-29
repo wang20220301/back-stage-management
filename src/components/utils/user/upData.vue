@@ -92,7 +92,8 @@ export default {
       if (!value) {
         return callback(new Error("邮箱不能为空"));
       }
-      let re = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/;
+      // let re = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/;
+        let re = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
       setTimeout(() => {
         if (!re.test(value)) {
           return callback(new Error("请输入正确的邮箱号"));
