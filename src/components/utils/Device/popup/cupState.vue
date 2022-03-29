@@ -124,28 +124,31 @@ export default {
       this.open4();
     },
     // 控制灯
-    lampStateCut(list) {
-      // let list = this.$data.list[8];
+    lampStateCut() {
+      let list = this.$data.list[8];
       if (list.value == "开启") {
         list.value = "关闭";
+        list.class = "highlight";
         controData(1, "lamp", 0);
         this.$set(this.$data.list, 8, list);
       } else {
         list.value = "开启";
+        list.class = "highlight2";
         controData(1, "lamp", 1);
         this.$set(this.$data.list, 8, list);
       }
     },
     // 控制电
-    powerStateCut(list) {
+    powerStateCut() {
+      let list = this.$data.list[11];
       if (list.value == "开启") {
         list.value = "关闭";
-        list.class = "highlight2";
+        list.class = "highlight";
         controData(2, "wire", 0);
         this.$set(this.$data.list, 11, list);
       } else {
         list.value = "开启";
-        list.class = "highlight";
+        list.class = "highlight2";
         controData(2, "wire", 1);
         this.$set(this.$data.list, 11, list);
       }
@@ -160,7 +163,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.lampStateCut(list);
+          this.lampStateCut();
           this.$message({
             type: "success",
             message: `灯已${str}!`,
@@ -183,7 +186,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.powerStateCut(list);
+          this.powerStateCut();
           this.$message({
             type: "success",
             message: `电源已${str}!`,
