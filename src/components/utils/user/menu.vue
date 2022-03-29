@@ -269,7 +269,6 @@ export default {
   height: 39px;
   display: flex;
   padding-top: 20px;
-  padding-bottom: 20xp;
   justify-content: space-between;
   background: #fff;
   padding-left: 20px;

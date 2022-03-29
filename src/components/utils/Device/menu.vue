@@ -352,9 +352,6 @@ export default {
   background: #fff;
   margin-top: 20px;
   align-items: center;
-  position: absolute;
-  width: calc(100% - 200px);
-  bottom: 0px;
 }
 .delete {
   margin-left: 30px;

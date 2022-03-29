@@ -18,18 +18,20 @@
             :key="index + 2"
           >
             <el-menu-item :index="item.path">
-              <i class="el-icon-setting"></i>
+              <i :class="item.class"></i>
               <span slot="title">{{ item.title }}</span>
             </el-menu-item>
           </div>
           <div class="menu" v-for="(item, index) in menu" :key="index">
             <el-submenu :index="item.index">
               <template slot="title">
-                <i class="el-icon-location"></i>
+                <i :class="item.class"></i>
                 <span>{{ item.title }}</span>
               </template>
               <el-menu-item-group v-for="(i, idx) in item.list" :key="idx">
-                <el-menu-item :index="i.path">{{ i.name }}</el-menu-item>
+                <el-menu-item :index="i.path" :class="i.class">{{
+                  i.name
+                }}</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
           </div>
@@ -57,27 +59,33 @@ export default {
         {
           title: "首页",
           path: "/superAdmin/home",
+          class: "el-icon-s-home",
         },
         {
           title: "用户管理",
           path: "/superAdmin/user",
+          class: "el-icon-user-solid",
         },
         {
           title: "商户管理",
           path: "/superAdmin/mer",
+          class: "el-icon-s-goods",
         },
       ],
       menu: [
         {
           index: "2",
           title: "设备管理",
+          class: "el-icon-menu",
           list: [
             {
               path: "/superAdmin/device",
               name: "柜子管理",
+              class: "el-icon-office-building",
             },
             {
               name: "移动房",
+              class: "el-icon-s-shop",
             },
           ],
         },
@@ -90,8 +98,7 @@ export default {
       return "/superAdmin/" + this.$route.path.split("/").reverse()[0];
     },
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 
@@ -114,7 +121,7 @@ export default {
 }
 .right {
   width: 100%;
-  min-height:100vh;
+  min-height: 100vh;
   background: #ecf0f5;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {

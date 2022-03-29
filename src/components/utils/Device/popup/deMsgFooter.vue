@@ -7,16 +7,18 @@
           <div class="block">
             <el-date-picker
               v-model="value3"
-              type="datetimerange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              value-format="yyyy-MM-dd,H"
+              type="daterange"
               size="mini"
+              start-placeholder="开始日期"
+              range-separator="至"
               end-placeholder="结束日期"
-              @change="getHousData"
+              value-format="yyyy-MM-dd,H"
             >
             </el-date-picker>
           </div>
+        </div>
+        <div class="download">
+          <el-button class="el-icon-download" size="mini" @click="downloadMsg">导出数据</el-button>
         </div>
       </div>
       <div class="footList2">
@@ -68,7 +70,6 @@ import { msg2, getHour } from "./popup.js";
 export default {
   name: "footerModelue",
   mounted() {
-    // 页面更新获取数据
     msg2((data) => {
       console.log(data, "打印data数据");
       if (data.monitor_data == false) {
@@ -102,6 +103,10 @@ export default {
         this.$data.tableData = msg.monitor_data;
       }
     },
+    // 点击导出数据
+     downloadMsg(){
+      console.log("导出数据成功")
+    }
   },
 };
 </script>
@@ -126,6 +131,12 @@ export default {
 .fooTitle div p {
   margin-left: 20px;
   margin-right: 20px;
+}
+.download{
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 .test {
   color: #08f !important;

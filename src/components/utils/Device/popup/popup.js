@@ -183,18 +183,19 @@ let getBoxSize = (fun) => {
     })
 }
 
-// // 获取弹窗的设备数据
-let getFacilityData = () => {
-    post(`${url}/api/index/monitor_switch`, queryAllDevilce()).then((res) => {
-        if (res.data.err_code == -2) {
-            backLoginPage()
-            alert("登录已过期,请重新登录")
-        } else {
-            // 通过vuex设置数据共享,数据分发
-            store.commit("popup/AddDetailsMsg", res.data.data);
-        }
+// // 获取弹窗的图表数据
+let getFacilityData = async () => {
+    let data = await post(`${url}/api/index/monitor_switch`, queryAllDevilce())
 
-    })
+    if (data.data.err_code == -2) {
+        backLoginPage()
+        alert("登录已过期,请重新登录")
+    } else {
+        console.log(data.data.data, "12345")
+        return data.data.data
+
+    }
+
 }
 
 // 获取vuex里存的详细的设备数据
