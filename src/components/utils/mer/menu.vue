@@ -18,7 +18,7 @@
             placeholder="请输入用户名或手机号"
             suffix-icon="el-icon-search"
             size="small"
-            @change="search"
+            @input="search"
           ></el-input>
         </div>
         <div class="add">
@@ -45,6 +45,7 @@
         <el-table-column label="id">
           <template slot-scope="scope">{{ scope.row.user_id }}</template>
         </el-table-column>
+         <el-table-column prop="name" label="用户名称"> </el-table-column>
         <el-table-column prop="username" label="账号"> </el-table-column>
         <el-table-column label="账号状态">
           <div slot-scope="scope" :class="scope.row.class">
@@ -53,7 +54,6 @@
         </el-table-column>
         <el-table-column prop="mobile" label="手机号"> </el-table-column>
         <el-table-column prop="email" label="邮箱"> </el-table-column>
-        <el-table-column prop="name" label="用户名称"> </el-table-column>
         <el-table-column prop="create_time" label="注册时间"> </el-table-column>
         <el-table-column prop="role_name" label="角色信息"> </el-table-column>
         <el-table-column prop="address" label="地址" show-overflow-tooltip>
@@ -81,7 +81,7 @@
         >
       </div>
       <div class="right">
-        <div class="block">
+        <div :class="block">
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
@@ -122,6 +122,7 @@ export default {
       total: 0,
       currentPage4: 1,
       page_num: 12,
+      block: "",
     };
   },
   mounted() {
@@ -168,9 +169,6 @@ export default {
       let len = this.multipleSelection.length;
       this.open2(value, len);
     },
-    // handleClick(row) {
-    //   console.log(row);
-    // },
     open2(value, len) {
       this.$confirm(`此操作将永久删除选中的${len}条数据, 是否继续?`, {
         confirmButtonText: "确定",
@@ -196,18 +194,23 @@ export default {
           });
         });
     },
-    // 在输入框失去焦点或用户按下回车时触发
+    // 在输入框输入数字时触发
     async search() {
       // 获取输入框的值
       let value = this.$data.input;
+      // 判断输入框的值是否为空
+      if (!value) {
+        // 为空显示输入框按钮
+        this.$data.block = "";
+      } else {
+        // 隐藏分页按钮
+        this.$data.block = "block";
+      }
       this.$data.tableData = await searchUres("keyword", value);
     },
 
     clickAddUserName() {
-      // let { form } = this.$data.form;
-      // console.log(form, "1212");
       this.$data.dialogFormVisible = false;
-      // console.log(this.$data.form, "12");
     },
     // 点击查看更新显示弹窗
     clickTrue(value) {
@@ -328,6 +331,9 @@ export default {
   background: rgba(0, 0, 0, 0.4);
   /* 设置弹性盒模型 */
   display: flex;
+}
+.block {
+  display: none;
 }
 </style>
 

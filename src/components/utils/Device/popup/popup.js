@@ -2,7 +2,7 @@ import store from "@/vuex/index"
 // 工具方法
 import { post } from "@/Api/index";
 import { url } from "@/Api/http.js"
-import { details, control, alter, queryAllDevilce, getDate, getHourDate } from "@/token/index";
+import { details, control, alter, queryAllDevilce, } from "@/token/index";
 import { backLoginPage } from "@/utils/index.js"
 
 let gitData = () => {
@@ -156,8 +156,6 @@ let alterData = (name, long, address, shop_id, kind) => {
             backLoginPage()
             alert("登录已过期,请重新登录")
         }
-        // 修改成功刷新数据
-        // gitData()
     })
 }
 // 获取弹窗的格子数量,以及是否有物品,給格子添加不同的class,已区分
@@ -183,54 +181,20 @@ let getBoxSize = (fun) => {
     })
 }
 
-// // 获取弹窗的图表数据
-let getFacilityData = async () => {
-    let data = await post(`${url}/api/index/monitor_switch`, queryAllDevilce())
-
-    if (data.data.err_code == -2) {
-        backLoginPage()
-        alert("登录已过期,请重新登录")
-    } else {
-        console.log(data.data.data, "12345")
-        return data.data.data
-
-    }
-
-}
-
-// 获取vuex里存的详细的设备数据
-let msg2 = (fun) => {
-    let time = setInterval(() => {
-        let data = store.state.popup.detailsMsg
-        if (data != null) {
-            clearInterval(time);
-            fun(data)
+// // 获取弹窗的设备数据
+let getFacilityData = (path,type, hour, day, day_start, day_end) => {
+    post(`${url}${path}`, queryAllDevilce(type, hour, day, day_start, day_end)).then((res) => {
+        if (res.data.err_code == -2) {
+            backLoginPage()
+            alert("登录已过期,请重新登录")
+        } else {
+            // 通过vuex设置数据共享,数据分发
+            store.commit("popup/AddDetailsMsg", res.data.data);
         }
-    }, 130)
 
+    })
 }
-// 获取指定设备的指定日期区间数据
-// day_start 开始日期
-// day_end 结束日期
-let getDateSection = async (day_start, day_end) => {
-    let res = await post(`${url}/api/index/day_switch`, getDate(day_start, day_end))
-    if (res.data.err_code == -2) {
-        backLoginPage()
-        alert("登录已过期,请重新登录")
-    } else {
-        return res
-    }
-}
-// 获取某个设备某天某个小时的数据
-let getHour = async (day, hour) => {
-    let res = await post(`${url}/api/index/hour_switch`, getHourDate(day, hour))
-    if (res.data.err_code == -2) {
-        backLoginPage()
-        alert("登录已过期,请重新登录")
-    } else {
-        return res.data.data
-    }
-}
+
 export {
     msg,
     StatusMsg,
@@ -239,7 +203,4 @@ export {
     alterData,
     getBoxSize,
     getFacilityData,
-    msg2,
-    getDateSection,
-    getHour
 }

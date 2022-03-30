@@ -7,18 +7,21 @@
           <div class="block">
             <el-date-picker
               v-model="value3"
-              type="daterange"
+              type="datetimerange"
               size="mini"
-              start-placeholder="开始日期"
               range-separator="至"
+              start-placeholder="开始日期"
               end-placeholder="结束日期"
-              value-format="yyyy-MM-dd,H"
+              value-format="yyyy-MM-dd,HH:mm:ss"
+              @change="getDateData"
             >
             </el-date-picker>
           </div>
         </div>
         <div class="download">
-          <el-button class="el-icon-download" size="mini" @click="downloadMsg">导出数据</el-button>
+          <el-button class="el-icon-download" size="mini" @click="downloadMsg"
+            >导出数据</el-button
+          >
         </div>
       </div>
       <div class="footList2">
@@ -66,25 +69,39 @@
 
 
 <script>
-import { msg2, getHour } from "./popup.js";
+import { getFacilityData } from "./popup.js";
 export default {
   name: "footerModelue",
+  data() {
+    return {
+      tableData: [],
+      value3: "",
+      hour: "",
+      day: "",
+      lazy: true,
+    };
+  },
   mounted() {
-    msg2((data) => {
-      console.log(data, "打印data数据");
+    // 进入页面获取数据
+    getFacilityData("/api/index/monitor_switch");
+  },
+  computed: {
+    vueMSg2() {
+      return this.$store.state.popup.detailsMsg;
+    },
+  },
+  watch: {
+    vueMSg2(data) {
+      this.$data.hour = data.hour;
+      this.$data.day = data.day;
       if (data.monitor_data == false) {
         this.$data.tableData = [];
       } else {
         this.$data.tableData = data.monitor_data;
       }
-    });
+    },
   },
-  data() {
-    return {
-      tableData: [],
-      value3: "",
-    };
-  },
+
   methods: {
     handlemyclass: function () {
       return "test";
@@ -92,21 +109,33 @@ export default {
     handrowclass: function () {
       return "text";
     },
-    async getHousData() {
-      let string = this.$data.value3;
-      //  转为数组
-      let arr = string.split(",");
-      let msg = await getHour(arr[0], arr[1]);
-      if (msg.monitor_data == false) {
-        this.$data.tableData = [];
-      } else {
-        this.$data.tableData = msg.monitor_data;
-      }
+    getDateData(value, type = 1) {
+      let data = this.$data;
+      let timeArr = data.value3;
+      let hour = "";
+      // 获取当前日期请求数据
+      getFacilityData(
+        "/api/index/day_switch",
+        type,
+        hour,
+        data.day,
+        timeArr[0],
+        timeArr[1]
+      );
+    },
+    // 父组件触发子组件方法
+    fatherClick(type) {
+      this.getDateData(null,type);
+    },
+    // 触底懒加载
+    load() {
+      console.log("懒加载");
+      // console.log(tree, treeNode);
     },
     // 点击导出数据
-     downloadMsg(){
-      console.log("导出数据成功")
-    }
+    downloadMsg() {
+      console.log("导出数据成功");
+    },
   },
 };
 </script>
@@ -132,7 +161,7 @@ export default {
   margin-left: 20px;
   margin-right: 20px;
 }
-.download{
+.download {
   flex: 1;
   display: flex;
   justify-content: flex-end;

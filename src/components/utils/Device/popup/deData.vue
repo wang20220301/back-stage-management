@@ -4,12 +4,17 @@
       <div class="headLeft">
         <h3>{{ details.monitor_name }}</h3>
         <div class="text">
-          <el-select v-model="value" placeholder="请选择" size="mini">
+          <el-select
+            v-model="drop_down"
+            placeholder="实时电量"
+            size="mini"
+            @change="clickCup(drop_down)"
+          >
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              v-for="item in monitor_list"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             >
             </el-option>
           </el-select>
@@ -21,42 +26,48 @@
         <div id="elect1" style="width: 100%; height: 100%"></div>
       </div>
     </div>
-    <Footer></Footer>
+    <Footer ref="child"></Footer>
   </div>
 </template>
 
 <script>
 import Footer from "./deMsgFooter.vue";
-import { getFacilityData } from "./popup.js";
 export default {
   name: "deviceData",
   components: {
     Footer,
   },
-  mounted() {
-    // 进入页面发起请求
-    this.getData()
-    // console.log(data, "123");
+  // 使用computed 监听vuex数据的变化
+  computed: {
+    vueMSg() {
+      return this.$store.state.popup.detailsMsg;
+    },
+  },
+  watch: {
+    vueMSg(data) {
+      this.$data.monitor_list = data.monitor_list;
+      this.$data.details = data.detail;
+      // console.log(this.$data.drop_down);
+      let value = data.monitor_list[this.$data.type * 1].name;
+      this.elect1(data.data.unit, data.data.x, data.data.y, value);
+    },
   },
   data() {
     return {
-      value2: "",
+      type: 0,
+      drop_down: "实时电量",
       details: "",
+      monitor_list: "",
     };
   },
   methods: {
-    async getData() {
-      let data = await getFacilityData();
-      this.$data.details=data.detail
-    },
-    elect1(dataX, datay) {
+    elect1(unit, dataX, datay, name) {
       var chartDom = document.getElementById("elect1");
       var myChart = this.$echarts.init(chartDom);
       var option;
-
       option = {
         title: {
-          subtext: "设备实时电量",
+          subtext: `${name}`,
           top: "10px",
         },
         tooltip: {
@@ -79,7 +90,7 @@ export default {
         yAxis: {
           type: "value",
           axisLabel: {
-            formatter: "{value} %",
+            formatter: `{value} ${unit}`,
           },
           axisPointer: {
             snap: true,
@@ -116,7 +127,7 @@ export default {
         },
         series: [
           {
-            name: "设备实时电量(百分比)",
+            name: `${name}`,
             type: "line",
             smooth: true,
             data: datay,
@@ -126,6 +137,12 @@ export default {
       };
 
       option && myChart.setOption(option);
+    },
+    clickCup(value) {
+      // 获取当前的id处理触发子组件方法
+      this.$data.type = value * 1 - 1;
+      this.$refs.child.fatherClick(value);
+      console.log("点击触发", value);
     },
   },
 };

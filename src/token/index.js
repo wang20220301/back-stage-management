@@ -76,12 +76,17 @@ let deleteDevice = (key, value) => {
     param.append(key, value)
     return param
 }
-let queryAllDevilce = () => {
+let queryAllDevilce = (type="", hour="", day="", day_start = "", day_end = "",) => {
     let tok = token()
     let id = cookieValue("id")
     var param = new FormData()
     param.append("token", tok);
     param.append("group_id", id);
+    param.append("type", type);
+    param.append("day_start", day_start);
+    param.append("day_end", day_end);
+    param.append("day", day)
+    param.append("hour", hour);
     return param
 
 }

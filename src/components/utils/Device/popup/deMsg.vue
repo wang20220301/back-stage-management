@@ -78,6 +78,7 @@ export default {
     cancel() {
       this.open1();
     },
+
     open() {
       this.$notify({
         title: "成功",

@@ -18,7 +18,7 @@
             placeholder="输入用户名或手机号"
             suffix-icon="el-icon-search"
             size="small"
-            @change="search"
+            @input="search"
           ></el-input>
         </div>
         <div class="add">
@@ -91,7 +91,7 @@
         >
       </div>
       <div class="right">
-        <div class="block" v-if="pageShow">
+        <div :class="block" v-if="pageShow">
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
@@ -134,6 +134,7 @@ export default {
       currentPage4: 1,
       page_num: 12,
       pageShow: true,
+      block: "",
     };
   },
   mounted() {
@@ -149,7 +150,7 @@ export default {
       // 获取当前的总数据
       this.$data.total = data.total * 1;
 
-      console.log(this.$data.currentPage4, "打印分页数据");
+      // console.log(this.$data.currentPage4, "打印分页数据");
     },
     async gitType() {
       // 把获取到的商户类型通过pops传给子组件
@@ -204,10 +205,18 @@ export default {
           });
         });
     },
-    // 在输入框失去焦点或用户按下回车时触发
+    // 在输入框输入时触发
     async search() {
       // 获取输入框的值
       let value = this.$data.input;
+      // 判断输入框的值是否为空
+      if (!value) {
+        // 为空显示输入框按钮
+        this.$data.block = "";
+      } else {
+        // 隐藏分页按钮
+        this.$data.block = "block";
+      }
       this.$data.tableData = await searchUres("keyword", value);
     },
 
@@ -333,6 +342,9 @@ export default {
   background: rgba(0, 0, 0, 0.4);
   /* 设置弹性盒模型 */
   display: flex;
+}
+.block {
+  display: none;
 }
 </style>
 
