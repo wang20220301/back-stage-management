@@ -104,7 +104,7 @@ export default {
       console.log(data, "检测data的数据变化");
       this.$data.hour = data.hour;
       this.$data.day = data.day;
-      if (data.monitor_data == false) { 
+      if (data.monitor_data == false) {
         this.$data.tableData = [];
       } else {
         this.$data.tableData = data.monitor_data;
@@ -163,8 +163,6 @@ export default {
             timeArr[1]
           );
         }, 100);
-
-        console.log("懒加载", this.$store.state.popup.detailsMsg);
       }
 
       // console.log(tree, treeNode);

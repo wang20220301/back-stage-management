@@ -18,8 +18,6 @@ export default {
   components: {
     Head,
     Middle,
-    // Menu,
-    // Footer,
   },
   mounted() {
     gitData();
