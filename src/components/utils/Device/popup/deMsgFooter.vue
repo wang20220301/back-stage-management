@@ -27,11 +27,11 @@
       <div class="footList2">
         <el-table
           :data="tableData"
-          style="width: 100%"
-          height="34vh"
           stripe
           :header-cell-class-name="handlemyclass"
           :row-class-name="handrowclass"
+          height="33vh"
+          v-el-table-infinite-scroll="load"
         >
           <el-table-column prop="time" label="更新时间" height="10px">
           </el-table-column>
@@ -69,9 +69,13 @@
 
 
 <script>
-import { getFacilityData } from "./popup.js";
+import { getFacilityData, getLoadData } from "./popup.js";
+import elTableInfiniteScroll from "el-table-infinite-scroll";
 export default {
   name: "footerModelue",
+  directives: {
+    "el-table-infinite-scroll": elTableInfiniteScroll,
+  },
   data() {
     return {
       tableData: [],
@@ -79,27 +83,38 @@ export default {
       hour: "",
       day: "",
       lazy: true,
+      index: 1,
     };
   },
   mounted() {
+    // this.$forceUpdate();
     // 进入页面获取数据
     getFacilityData("/api/index/monitor_switch");
   },
   computed: {
+    vueMSg() {
+      return this.$data.state.popup.detailsMsg.tableData;
+    },
     vueMSg2() {
       return this.$store.state.popup.detailsMsg;
     },
   },
   watch: {
     vueMSg2(data) {
+      console.log(data, "检测data的数据变化");
       this.$data.hour = data.hour;
       this.$data.day = data.day;
-      if (data.monitor_data == false) {
+      if (data.monitor_data == false) { 
         this.$data.tableData = [];
       } else {
         this.$data.tableData = data.monitor_data;
       }
     },
+    vueMSg() {
+      console.log("检测到vueMsg数据发生变化");
+    },
+    // 开启深度监听
+    deep: true,
   },
 
   methods: {
@@ -109,10 +124,9 @@ export default {
     handrowclass: function () {
       return "text";
     },
-    getDateData(value, type = 1) {
+    getDateData(type = 1, hour = "") {
       let data = this.$data;
       let timeArr = data.value3;
-      let hour = "";
       // 获取当前日期请求数据
       getFacilityData(
         "/api/index/day_switch",
@@ -125,17 +139,38 @@ export default {
     },
     // 父组件触发子组件方法
     fatherClick(type) {
-      this.getDateData(null,type);
+      this.getDateData(null, type);
     },
     // 触底懒加载
     load() {
-      console.log("懒加载");
+      // 判断是否是首次加载
+      if (this.$data.index == 1) {
+        this.$data.index = 2;
+        console.log("首次加载不请求数据");
+      } else {
+        // 节流
+        setTimeout(() => {
+          // 获取当前请求数据的次数
+          let hour = this.$data.hour * 1 + 1;
+          let data = this.$data;
+          let timeArr = data.value3;
+          getLoadData(
+            "/api/index/day_switch",
+            1,
+            hour,
+            data.day,
+            timeArr[0],
+            timeArr[1]
+          );
+        }, 100);
+
+        console.log("懒加载", this.$store.state.popup.detailsMsg);
+      }
+
       // console.log(tree, treeNode);
     },
     // 点击导出数据
-    downloadMsg() {
-      console.log("导出数据成功");
-    },
+    downloadMsg() {},
   },
 };
 </script>
@@ -148,6 +183,8 @@ export default {
 .footList2 {
   margin-left: 10px;
   margin-top: 10px;
+  /* height: 34vh; */
+  overflow: auto;
 }
 .fooTitle {
   height: 40px;

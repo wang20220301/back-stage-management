@@ -42,8 +42,18 @@ const moduleC = {
       state.data = data
     },
     AddDetailsMsg(state, data) {
+      state.detailsMsg = data
+    },
+    SetLoadData(state, data) {
+      // vue无法检测到数组内部的变化
+      let { detailsMsg } = state
+      let list = detailsMsg.monitor_data
+      let list2 = data.monitor_data
+      // 合并数组
+      data.monitor_data = [...list, ...list2]
       state.detailsMsg=data
     }
+
   },
 }
 

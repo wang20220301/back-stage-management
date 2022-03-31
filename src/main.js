@@ -1,6 +1,4 @@
 import Vue from 'vue'
-import infiniteScroll from "vue-infinite-scroll";
-Vue.use(infiniteScroll);
 import App from './App.vue'
 import store from "./vuex/index"
 import router from "./router/index"

@@ -182,7 +182,7 @@ let getBoxSize = (fun) => {
 }
 
 // // 获取弹窗的设备数据
-let getFacilityData = (path,type, hour, day, day_start, day_end) => {
+let getFacilityData = (path, type, hour, day, day_start, day_end) => {
     post(`${url}${path}`, queryAllDevilce(type, hour, day, day_start, day_end)).then((res) => {
         if (res.data.err_code == -2) {
             backLoginPage()
@@ -190,6 +190,21 @@ let getFacilityData = (path,type, hour, day, day_start, day_end) => {
         } else {
             // 通过vuex设置数据共享,数据分发
             store.commit("popup/AddDetailsMsg", res.data.data);
+        }
+
+    })
+}
+
+// 懒加载获取数据
+let getLoadData = (path, type, hour, day, day_start, day_end) => {
+    post(`${url}${path}`, queryAllDevilce(type, hour, day, day_start, day_end)).then((res) => {
+        if (res.data.err_code == -2) {
+            backLoginPage()
+            alert("登录已过期,请重新登录")
+        } else {
+            console.log(res.data.data,"打印请求回来的数据")
+            // 通过vuex设置数据共享,数据分发
+            store.commit("popup/SetLoadData", res.data.data);
         }
 
     })
@@ -203,4 +218,5 @@ export {
     alterData,
     getBoxSize,
     getFacilityData,
+    getLoadData
 }

@@ -38,7 +38,7 @@
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
-        height="77vh"
+        height="75vh"
         highlight-current-row
         @selection-change="handleSelectionChange"
       >

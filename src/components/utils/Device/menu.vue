@@ -65,7 +65,12 @@
         <el-table-column prop="username" label="所属商户" width="">
         </el-table-column>
         <el-table-column prop="name" label="分类" width=""> </el-table-column>
-        <el-table-column prop="address" label="位置" width="" show-overflow-tooltip>
+        <el-table-column
+          prop="address"
+          label="位置"
+          width=""
+          show-overflow-tooltip
+        >
         </el-table-column>
         <el-table-column label="设备状态" width="">
           <div
